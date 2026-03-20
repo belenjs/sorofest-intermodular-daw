@@ -1,0 +1,36 @@
+# macOS
+.DS_Store
+
+# IDEs
+.vscode/
+.idea/
+*.iml
+
+# Java
+*.class
+*.jar
+out/
+bin/
+target/
+
+# Logs
+*.log
+
+# Temporales
+*.tmp
+*.swp
+
+# Config local
+.env
+application.properties.local
+config.local.properties
+
+# Bases de datos locales
+*.db
+*.sqlite
+*.sqlite3
+
+# Comprimidos
+*.zip
+*.rar
+*.7z
