@@ -1,0 +1,74 @@
+:root {
+    /* Color principal para textos y elementos importantes */
+    --color-principal: #023047;
+
+    /* Color secundario para textos */
+    --color-secundario: #219EBC;
+
+    /* Color para el fondo */
+    --bg-color: #8ecae6;
+
+    /* Color para enlaces, hover y elementos destacados */
+    --color-destacado: #FFB703;
+
+    /* Borde común para las esquinas de los elementos */
+    --border-radius: 8px;
+
+    /* Sombra estándar */
+    --shadow: 0 14px 35px rgba(0,0,0,.30);
+}
+
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family:Arial, Helvetica, sans-serif;
+    line-height: 1.6;
+    background-color: var(--bg-color);
+    color: var(--color-principal);
+    padding-top: 30px;
+    padding-bottom: 20px;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: var(--color-principal);
+    color: var(--color-secundario);
+}
+
+.logo img {
+    width: 250px;
+    height: auto;
+    display: block;
+}
+
+.brand{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.nav {
+    display: flex;
+    gap: 20px;
+    font-size: 1.4rem;
+}
+
+.nav a {
+    color: var(--color-secundario);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.nav a:hover {
+    color: var(--color-destacado);
+}
+
+h1 {
+    font-size: 2.6rem;
+}
