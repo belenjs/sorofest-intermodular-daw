@@ -64,7 +64,22 @@
                     Email
                     <input type="email" placeholder="Escribe tu correo electrónico" required>
                 </label>
-               
+
+                <label>
+                    Teléfono
+                    <input type="tel" placeholder="Escribe tu teléfono de contacto" required>
+                </label>
+
+                <label for="asunto">
+                    Asunto
+                    <select id="asunto" name="asunto" required>
+                        <option value="">Selecciona un asunto</option>
+                        <option value="entradas">Error en la compra de entradas</option>
+                        <option value="informacion">Necesito más información</option>
+                        <option value="patrocinio">Patrocinios</option>
+                        <option value="otros">Otros</option>
+                    </select>
+                </label>
                 <label>
                     Mensaje
                     <textarea rows="4"
