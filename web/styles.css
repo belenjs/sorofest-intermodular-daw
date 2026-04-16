@@ -180,3 +180,71 @@ h1 {
 .poster {
     padding: 40px;
 }
+
+/* ESTILO SECCIÓN FORM */
+
+.contact-section{
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px;
+    background-color: var(--color-destacado);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    justify-content: center;
+}
+
+.contact-header h2 {
+    color: var(--color-principal);
+    text-align: center;
+}
+.contact-header p {
+    color: var(--color-secundario);
+    text-align: center;
+}
+
+.form {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 40px;
+}
+
+.form label {
+    width: 100%;
+    max-width: 500px;
+    text-align: left;
+    color: var(--color-principal);
+    font-weight: bold;
+}
+
+.form input,
+.form textarea {
+    width: 100%;
+    max-width: 500px;
+    border-radius: var(--border-radius);
+    border: 1px solid rgba(255, 255, 255, .14);
+    padding: 12px;
+    font-size: 1rem;
+}
+
+.form textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.btn-enviar {
+    background-color: var(--color-principal);
+    color: var(--color-text);
+    padding: 20px 40px;
+    border-radius: var(--border-radius);
+    font-weight: bold;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+}
+
+.btn-enviar:hover {
+    background-color: var(--color-secundario);
+    color: var(--color-text);
+}
