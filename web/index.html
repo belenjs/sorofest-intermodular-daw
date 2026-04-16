@@ -8,28 +8,22 @@
 </head>
 <body>
     <header class="topbar">
-        <div class="brand">
+        <div class="topbar-left">
             <div class="logo">
-                <img src="assets/logo-sorofest.png" alt="Logo puño sujetando micrófono">
-            </div>
-            <div class="text-brand">
-                <h1>SoroFest</h1>
+                <img src="assets/img/logo-sorofest.png" alt="Logo puño sujetando micrófono">
             </div>
         </div>
-        <nav class="nav">
+        <nav class="topbar-nav">
             <a href="manifiesto.html">Manifiesto</a>
-            <div class="dropdown">
-                <a href="#" class="dropbtn">Programación</a>
-                <div class="dropdown-content">
-                    <a href="cartel.html">Cartel</a>
-                    <a href="artistas.html">Artistas</a>
-                    <a href="horarios.html">Horarios</a>
-                </div>
-            </div>
-            <a href="entradas.html">Entradas</a>
+            <a href="cartel.html">Cartel</a>
+            <a href="artistas.html">Artistas</a>
+            <a href="horarios.html">Horarios</a> 
             <a href="informacion.html">Información</a>
             <a href="index.html#contacto">Contacto</a>
         </nav>
+        <div class=topbar-right>
+            <a href="entradas.html" class="btn">Entradas</a>
+        </div>
     </header>
     <main>
         <section class="hero">
@@ -38,14 +32,20 @@
                     <p>17, 18 y 19 de JULIO de 2026 - CÁDIZ</p>
                 </div>
                 <div class="hero-content">
-                    <h2>Talento femenino en el centro del escenario</h2> 
-                </div>
-                <div class="hero-action">
-                    <a href="" class="btn">Entradas</a>
+                    <div class="hero-media">
+                        <video autoplay muted loop playsinline class="hero-video">
+                            <source src="assets/video/video-hero.mp4" type="video/mp4">
+                        </video>
+                        <div class="hero-overlay"></div>
+                    </div>
+                    <div class="hero-text">
+                        <h2>Talento femenino en el centro del escenario</h2> 
+                    <h3>SoroFest 2026</h3>
+                    </div>  
                 </div>
             </div> 
         </section>
-        <section class="#poster">
+        <section id="#poster" class="poster">
             <img>
             <a href="" class="btn">Entradas</a>
         </section>
