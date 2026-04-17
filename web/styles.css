@@ -305,6 +305,21 @@ p {
     color: var(--color-principal);
 }
 
+.icon:hover {
+    cursor: pointer;
+    color: var(--color-destacado);
+}
+.footer-legal a {
+    display: flex;
+    flex-direction: column;
+    color: var(--color-principal);
+}
+.footer-legal a:hover {
+    cursor: pointer;
+    color: var(--color-destacado);
+}
+
+
 /* PÁGINA MANIFIESTO */
 
 .manifest {
