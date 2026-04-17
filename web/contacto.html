@@ -10,7 +10,9 @@
     <header class="topbar">
         <div class="topbar-left">
             <div class="logo">
-                <img src="assets/img/logo-sorofest.png" alt="Logo puño sujetando micrófono">
+                <a href="index.html">
+                    <img src="assets/img/logo-sorofest.png" alt="Logo puño sujetando micrófono">
+                </a> 
             </div>
         </div>
         <nav class="topbar-nav">
@@ -19,7 +21,7 @@
             <a href="artistas.html">Artistas</a>
             <a href="horarios.html">Horarios</a> 
             <a href="informacion.html">Información</a>
-            <a href="contacto.html">Contacto</a>
+            <a href="index.html#contacto">Contacto</a>
         </nav>
         <div class=topbar-right>
             <a href="entradas.html" class="btn">Entradas</a>
@@ -31,27 +33,50 @@
                 <div class="hero-topbar">
                     <p>17, 18 y 19 de JULIO de 2026 - CÁDIZ</p>
                 </div>
-                <div class="hero-content">
-                    <div class="hero-media">
-                        <video autoplay muted loop playsinline class="hero-video">
-                            <source src="assets/video/video-hero.mp4" type="video/mp4">
-                        </video>
-                        <div class="hero-overlay"></div>
-                    </div>
-                    <div class="hero-text">
-                        <h2>Talento femenino en el centro del escenario</h2> 
-                    <h3>SoroFest 2026</h3>
-                    </div>  
-                </div>
-            </div> 
+            </div>
         </section>
-        <section id="#poster" class="poster">
-            <img>
-            <a href="" class="btn">Entradas</a>
+        <section id="contacto" class="contact-section">
+            <header class="contact-header">
+                <h2>Formulario de contacto</h2>
+                <p>Si necesitas ponerte en contacto con nosotras rellena este formulario:</p>
+            </header>
+            <form class="form">
+                <label>
+                    Nombre
+                    <input type="text" placeholder="Escribe tu nombre" required>
+                </label>
+                
+                <label>
+                    Email
+                    <input type="email" placeholder="Escribe tu correo electrónico" required>
+                </label>
+
+                <label>
+                    Teléfono
+                    <input type="tel" placeholder="Escribe tu teléfono de contacto" required>
+                </label>
+
+                <label for="asunto">
+                    Asunto
+                    <select id="asunto" name="asunto" required>
+                        <option value="">Selecciona un asunto</option>
+                        <option value="entradas">Error en la compra de entradas</option>
+                        <option value="informacion">Necesito más información</option>
+                        <option value="patrocinio">Patrocinios</option>
+                        <option value="otros">Otros</option>
+                    </select>
+                </label>
+                <label>
+                    Mensaje
+                    <textarea rows="4"
+                        placeholder="Escribe tu mensaje aquí..." required></textarea>
+                </label>
+                <button class="btn-enviar" type="submit">Enviar</button>
+
+            </form>
         </section>
-        
     </main>
-    <footer class="footer">
+   <footer class="footer">
         <div class="logo">
             <img src="assets/img/logo-sorofest.png" alt="Logo puño sujetando micrófono">
             <div class="footer-text">
@@ -91,6 +116,5 @@
             <p>Política de cookies</p>
         </div>
     </footer>
-    
 </body>
 </html>
