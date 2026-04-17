@@ -107,7 +107,9 @@ h1 {
 
 .hero-content {
     position: relative;
-    min-height: 100vh;
+    height: 70vh;
+    min-width: 500px;
+    /*/min-height: 100vh;*/
     display: flex;
     align-items: center;
     justify-content: center;
@@ -192,6 +194,8 @@ h1 {
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
     justify-content: center;
+    margin-bottom: 40px;
+    margin-top: 40px;
 }
 
 .contact-header h2 {
@@ -269,4 +273,26 @@ h1 {
 .btn-enviar:hover {
     background-color: var(--color-secundario);
     color: var(--color-text);
+}
+
+/* ESTILOS SECCIÓN FOOTER */
+
+.footer {
+    background-color: var(--color-banda);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    text-align: center;
+    align-items: center;
+    padding-top: 12px;
+
+}
+
+.logo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.icon {
+    color: var(--color-principal);
 }
