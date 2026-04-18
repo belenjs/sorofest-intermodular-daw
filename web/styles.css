@@ -189,6 +189,19 @@ p {
 /* ESTILO SECCIÓN POSTER */
 .poster {
     padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.poster img {
+    margin: 0 auto;
+    box-shadow: var(--shadow);
+}
+
+.poster a {
+    margin: 0 auto;
+    justify-items: center;
 }
 
 /* ESTILO SECCIÓN FORM */
