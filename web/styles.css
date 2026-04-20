@@ -526,6 +526,19 @@ p {
         width: 100%;
         height: 100%;
     }
+  
+  .container-download {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+  .container-download a {
+    background-color: var(--color-banda);
+    color: var(--color-text);
+    padding: 20px 20px;
+    border-radius: 900px;
+    text-transform: uppercase;
+  }
 
 /* ESTILOS ARTISTAS */
 .artist-container {
