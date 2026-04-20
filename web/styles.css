@@ -9,7 +9,7 @@
     --bg-color: #8ecae6;
 
     /* Color para enlaces, hover y elementos destacados */
-    --color-destacado: #FFB703;
+    --color-destacado: #ffb703;
 
     /* Borde común para las esquinas de los elementos */
     --border-radius: 8px;
@@ -27,16 +27,19 @@
 /* ESTILOS GENERALES */
 * {
     margin: 0;
+    padding: 0;
     box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
     font-family:Arial, Helvetica, sans-serif;
     line-height: 1.6;
     background-color: var(--bg-color);
-    color: var(--color-principal);
-    padding-top: 30px;
-    padding-bottom: 20px;
+    color: var(--color-principal); 
 }
 
 a {
@@ -117,21 +120,23 @@ p {
     position: relative;
     height: 70vh;
     min-width: 500px;
-    /*/min-height: 100vh;*/
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
     text-align: center;
+    line-height: 0;
 }
 
 .hero-media {
     position: absolute;
     inset: 0;
     z-index: 1;
+    line-height: 0;
 }
 
 .hero-video {
+    display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -147,9 +152,14 @@ p {
 
 .hero-text {
     position: relative;
-    z-index: 2;
+    z-index: 3;
     color: var(--color-text);
     padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 60px;
 }
 
 .hero-text h2,
@@ -169,6 +179,53 @@ p {
   font-weight: 400;
 }
 
+.dates {
+    font-size: 1.4rem;
+    font-weight: 900;
+}
+
+/* ESTILO BOTTOM-BAR */
+.hero-bottombar {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+  display: flex;
+  z-index: 4;
+}
+
+
+.stripe {
+  height: 100%;
+  flex: 1;
+}
+
+.stripe-1 {
+  background: var(--color-banda);
+  width: 20%;
+}
+
+.stripe-2 {
+  background: var(--color-principal);
+  width: 20%;
+}
+
+.stripe-3 {
+  background: var(--color-secundario);
+  width: 20%;
+}
+
+.stripe-4 {
+  background: var(--color-destacado);
+  width: 20%;
+}
+
+.stripe-5 {
+  background: var(--color-banda);
+  width: 20%;
+}
+
 /* ESTILOS BOTONES */
 
 .btn {
@@ -186,22 +243,95 @@ p {
     color: var(--color-principal);
 }
 
-/* ESTILO SECCIÓN POSTER */
-.poster {
-    padding: 40px;
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
+/* ESTILO CARTEL */
+.festival-lineup-poster {
+  background: var(--bg-color);
+  padding: 20px 20px;
 }
 
-.poster img {
-    margin: 0 auto;
-    box-shadow: var(--shadow);
+.lineup-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-width: 1100px;
+  margin: 0 auto;
+  background-color: var(--bg-color);
+  border-radius: 28px;
+  padding: 36px 28px;
 }
 
-.poster a {
-    margin: 0 auto;
-    justify-items: center;
+.lineup-title {
+  margin: 0 0 28px;
+  font-size: clamp(1.7rem, 4.5vw, 3.4rem);
+  line-height: 0.95;
+  text-transform: uppercase;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  color: var(--color-principal);
+  text-align: center;
+}
+
+.day-block {
+  padding: 24px 0;
+}
+
+.day-block:first-of-type {
+  border-top: none;
+  padding-top: 0;
+}
+
+.day-title {
+  margin: 0 auto 25px;
+  color: var(--color-principal);
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  border-radius: var(--border-radius);
+  border: 4px solid rgb(255, 183, 3);
+  padding: 12px;
+  text-align: center;
+  width: 500px;
+  position: relative;
+}
+
+.day-title::before,
+.day-title::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  background: var(--color-banda);
+  border-radius: 50%;
+  transform: translateY(-50%);
+}
+
+.day-title::before {
+  left: 70px;
+}
+
+.day-title::after {
+  right: 70px;
+}
+
+.artist {
+  text-transform: uppercase;
+  font-weight: 900;
+  line-height: 0.95;
+  color: var(--color-principal);
+  word-break: break-word;
+  text-align: center;
+}
+
+.artist-lg {
+  font-size: clamp(1.7rem, 4.5vw, 3.4rem);
+  color: var(--color-principal);
+}
+
+.artist-md {
+  font-size: clamp(1.2rem, 3vw, 2.2rem);
+  color: var(--color-principal);
 }
 
 /* ESTILO SECCIÓN FORM */
@@ -296,6 +426,111 @@ p {
     color: var(--color-text);
 }
 
+/* ESTILOS HORARIOS */
+.schedule {
+      margin: 40px;
+    }
+
+.container-days {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    margin-bottom: 100px;
+}
+
+.title-schedule {
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.info-schedule {
+    text-align: center;
+    margin-bottom: 40px;
+}
+    .day {
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .day-header {
+      background: var(--color-principal);
+      color: var(--color-text);
+      padding: 22px 22px 18px;
+    }
+
+    .day-date {
+      margin: 0;
+      font-size: 1.2rem;
+      line-height: 1.2;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .day-stage {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--color-destacado);
+      color: var(--color-principal);
+      font-weight: 900;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+    }
+
+    .day-content {
+      padding: 40px;
+    }
+
+    .bar {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 14px 12px;
+      border-radius: var(--border-radius);
+      background: rgba(255, 255, 255, 0.28);
+    }
+
+    .bar + .bar {
+      margin-top: 12px;
+    }
+
+    .bar-time {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 48px;
+      padding: 8px 10px;
+      border-radius: var(--border-radius);
+      background: var(--color-banda);
+      color: var(--color-text);
+      font-weight: 900;
+      text-align: center;
+      line-height: 1.1;
+      font-size: 0.92rem;
+    }
+
+    .bar-artist {
+      font-weight: 900;
+      color: var(--color-principal);
+      font-size: 1.08rem;
+      text-transform: uppercase;
+    }
+
+    .img-footer {
+        width: 100%;   
+    }
+
+    .img-footer img {
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+
+
 /* ESTILOS SECCIÓN FOOTER */
 
 .footer {
@@ -305,6 +540,7 @@ p {
     text-align: center;
     align-items: center;
     padding-top: 12px;
+    color: var(--color-text);
 
 }
 
@@ -315,7 +551,7 @@ p {
 }
 
 .icon {
-    color: var(--color-principal);
+    color: var(--color-text);
 }
 
 .icon:hover {
@@ -325,7 +561,7 @@ p {
 .footer-legal a {
     display: flex;
     flex-direction: column;
-    color: var(--color-principal);
+    color: var(--color-text);
 }
 .footer-legal a:hover {
     cursor: pointer;
