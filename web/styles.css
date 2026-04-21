@@ -337,6 +337,53 @@ p {
   color: var(--color-principal);
 }
 
+/* ESTILO SECCIÓN INFORMACIÓN */
+
+.header-info {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  
+}
+
+.header-info h2 {
+  text-align: center;
+  margin: 0 auto;
+  padding: 12px;
+}
+
+.imgs-info {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  max-width: 100%;
+  align-items: center;
+
+}
+
+.maps {
+  height: auto;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 20px;
+}
+
+.maps h3 {
+  margin-bottom: 20px;
+}
+
+.imgs-info img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
 /* ESTILO SECCIÓN FORM */
 
 .contact-section{
