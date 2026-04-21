@@ -517,7 +517,7 @@ input[type='checkbox']:checked ~ ::after{
     gap: 12px;
     margin-bottom: 12px;
     font-size: 1rem;
-    background-color: var(--color-destacado);
+    background-color: var(--color-text);
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
 }
@@ -527,7 +527,7 @@ input[type='checkbox']:checked ~ ::after{
     max-width: 700px;
     margin-bottom: 20px;
     text-align: left;
-    color: var(--color-principal);
+    color: var(--color-secundario);
     font-weight: bold;
     line-height: 40px;
 }
@@ -540,6 +540,7 @@ input[type='checkbox']:checked ~ ::after{
     border: 1px solid rgba(255, 255, 255, .14);
     padding: 12px;
     font-size: 1rem;
+    box-shadow: var(--shadow);
 }
 
 .form textarea {
@@ -554,6 +555,8 @@ input[type='checkbox']:checked ~ ::after{
     border: 1px solid rgba(255, 255, 255, .14);
     padding: 12px;
     font-size: 1rem;
+    color:#767c86;
+    box-shadow: var(--shadow);
 }
 
 .form input:focus,
@@ -565,7 +568,7 @@ input[type='checkbox']:checked ~ ::after{
 }
 
 .btn-enviar {
-    background-color: var(--color-principal);
+    background-color: var(--color-secundario);
     color: var(--color-text);
     padding: 20px 40px;
     border-radius: var(--border-radius);
@@ -573,10 +576,11 @@ input[type='checkbox']:checked ~ ::after{
     box-shadow: var(--shadow);
     cursor: pointer;
     font-size: 1rem;
+    border:none;
 }
 
 .btn-enviar:hover {
-    background-color: var(--color-secundario);
+    background-color: var(--color-principal);
     color: var(--color-text);
 }
 
