@@ -792,20 +792,30 @@ input[type='checkbox']:checked ~ ::after{
 
 /* PÁGINA MANIFIESTO */
 
-.manifest {
+.manifest-header {
+  text-align: center;
+  margin: 0 auto;
+  padding: 20px 20px;
+}
+.manifest-content {
     margin: 0 auto;
     max-width: 900px;
     width: 90%;
     padding: 40px;
-    margin-top: 40px;
     margin-bottom: 40px;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
     background-color: var(--color-text);
+    margin-bottom: 80px;
+    text-align: center;
 }
 
 .manifest h2 {
     color: var(--color-secundario)
+}
+
+.manifest p {
+  margin-bottom: 40px;
 }
 
 .cierre {
