@@ -451,7 +451,7 @@ input[type='checkbox'] {
   margin-bottom: 40px;
 }
 
-label::after {
+.faq-group label::after {
   content: '+';
   position: absolute;
   font-size: 32px;
