@@ -589,44 +589,43 @@ p {
 .info {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  padding: var(--space-6) var(--space-4) var(--space-8);
 }
 
 .header-info {
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  gap: var(--space-2);
+  margin: var(--space-6);
   
 }
 
 .header-info h2 {
   text-align: center;
   margin: 0 auto;
-  padding: 12px;
 }
 
 .imgs-info {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 24px;
-  max-width: 100%;
-  align-items: center;
-
+  gap: var(--space-3);
+  max-width: 1400px;
+  margin: 0 auto;
+  align-items: start;
 }
 
 .maps {
-  height: auto;
-  margin: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
   overflow: hidden;
-  padding: 20px;
 }
 
 .maps h3 {
-  margin-bottom: 20px;
+  margin: 0;
 }
 
 .imgs-info img {
@@ -638,6 +637,7 @@ p {
 }
 
 .location {
+  position: relative;
   display: flex;
   flex-direction: column;
   padding: 20px;
@@ -659,10 +659,9 @@ p {
 }
 
 .faqs-container {
-  width: 100%;
-  max-width: 700px;
+  position: relative;
+  width: min(100%, 700px);
   margin: 0 auto;
-  margin-bottom: 60px;
 }
 
 .faqs-container h2 {
@@ -671,9 +670,9 @@ p {
 }
 
 .faqs-container details {
+  margin-bottom: var(--space-3);
   border: 1px solid var(--color-principal);
-  border-radius: 16px;
-  margin-bottom: 1rem;
+  border-radius: var(--border-radius);
   background-color: var(--color-principal);
   overflow: hidden;
   color: var(--color-text);
@@ -683,7 +682,7 @@ p {
 .faqs-container summary {
   list-style: none;
   cursor: pointer;
-  padding: 1rem 1.25rem;
+  padding: var(--space-3) var(--space-4);
   font-weight: 700;
   text-transform: uppercase;
   position: relative;
@@ -691,7 +690,7 @@ p {
 }
 
 .faqs-container p {
-  margin-bottom: 20px;
+  margin-bottom: var(--space-4);
 }
 
 .faqs-container summary::-webkit-details-marker {
@@ -705,7 +704,7 @@ p {
 .faqs-container summary::after {
   content: "+";
   position: absolute;
-  right: 20px;
+  right:  var(--space-4);
   top: 50%;
   transform: translateY(-50%) rotate(0deg);
   font-size: 32px;
@@ -719,27 +718,38 @@ p {
 
 .faqs-container ul {
   margin: 0;
-  padding: 0 1.25rem 1rem;
+  padding: 0 var(--space-4) var(--space-3);
   list-style: none;
 }
 
 .info > .location,
 .info > .faqs-container {
-    position: relative;
-    margin-top: 3rem;
-    padding-top: 3rem;
+  position: relative;
+  margin-top: 3rem;
+  padding-top: 3rem;
 }
 
 .info > .location::before,
 .info > .faqs-container::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 10%;
-    width: 80%;
-    height: 1px;
-    background-color: var(--color-principal);
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 10%;
+  width: 80%;
+  height: 1px;
+  background-color: var(--color-principal);
 }
+
+.maps .map-download {
+  background-color: var(--color-banda);
+  color: var(--color-text);
+  padding: var(--space-2) var(--space-2);
+  border-radius: 999px;
+  text-transform: uppercase;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
 
 /* ESTILO SECCIÓN FORM */
 
