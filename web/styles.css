@@ -823,3 +823,16 @@ input[type='checkbox']:checked ~ ::after{
     margin-top: 12px;
     color: var(--color-principal);
 }
+
+
+/* ESTILOS SECCIÓN ENTRADAS */
+
+.tickets {
+  margin: 0 auto;
+  margin-bottom: 60px;
+  margin-top: 40px;
+}
+
+.header-tickets {
+  text-align: center;
+}
