@@ -475,6 +475,114 @@ p {
   font-size: 1.2rem;
 }
 
+/* ESTILOS HORARIOS */
+.schedule {
+  padding: var(--space-6) var(--space-4) var(--space-8);
+}
+
+.title-schedule,
+.info-schedule {
+  width: min(90%, 900px);
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.container-days {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-5);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.day {
+  overflow: hidden;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+}
+
+.day-header {
+  background: var(--color-principal);
+  color: var(--color-text);
+  padding: var(--space-4) var(--space-4) var(--space-3);
+}
+
+.day-date {
+    margin: 0;
+    font-size: 1.2rem;
+    line-height: 1.2;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.day-stage {
+  display: inline-block;
+  margin-top: var(--space-2);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--border-radius);
+  background: var(--color-destacado);
+  color: var(--color-principal);
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+}
+
+.day-content {
+  padding: 40px;
+}
+
+.bar {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: var(--space-2);
+    align-items: center;
+    padding: var(--space-2);
+    border-radius: var(--border-radius);
+    background: rgba(255, 255, 255, 0.28);
+}
+
+.bar + .bar {
+    margin-top: 12px;
+}
+
+.bar-time {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 48px;
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--border-radius);
+    background: var(--color-banda);
+    color: var(--color-text);
+    font-weight: 900;
+    text-align: center;
+    line-height: 1.1;
+    font-size: 0.92rem;
+}
+
+.bar-artist {
+    font-weight: 900;
+    color: var(--color-principal);
+    font-size: 1.08rem;
+    text-transform: uppercase;
+}
+
+.container-download {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-6);
+}
+  .container-download a {
+    background-color: var(--color-banda);
+    color: var(--color-text);
+    padding: var(--space-2) var(--space-3);
+    border-radius: 900px;
+    text-transform: uppercase;
+}
+
 /* ESTILO SECCIÓN INFORMACIÓN */
 
 .info {
@@ -723,125 +831,6 @@ p {
     background-color: var(--color-principal);
     color: var(--color-text);
 }
-
-/* ESTILOS HORARIOS */
-.schedule {
-      margin: 40px;
-    }
-
-.container-days {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 24px;
-    margin-bottom: 100px;
-}
-
-.title-schedule {
-    text-align: center;
-    margin-bottom: 8px;
-}
-
-.info-schedule {
-    text-align: center;
-    margin-bottom: 40px;
-}
-
-.day {
-    border-radius: var(--border-radius);
-    overflow: hidden;
-    box-shadow: var(--shadow);
-}
-
-.day-header {
-    background: var(--color-principal);
-    color: var(--color-text);
-    padding: 22px 22px 18px;
-}
-
-.day-date {
-    margin: 0;
-    font-size: 1.2rem;
-    line-height: 1.2;
-    font-weight: 900;
-    text-transform: uppercase;
-}
-
-.day-stage {
-    display: inline-block;
-    margin-top: 12px;
-    padding: 8px 12px;
-    border-radius: 999px;
-    background: var(--color-destacado);
-    color: var(--color-principal);
-    font-weight: 900;
-    text-transform: uppercase;
-    font-size: 0.78rem;
-    letter-spacing: 0.08em;
-}
-
-.day-content {
-    padding: 40px;
-}
-
-.bar {
-    display: grid;
-    grid-template-columns: 110px 1fr;
-    gap: 14px;
-    align-items: center;
-    padding: 14px 12px;
-    border-radius: var(--border-radius);
-    background: rgba(255, 255, 255, 0.28);
-}
-
-.bar + .bar {
-    margin-top: 12px;
-}
-
-.bar-time {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 48px;
-    padding: 8px 10px;
-    border-radius: var(--border-radius);
-    background: var(--color-banda);
-    color: var(--color-text);
-    font-weight: 900;
-    text-align: center;
-    line-height: 1.1;
-    font-size: 0.92rem;
-}
-
-.bar-artist {
-    font-weight: 900;
-    color: var(--color-principal);
-    font-size: 1.08rem;
-    text-transform: uppercase;
-}
-
-.img-footer {
-    width: 100%;   
-}
-
-.img-footer img {
-    display: block;
-    width: 100%;
-    height: 100%;
-}
-  
-.container-download {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 40px;
-}
-  .container-download a {
-    background-color: var(--color-banda);
-    color: var(--color-text);
-    padding: 10px 10px;
-    border-radius: 900px;
-    text-transform: uppercase;
-}
-
 
 
 /* ESTILOS SECCIÓN ENTRADAS */
