@@ -754,93 +754,96 @@ p {
 /* ESTILO SECCIÓN FORM */
 
 .contact-section{
-    margin: 0 auto;
-    margin-bottom: 60px;
-    margin-top: 40px;
+  padding: var(--space-6) var(--space-4) var(--space-8);
 }
 
 .contact-header {
-    color: var(--color-principal);
-    text-align: center;
+  width: min(90%, 900px);
+  margin: 0 auto var(--space-5);
+  color: var(--color-principal);
+  text-align: center;
+}
+
+.contact-header p {
+  margin-top: var(--space-3);
 }
 
 .form {
-    margin: 0 auto;
-    max-width: 900px;
-    width: 90%;
-    margin-top: 12px;
-    padding: 40px 40px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 12px;
-    font-size: 1rem;
-    background-color: var(--color-text);
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin: 0 auto;
+  width: min(90%, 900px);
+  padding: var(--space-7);
+  font-size: 1rem;
+  background-color: var(--color-text);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
 }
 
 .form label {
-    width: 100%;
-    max-width: 700px;
-    margin-bottom: 20px;
-    text-align: left;
-    color: var(--color-secundario);
-    font-weight: bold;
-    line-height: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 100%;
+  text-align: left;
+  color: var(--color-secundario);
+  font-weight: bold;
+  font-size:large;
 }
 
 .form input,
 .form textarea {
-    width: 100%;
-    max-width: 700px;
-    border-radius: var(--border-radius);
-    border: 1px solid rgba(255, 255, 255, .14);
-    padding: 12px;
-    font-size: 1rem;
-    box-shadow: var(--shadow);
+  width: 100%;
+  border-radius: var(--border-radius);
+  border: 1px solid rgba(255, 255, 255, .14);
+  padding: var(--space-3);
+  font-size: 1rem;
+  box-shadow: var(--shadow);
 }
 
 .form textarea {
-    min-height: 120px;
-    resize: none;
+  min-height: 120px;
+  resize: none;
 }
 
 .form select {
-    width: 100%;
-    padding: 10px;
-    border-radius: var(--border-radius);
-    border: 1px solid rgba(255, 255, 255, .14);
-    padding: 12px;
-    font-size: 1rem;
-    color:#767c86;
-    box-shadow: var(--shadow);
+  width: 100%;
+  padding: 10px;
+  border-radius: var(--border-radius);
+  border: 1px solid rgba(255, 255, 255, .14);
+  padding: 12px;
+  font-size: 1rem;
+  color:#767c86;
+  box-shadow: var(--shadow);
 }
 
 .form input:focus,
 .form textarea:focus,
 .form select:focus {
-    outline: none;
-    border-color: var(--color-secundario);
-    box-shadow: var(--shadow);
+  outline: none;
+  border-color: var(--color-secundario);
+  box-shadow: var(--shadow);
 }
 
 .btn-enviar {
-    background-color: var(--color-secundario);
-    color: var(--color-text);
-    padding: 20px 40px;
-    border-radius: var(--border-radius);
-    font-weight: bold;
-    box-shadow: var(--shadow);
-    cursor: pointer;
-    font-size: 1rem;
-    border:none;
+  align-self: center;
+  width: auto;
+  min-width: 100px;
+  background-color: var(--color-secundario);
+  color: var(--color-text);
+  padding: var(--space-4) var(--space-6);
+  border-radius: var(--border-radius);
+  font-weight: bold;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  font-size: 1rem;
+  border:none;
 }
 
 .btn-enviar:hover {
-    background-color: var(--color-principal);
-    color: var(--color-text);
+  background-color: var(--color-principal);
+  color: var(--color-text);
 }
 
 
