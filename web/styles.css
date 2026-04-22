@@ -302,15 +302,24 @@ p {
   padding: var(--space-4);
 }
 
+.lineup-title {
+  margin: 0 0 var(--space-4);
+  text-align: center;
+}
+
 .lineup-inner {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  gap: 0;
   max-width: 1100px;
   margin: 0 auto;
   background-color: var(--bg-color);
   border-radius: var(--border-radius);
   padding: var(--space-8) var(--space-6);
+}
+
+.lineup-inner > img {
+  margin-bottom: var(--space-1);
 }
 
 .day-block {
