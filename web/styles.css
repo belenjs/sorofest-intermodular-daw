@@ -1,34 +1,58 @@
 :root {
-    /* Color principal para textos y elementos importantes */
+    /* Colores */
     --color-principal: #023047;
-
-    /* Color secundario para textos */
     --color-secundario: #219EBC;
-
-    /* Color para el fondo */
     --bg-color: #8ecae6;
-
-    /* Color para enlaces, hover y elementos destacados */
     --color-destacado: #ffb703;
+    --color-text: #ebedee;
+    --color-banda: #BC219D;
 
-    /* Borde común para las esquinas de los elementos */
+    /* Espaciado */
+    --space-1: 0.5rem;
+    --space-2: 1rem;
+    --space-3: 1.5rem;
+    --space-4: 2rem;
+    --space-5: 3rem;
+    --space-6: 4rem;
+    --space-7: 2.5rem;
+    --space-8: 3rem;
+    --space-9: 3.75rem;
+    --space-10: 5rem;
+
+    /* Borde */
     --border-radius: 8px;
 
-    /* Sombra estándar */
+    /* Sombra*/
     --shadow: 0 14px 35px rgba(0,0,0,.30);
 
-    /* Color texto alternativo */
-    --color-text: #ebedee;
+    /* Tipografía */
+    --font-base: Arial, Helvetica, sans-serif;
+    --font-heading: 'Poppins', sans-serif;
 
-    /* Color banda header */
-    --color-banda: #BC219D;
+    /* Contenedores */
+    --container-padding: 1.25rem;
+    --container-padding-lg: 2.5rem;
+    --max-width-site: 1400px;
+    --max-width-content: 1200px;
+    --max-width-text: 700px;
+
+    /* Transiciones */
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+
+   
 }
 
 /* ESTILOS GENERALES */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 html {
@@ -36,7 +60,7 @@ html {
 }
 
 body {
-    font-family:Arial, Helvetica, sans-serif;
+    font-family: var(--font-base);
     line-height: 1.6;
     background-color: var(--bg-color);
     color: var(--color-principal); 
@@ -46,9 +70,14 @@ a {
     text-decoration: none;
 }
 /* ESTILOS DE TEXTOS */
+
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  line-height: 1.2;
+}
+
 h1 {
     font-size: 2.6rem;
-    font-family: 'Poppins', sans-serif;
     text-align: center;
     text-transform: uppercase;
 }
@@ -69,13 +98,30 @@ p {
     font-size: 1rem;;
 }
 
+/* ESTILOS BOTONES */
+
+.btn {
+    background-color: var(--color-banda);
+    color: var(--color-text);
+    padding: 20px 40px;
+    border-radius: var(--border-radius);
+    font-weight: bold;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: var(--color-destacado);
+    color: var(--color-principal);
+}
+
 /* ESTILOS TOPBAR Y NAV */
 .topbar {
     position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 40px;
+    padding: var(--space-4) var(--container-padding-lg);
     min-height: 80px;
     background-color: var(--color-principal);
     color: var(--color-secundario);
@@ -94,7 +140,7 @@ p {
     transform: translateX(-50%);
     display: flex;
     align-items: center;
-    gap: 80px;
+    gap: var(--space-10);
     font-size: 1.4rem;
 }
 
@@ -106,8 +152,8 @@ p {
 
 .topbar-nav a {
     color: var(--color-text);
-    text-decoration: none;
     font-weight: bold;
+    transition: var(--transition-fast);
 }
 
 .topbar-nav a:hover {
@@ -118,7 +164,7 @@ p {
 
 .hero-topbar {
     background-color: var(--color-destacado);
-    padding: 20px;
+    padding: var(--space-4);
     color: var(--color-principal);
     font-size: 1.6rem;
     font-weight: bold;
@@ -129,7 +175,6 @@ p {
 .hero-content {
     position: relative;
     height: 70vh;
-    min-width: 500px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -154,22 +199,16 @@ p {
     filter: saturate(0.9) contrast(0.95);
 }
 
-.hero-overplay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,.35);
-}
-
 .hero-text {
     position: relative;
     z-index: 3;
     color: var(--color-text);
-    padding: 0 20px;
+    padding-inline: var(--space-4);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 60px;
+    gap: var(--space-9);
 }
 
 .hero-text h2,
@@ -184,7 +223,6 @@ p {
 }
 
 .hero-text h3 {
-  margin-top: 12px;
   font-size: clamp(1rem, 2vw, 1.5rem);
   font-weight: 400;
 }
@@ -200,7 +238,7 @@ p {
   left: 0;
   bottom: 0;
   width: 100%;
-  height: 60px;
+  height: var(--space-9);
   display: flex;
   z-index: 4;
 }
@@ -210,47 +248,55 @@ p {
   flex: 1;
 }
 
-.stripe-1 {
-  background: var(--color-banda);
-  width: 20%;
-}
+.stripe-1 { background: var(--color-banda); }
+.stripe-2 { background: var(--color-principal); }
+.stripe-3 { background: var(--color-secundario); }
+.stripe-4 { background: var(--color-destacado); }
 
-.stripe-2 {
-  background: var(--color-principal);
-  width: 20%;
-}
+.stripe-5 { background: var(--color-banda); }
 
-.stripe-3 {
-  background: var(--color-secundario);
-  width: 20%;
-}
+/* ESTILOS SECCIÓN FOOTER */
 
-.stripe-4 {
-  background: var(--color-destacado);
-  width: 20%;
-}
-
-.stripe-5 {
-  background: var(--color-banda);
-  width: 20%;
-}
-
-/* ESTILOS BOTONES */
-
-.btn {
+.footer {
     background-color: var(--color-banda);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    text-align: center;
+    align-items: center;
+    gap: var(--space-5);
+    padding: var(--space-4) var(--container-padding-lg);
     color: var(--color-text);
-    padding: 20px 40px;
-    border-radius: var(--border-radius);
-    font-weight: bold;
-    box-shadow: var(--shadow);
-    cursor: pointer;
+
 }
 
-.btn:hover {
-    background-color: var(--color-destacado);
-    color: var(--color-principal);
+.logo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-3);
 }
+
+.icon {
+    color: var(--color-text);
+    transition: color var(--transition-fast);
+}
+
+.icon:hover {
+    cursor: pointer;
+    color: var(--color-destacado);
+}
+.footer-legal a {
+    display: flex;
+    flex-direction: column;
+    color: var(--color-text);
+    transition: color var(--transition-fast);
+}
+.footer-legal a:hover {
+    cursor: pointer;
+    color: var(--color-destacado);
+}
+
+
 
 /* ESTILO CARTEL */
 .festival-lineup-poster {
@@ -267,17 +313,6 @@ p {
   background-color: var(--bg-color);
   border-radius: 28px;
   padding: 36px 28px;
-}
-
-.lineup-title {
-  margin: 0 0 28px;
-  font-size: clamp(1.7rem, 4.5vw, 3.4rem);
-  line-height: 0.95;
-  text-transform: uppercase;
-  font-weight: 900;
-  letter-spacing: -0.04em;
-  color: var(--color-principal);
-  text-align: center;
 }
 
 .day-block {
@@ -757,46 +792,6 @@ p {
   color: var(--color-secundario);
   font-size: 1.2rem;
 }
-
-
-
-/* ESTILOS SECCIÓN FOOTER */
-
-.footer {
-    background-color: var(--color-banda);
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    text-align: center;
-    align-items: center;
-    padding-top: 12px;
-    color: var(--color-text);
-
-}
-
-.logo {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-.icon {
-    color: var(--color-text);
-}
-
-.icon:hover {
-    cursor: pointer;
-    color: var(--color-destacado);
-}
-.footer-legal a {
-    display: flex;
-    flex-direction: column;
-    color: var(--color-text);
-}
-.footer-legal a:hover {
-    cursor: pointer;
-    color: var(--color-destacado);
-}
-
 
 /* PÁGINA MANIFIESTO */
 
