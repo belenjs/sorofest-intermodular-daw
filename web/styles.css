@@ -415,82 +415,70 @@ p {
   border: 5px solid var(--color-banda);
 }
 
-.faq-group {
-  margin: 60px auto;
+.faqs-container {
   width: 100%;
-  max-width: 750px;
+  max-width: 700px;
+  margin: 0 auto;
+  margin-bottom: 60px;
 }
 
-input[type='checkbox'] {
-  display: none;
+.faqs-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.faqs-container details {
+  border: 1px solid var(--color-principal);
+  border-radius: 16px;
+  margin-bottom: 1rem;
+  background-color: var(--color-principal);
+  overflow: hidden;
+  color: var(--color-text);
   
 }
 
-.faq-group li {
+.faqs-container summary {
   list-style: none;
-  width: 100%;
-  padding: 5px;
-}
-
-.faq-group li label {
-  display: flex;
-  align-items: center;
-  line-height: 1.2;
-  text-transform: uppercase;
-  padding: 20px;
   cursor: pointer;
+  padding: 1rem 1.25rem;
+  font-weight: 700;
+  text-transform: uppercase;
   position: relative;
-  background-color: var(--color-principal);
-  color: var(--color-text);
-  font-size: 1.2rem;
-  font-weight: bold;
+  color: var(--color-destacado)
 }
 
-.faq-group h2 {
-  text-align: center;
-  margin-bottom: 40px;
+.faqs-container p {
+  margin-bottom: 20px;
 }
 
-.faq-group label::after {
-  content: '+';
-  position: absolute;
-  font-size: 32px;
-  right: 20px;
-  transition: transform 0.5s;
-}
-
-.faq-item {
-  background-color: var(--color-principal);
-  color: var(--color-text);
-  padding: 0 20px;
-  max-height: 0;
-  overflow: hidden;
-  transition:  max-height 0.6s, padding 0.6s;
-  line-height: 1.2;
-}
-
-input[type='checkbox']:checked ~ .faq-item{
-  max-height: 600px;
-  padding: 30px 20px;
-}
-
-input[type='checkbox']:checked ~ ::after{
-  transform: rotate(135deg);
-}
-
-.faq-group input[type='checkbox'] {
+.faqs-container summary::-webkit-details-marker {
   display: none;
 }
 
-.faq-item h4 {
-  line-height: 30px;
-  margin-bottom: 12px;
+.faqs-container summary::marker {
+  display: none;
 }
 
-.faq-item p {
-    margin-bottom: 20px;
+.faqs-container summary::after {
+  content: "+";
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%) rotate(0deg);
+  font-size: 32px;
+  line-height: 1;
+  transition: transform 0.4s ease;
 }
 
+.faqs-container details[open] summary::after {
+  transform: translateY(-50%) rotate(135deg);
+}
+
+.faqs-container ul {
+  margin: 0;
+  padding: 0 1.25rem 1rem;
+  list-style: none;
+}
 
 /* ESTILO SECCIÓN FORM */
 
