@@ -49,6 +49,8 @@ a {
 h1 {
     font-size: 2.6rem;
     font-family: 'Poppins', sans-serif;
+    text-align: center;
+    text-transform: uppercase;
 }
 
 h2 {
@@ -478,6 +480,24 @@ p {
   margin: 0;
   padding: 0 1.25rem 1rem;
   list-style: none;
+}
+
+.info > .location,
+.info > .faqs-container {
+    position: relative;
+    margin-top: 3rem;
+    padding-top: 3rem;
+}
+
+.info > .location::before,
+.info > .faqs-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 10%;
+    width: 80%;
+    height: 1px;
+    background-color: var(--color-principal);
 }
 
 /* ESTILO SECCIÓN FORM */
