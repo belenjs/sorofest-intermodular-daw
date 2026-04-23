@@ -246,21 +246,16 @@ p {
   bottom: 0;
   width: 100%;
   height: var(--space-9);
-  display: flex;
   z-index: 4;
+  background: linear-gradient(
+    90deg,
+    var(--color-banda) 0%,
+    var(--color-principal) 25%,
+    var(--color-secundario) 50%,
+    var(--color-destacado) 75%,
+    var(--color-banda) 100%
+  );
 }
-
-.stripe {
-  height: 100%;
-  flex: 1;
-}
-
-.stripe-1 { background: var(--color-banda); }
-.stripe-2 { background: var(--color-principal); }
-.stripe-3 { background: var(--color-secundario); }
-.stripe-4 { background: var(--color-destacado); }
-
-.stripe-5 { background: var(--color-banda); }
 
 /* ESTILOS SECCIÓN FOOTER */
 
