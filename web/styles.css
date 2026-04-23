@@ -659,8 +659,21 @@ p {
   color: var(--color-banda);
 }
 
-.location iframe {
-  border: 5px solid var(--color-banda);
+.map-frame {
+  padding: 10px;
+  background: linear-gradient(
+    90deg,
+    var(--color-destacado),
+    var(--color-banda),
+    var(--color-secundario)
+  );
+  border-radius: var(--border-radius);
+}
+
+.map-frame iframe {
+  display: block;
+  border: 0;
+  border-radius: var(--border-radius);
 }
 
 .faqs-container {
