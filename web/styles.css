@@ -614,20 +614,17 @@ p {
 }
 
 .imgs-info {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-3);
   max-width: 1400px;
   margin: 0 auto;
   align-items: start;
 }
 
 .maps {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-6);
   align-items: center;
   justify-content: center;
-  gap: var(--space-3);
   padding: var(--space-4);
   overflow: hidden;
 }
@@ -748,7 +745,14 @@ p {
   background-color: var(--color-principal);
 }
 
-.maps .map-download {
+.container-download {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-6);
+}
+
+
+.map-download {
   background-color: var(--color-banda);
   color: var(--color-text);
   padding: var(--space-2) var(--space-2);
@@ -875,12 +879,6 @@ p {
 .header-tickets p {
   margin: 0;
 }
-
-/*.header-tickets img {
-  width: 100%;
-  height: auto;
-  max-width: 600px;
-}*/
 
 .container-tickets {
   display:grid;
