@@ -891,7 +891,8 @@ p {
 
 .header-tickets {
   text-align: center;
-  margin-bottom: var(--space-6);
+  margin-bottom: var(--space-10);
+  padding-bottom: var(--space-10);
 }
 
 .header-tickets h1 {
@@ -904,9 +905,9 @@ p {
 
 .container-tickets {
   display:grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   align-items: center;
-  gap: var(--space-9);
+  gap: var(--space-3);
   margin-top: var(--space-6);
 
 }
@@ -963,7 +964,7 @@ p {
   font-size: 1.8rem;
   font-weight: 800;
   text-transform: uppercase;
-  color: var(--color-text);
+  color: var(--color-destacado);
   letter-spacing: 1px;
 }
 
@@ -1066,6 +1067,7 @@ p {
 
 
 .authorization {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
@@ -1090,4 +1092,14 @@ p {
 
 .authorization a:hover {
   background-color: var(--color-secundario);
+}
+
+.authorization::before {
+  content: "";
+  position: absolute;
+  top: -2.5rem;
+  left: 10%;
+  width: 80%;
+  height: 1px;
+  background-color: var(--color-principal);
 }
