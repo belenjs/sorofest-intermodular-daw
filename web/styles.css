@@ -271,11 +271,17 @@ p {
 
 }
 
-.logo {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: var(--space-3);
+.footer-logo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.footer-logo img {
+  width: 190px;
+  height: auto;
+  display: block;
 }
 
 .icon {
@@ -1098,3 +1104,487 @@ p {
   height: 1px;
   background-color: var(--color-principal);
 }
+
+
+/* MEDIA QUERIES */
+
+/* Móvil */
+@media (max-width: 768px) {
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+  }
+
+  h4 {
+    font-size: 1.1rem;
+  }
+
+  p {
+    font-size: 0.95rem;
+  }
+
+  .p-header {
+    font-size: 1rem;
+    margin-top: var(--space-2);
+    padding-inline: var(--space-2);
+  }
+
+  .btn {
+    padding: 14px 24px;
+    font-size: 0.95rem;
+    text-align: center;
+  }
+
+  .topbar {
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--space-3) var(--space-2);
+    gap: var(--space-3);
+    text-align: center;
+  }
+
+  .topbar-left,
+  .topbar-right {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .topbar-nav {
+    position: static;
+    transform: none;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-2);
+    font-size: 1rem;
+  }
+
+  .logo img {
+    width: 160px;
+  }
+
+  .hero-topbar {
+    font-size: 1rem;
+    padding: var(--space-2);
+  }
+
+  .hero-content {
+    height: auto;
+    min-height: 70vh;
+    padding: var(--space-5) var(--space-2);
+  }
+
+  .hero-text {
+    gap: var(--space-4);
+    padding-inline: var(--space-2);
+  }
+
+  .hero-text h2 {
+    font-size: clamp(1.6rem, 8vw, 2.4rem);
+    line-height: 1.15;
+  }
+
+  .hero-text h3 {
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+
+  .dates {
+    font-size: 1rem;
+    text-align: center;
+  }
+
+  .hero-bottombar {
+    height: 2.2rem;
+  }
+
+  .footer {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+    padding: var(--space-4) var(--space-3);
+    text-align: center;
+  }
+
+  .footer-logo {
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-3);
+  }
+
+  .footer-logo img {
+    width: 140px;
+    height: auto;
+  }
+
+  .footer-text {
+    text-align: center;
+    align-items: center;
+  }
+
+  .footer-icons {
+    gap: var(--space-2);
+  }
+
+  .footer-icons svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .footer-legal {
+    gap: var(--space-2);
+  }
+
+  .footer-text p,
+  .footer-icons p,
+  .footer-legal a {
+    font-size: 0.95rem;
+  }
+
+  .festival-lineup-poster {
+    padding: var(--space-2) var(--space-2) var(--space-6);
+  }
+
+  .lineup-inner {
+    max-width: 100%;
+    padding: var(--space-4) var(--space-2);
+  }
+
+  .lineup-inner > img {
+    width: 100%;
+    height: auto;
+  }
+
+  .day-block {
+    padding-block: var(--space-3);
+  }
+
+  .day-title {
+    width: 100%;
+    margin-bottom: var(--space-3);
+    padding: 0.9rem 2.5rem;
+    font-size: 0.95rem;
+    border-width: 4px;
+    letter-spacing: 0.08em;
+  }
+
+  .day-title::before,
+  .day-title::after {
+    width: 10px;
+    height: 10px;
+  }
+
+  .day-title::before {
+    left: 1rem;
+  }
+
+  .day-title::after {
+    right: 1rem;
+  }
+
+  .artists-list {
+    gap: var(--space-2);
+  }
+
+  .artist {
+    line-height: 1.1;
+  }
+
+  .artist-lg {
+    font-size: clamp(1.6rem, 8vw, 2.3rem);
+  }
+
+  .artist-md {
+    font-size: clamp(1rem, 5.2vw, 1.35rem);
+  }
+  
+}
+
+/* Tablets */
+@media (min-width: 769px) and (max-width: 1024px) {
+
+  h1 {
+    font-size: 2.2rem;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+  }
+
+  h3 {
+    font-size: 1.4rem;
+  }
+
+  .p-header {
+    font-size: 1.1rem;
+  }
+
+  .btn {
+    padding: 16px 30px;
+  }
+
+  .topbar {
+    padding: var(--space-3) var(--space-4);
+    min-height: auto;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .topbar-nav {
+    position: static;
+    transform: none;
+    width: 100%;
+    justify-content: center;
+    gap: var(--space-5);
+    font-size: 1.1rem;
+    flex-wrap: wrap;
+  }
+
+  .logo img {
+    width: 200px;
+  }
+
+  .hero-topbar {
+    font-size: 1.3rem;
+    padding: var(--space-3);
+  }
+
+  .hero-content {
+    height: 60vh;
+  }
+
+  .hero-text {
+    gap: var(--space-6);
+    padding-inline: var(--space-3);
+  }
+
+  .hero-text h2 {
+    font-size: clamp(1.8rem, 4vw, 3.2rem);
+  }
+
+  .hero-text h3 {
+    font-size: clamp(1rem, 2vw, 1.3rem);
+  }
+
+  .dates {
+    font-size: 1.2rem;
+  }
+
+  .hero-bottombar {
+    height: 3rem;
+  }
+
+  .footer {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+    padding: var(--space-4);
+  }
+
+  .footer-logo {
+    gap: var(--space-2);
+    align-items: center;
+  }
+
+  .footer-logo img {
+    width: 160px;
+    height: auto;
+  }
+
+  .footer-text {
+    text-align: left;
+  }
+
+  .footer-icons {
+    justify-self: center;
+  }
+
+  .footer-legal {
+    grid-column: 1 / -1;
+    margin-top: var(--space-2);
+  }
+
+  .footer-text p,
+  .footer-icons p,
+  .footer-legal a {
+    font-size: 0.95rem;
+  }
+
+  .festival-lineup-poster {
+    padding: var(--space-3) var(--space-3) var(--space-7);
+  }
+
+  .lineup-inner {
+    max-width: 100%;
+    padding: var(--space-5) var(--space-4);
+  }
+
+  .lineup-inner > img {
+    width: 100%;
+    height: auto;
+  }
+
+  .day-block {
+    padding-block: var(--space-4);
+  }
+
+  .day-title {
+    width: min(100%, 26rem);
+    margin-bottom: var(--space-4);
+    padding: var(--space-2) var(--space-3);
+    font-size: 1rem;
+    border-width: 6px;
+  }
+
+  .day-title::before,
+  .day-title::after {
+    width: 14px;
+    height: 14px;
+  }
+
+  .day-title::before {
+    left: var(--space-3);
+  }
+
+  .day-title::after {
+    right: var(--space-3);
+  }
+
+  .artists-list {
+    gap: var(--space-2);
+  }
+
+  .artist-lg {
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    line-height: 1.05;
+  }
+
+  .artist-md {
+    font-size: clamp(1.1rem, 3vw, 1.6rem);
+    line-height: 1.1;
+  }
+
+  
+}
+
+/* Portátil y escritorio grandes */
+@media (min-width: 1024px) and (max-width: 1366px) {
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-3) var(--space-4);
+    gap: 1.5rem;
+  }
+
+  .topbar-left,
+  .topbar-right {
+    flex: 0 0 auto;
+  }
+
+  .topbar-nav {
+    position: static;
+    transform: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    gap: 2rem;
+    font-size: 1rem;
+    min-width: 0;
+  }
+
+  .logo img {
+    width: 180px;
+  }
+
+  .topbar-right .btn {
+    padding: 14px 22px;
+    font-size: 0.95rem;
+    white-space: nowrap;
+  }
+
+  .footer {
+    gap: var(--space-4);
+    padding: var(--space-4);
+  }
+
+  .footer-logo {
+    gap: var(--space-2);
+  }
+
+  .footer-logo img {
+    width: 170px;
+    height: auto;
+  }
+
+  .footer-text p,
+  .footer-icons p,
+  .footer-legal a {
+    font-size: 0.95rem;
+  }
+
+  .footer-icons svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .festival-lineup-poster {
+    padding: var(--space-3) var(--space-3) var(--space-8);
+  }
+
+  .lineup-inner {
+    max-width: 950px;
+    padding: var(--space-6) var(--space-5);
+  }
+
+  .lineup-inner > img {
+    width: 100%;
+    height: auto;
+  }
+
+  .day-block {
+    padding-block: var(--space-4);
+  }
+
+  .day-title {
+    width: min(100%, 28rem);
+    margin-bottom: var(--space-4);
+    padding: var(--space-2) var(--space-3);
+    font-size: 1.1rem;
+  }
+
+  .day-title::before,
+  .day-title::after {
+    width: 16px;
+    height: 16px;
+  }
+
+  .day-title::before {
+    left: var(--space-4);
+  }
+
+  .day-title::after {
+    right: var(--space-4);
+  }
+
+  .artists-list {
+    gap: var(--space-2);
+  }
+
+  .artist-lg {
+    font-size: clamp(2rem, 4.2vw, 3.2rem);
+  }
+
+  .artist-md {
+    font-size: clamp(1.15rem, 2.4vw, 1.8rem);
+  }
+  
+}
+
