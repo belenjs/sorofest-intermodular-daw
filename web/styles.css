@@ -98,6 +98,13 @@ p {
     font-size: 1rem;;
 }
 
+.p-header {
+  font-size: 1.2rem;
+  text-align: center;
+  font-weight: bold;
+  margin-top: var(--space-3);
+}
+
 /* ESTILOS BOTONES */
 
 .btn {
@@ -299,7 +306,7 @@ p {
 /* ESTILO CARTEL */
 .festival-lineup-poster {
   background: var(--bg-color);
-  padding: var(--space-6) var(--space-4) var(--space-10);
+  padding: var(--space-3) var(--space-4) var(--space-10);
 }
 
 .lineup-inner {
@@ -435,7 +442,7 @@ p {
 
 .artist-container h1 {
   width: min(90%, 900px);
-  margin: 0 auto var(--space-6);
+  margin: 0 auto;
 }
 
 .grid-card {
@@ -448,6 +455,7 @@ p {
 }
 
 .artist-card {
+  margin-top: var(--space-3);
   background-color: var(--color-text);
   border-radius: var(--border-radius);
   padding: var(--space-3);
