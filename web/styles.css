@@ -846,7 +846,7 @@ p {
   padding: 10px;
   border-radius: var(--border-radius);
   border: 1px solid rgba(255, 255, 255, .14);
-  padding: 12px;
+  padding: var(--space-3);
   font-size: 1rem;
   color:#767c86;
   box-shadow: var(--shadow);
