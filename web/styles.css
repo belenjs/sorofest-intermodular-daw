@@ -1538,6 +1538,47 @@ p {
     left: 5%;
     width: 90%;
   }
+
+  .contact-section {
+    padding: var(--space-4) var(--space-2) var(--space-5);
+  }
+
+  .contact-header {
+    width: 100%;
+    margin-bottom: var(--space-3);
+  }
+
+  .contact-header p {
+    margin-top: var(--space-2);
+  }
+
+  .form {
+    width: 100%;
+    padding: var(--space-3);
+    gap: var(--space-3);
+  }
+
+  .form label {
+    font-size: 1rem;
+    gap: var(--space-1);
+  }
+
+  .form input,
+  .form textarea,
+  .form select {
+    padding: var(--space-2);
+    font-size: 0.95rem;
+  }
+
+  .form textarea {
+    min-height: 140px;
+  }
+
+  .btn-enviar {
+    width: 100%;
+    padding: var(--space-3);
+    font-size: 0.95rem;
+  }
   
 }
 
@@ -1832,6 +1873,35 @@ p {
     padding: var(--space-3);
   }
 
+  .contact-section {
+    padding: var(--space-5) var(--space-3) var(--space-6);
+  }
+
+  .contact-header {
+    width: 100%;
+    margin-bottom: var(--space-4);
+  }
+
+  .form {
+    width: min(94%, 720px);
+    padding: var(--space-5);
+    gap: var(--space-3);
+  }
+
+  .form label {
+    font-size: 1rem;
+  }
+
+  .form input,
+  .form textarea,
+  .form select {
+    padding: var(--space-2);
+  }
+
+  .btn-enviar {
+    padding: var(--space-3) var(--space-5);
+  }
+
   
 }
 
@@ -2060,6 +2130,25 @@ p {
 
   .faqs-container {
     width: min(100%, 650px);
+  }
+
+  .contact-section {
+    padding: var(--space-5) var(--space-3) var(--space-7);
+  }
+
+  .contact-header {
+    width: min(92%, 820px);
+    margin-bottom: var(--space-4);
+  }
+
+  .form {
+    width: min(92%, 820px);
+    padding: var(--space-6);
+    gap: var(--space-3);
+  }
+
+  .btn-enviar {
+    padding: var(--space-3) var(--space-5);
   }
   
 }
