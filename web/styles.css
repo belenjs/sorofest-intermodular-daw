@@ -1579,6 +1579,88 @@ p {
     padding: var(--space-3);
     font-size: 0.95rem;
   }
+
+  .tickets {
+    width: 100%;
+    padding: var(--space-4) var(--space-2);
+  }
+
+  .header-tickets {
+    margin-bottom: var(--space-5);
+    padding-bottom: var(--space-5);
+  }
+
+  .ticket-img img {
+    max-width: 320px;
+  }
+
+  .container-tickets {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+  }
+
+  .container-info,
+  .container-info-promo {
+    max-width: 100%;
+    padding: var(--space-4) var(--space-3);
+    gap: var(--space-2);
+  }
+
+  .container-info h3,
+  .container-info-promo h3 {
+    font-size: 1.25rem;
+    line-height: 1.2;
+  }
+
+  .description {
+    font-size: 0.95rem;
+  }
+
+  .price {
+    font-size: 1.8rem;
+  }
+
+  .amount {
+    padding: 12px 16px;
+    font-size: 0.95rem;
+  }
+
+  .button {
+    width: 100%;
+    padding: var(--space-2) var(--space-3);
+    font-size: 0.95rem;
+  }
+
+  .authorization {
+    margin-top: var(--space-6);
+    padding: var(--space-4) var(--space-3);
+    gap: var(--space-2);
+  }
+
+  .authorization h3 {
+    font-size: 1.25rem;
+  }
+
+  .authorization h4 {
+    font-size: 1rem;
+  }
+
+  .authorization p {
+    font-size: 0.95rem;
+  }
+
+  .authorization a {
+    width: 100%;
+    padding: var(--space-2);
+    font-size: 0.9rem;
+  }
+
+  .authorization::before {
+    top: -2rem;
+    left: 5%;
+    width: 90%;
+  }
   
 }
 
@@ -1902,6 +1984,48 @@ p {
     padding: var(--space-3) var(--space-5);
   }
 
+  .tickets {
+    width: min(94%, 850px);
+    padding: var(--space-5) var(--space-3);
+  }
+
+  .header-tickets {
+    margin-bottom: var(--space-6);
+    padding-bottom: var(--space-6);
+  }
+
+  .ticket-img img {
+    max-width: 460px;
+  }
+
+  .container-tickets {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+    max-width: 600px;
+    margin-inline: auto;
+    margin-top: var(--space-5);
+  }
+
+  .container-info,
+  .container-info-promo {
+    max-width: 100%;
+    padding: var(--space-5) var(--space-4);
+  }
+
+  .container-info h3,
+  .container-info-promo h3 {
+    font-size: 1.5rem;
+  }
+
+  .price {
+    font-size: 2rem;
+  }
+
+  .authorization {
+    margin-top: var(--space-7);
+    padding: var(--space-5);
+  }
+
   
 }
 
@@ -2149,6 +2273,42 @@ p {
 
   .btn-enviar {
     padding: var(--space-3) var(--space-5);
+  }
+
+  .tickets {
+    width: min(94%, 1200px);
+    padding: var(--space-5) var(--space-3);
+  }
+
+  .header-tickets {
+    margin-bottom: var(--space-7);
+    padding-bottom: var(--space-7);
+  }
+
+  .ticket-img img {
+    max-width: 500px;
+  }
+
+  .container-tickets {
+    gap: var(--space-3);
+  }
+
+  .container-info,
+  .container-info-promo {
+    padding: var(--space-5) var(--space-3);
+  }
+
+  .container-info h3,
+  .container-info-promo h3 {
+    font-size: 1.35rem;
+  }
+
+  .price {
+    font-size: 1.9rem;
+  }
+
+  .authorization {
+    padding: var(--space-6);
   }
   
 }
