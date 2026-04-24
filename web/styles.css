@@ -1347,6 +1347,197 @@ p {
     line-height: 1.4;
     text-align: center;
   }
+
+  .artist-container {
+    padding: var(--space-4) var(--space-2) var(--space-5);
+  }
+
+  .artist-container h1 {
+    width: 100%;
+  }
+
+  .grid-card {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+    max-width: 420px;
+  }
+
+  .artist-card {
+    margin-top: var(--space-2);
+    padding: var(--space-2);
+  }
+
+  .artist-card img {
+    height: 360px;
+  }
+
+  .artist-card h3 {
+    font-size: 1.15rem;
+    margin-top: var(--space-2);
+  }
+
+  .schedule {
+    padding: var(--space-4) var(--space-2) var(--space-5);
+  }
+
+  .title-schedule,
+  .info-schedule {
+    width: 100%;
+    margin-bottom: var(--space-3);
+  }
+
+  .info-schedule h3 {
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+
+  .container-days {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+    max-width: 100%;
+  }
+
+  .day-header {
+    padding: var(--space-3);
+    text-align: center;
+  }
+
+  .day-date {
+    font-size: 1rem;
+  }
+
+  .day-stage {
+    font-size: 0.7rem;
+  }
+
+  .day-content {
+    padding: var(--space-3);
+  }
+
+  .bar {
+    grid-template-columns: 1fr;
+    gap: var(--space-1);
+    text-align: center;
+  }
+
+  .bar-time {
+    width: 100%;
+    min-height: auto;
+    font-size: 0.85rem;
+  }
+
+  .bar-artist {
+    font-size: 0.95rem;
+    line-height: 1.3;
+  }
+
+  .container-download {
+    margin-top: var(--space-4);
+  }
+
+  .container-download a {
+    width: 100%;
+    max-width: 320px;
+    text-align: center;
+    padding: var(--space-2);
+    font-size: 0.9rem;
+  }
+
+  .info {
+    padding: var(--space-4) var(--space-2) var(--space-5);
+  }
+
+  .info h1 {
+    text-align: center;
+  }
+
+  .header-info {
+    margin: var(--space-4) 0;
+    gap: var(--space-2);
+  }
+
+  .imgs-info {
+    max-width: 100%;
+  }
+
+  .maps {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+    padding: 0;
+  }
+
+  .imgs-info img {
+    height: auto;
+  }
+
+  .container-download {
+    margin-top: var(--space-4);
+  }
+
+  .map-download {
+    width: 100%;
+    max-width: 320px;
+    text-align: center;
+    font-size: 0.85rem;
+    padding: var(--space-2);
+  }
+
+  .location {
+    padding: 0;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+  }
+
+  .location p {
+    font-size: 0.95rem;
+  }
+
+  .map-frame {
+    padding: 6px;
+  }
+
+  .map-frame iframe {
+    height: 300px;
+  }
+
+  .faqs-container {
+    width: 100%;
+  }
+
+  .faqs-container summary {
+    padding: var(--space-2) var(--space-4) var(--space-2) var(--space-2);
+    font-size: 0.9rem;
+  }
+
+  .faqs-container summary::after {
+    right: var(--space-2);
+    font-size: 26px;
+  }
+
+  .faqs-container ul {
+    padding: 0 var(--space-2) var(--space-2);
+  }
+
+  .faqs-container h4 {
+    font-size: 1rem;
+  }
+
+  .faqs-container p {
+    font-size: 0.95rem;
+    margin-bottom: var(--space-3);
+  }
+
+  .info > .location,
+  .info > .faqs-container {
+    margin-top: var(--space-4);
+    padding-top: var(--space-4);
+  }
+
+  .info > .location::before,
+  .info > .faqs-container::before {
+    left: 5%;
+    width: 90%;
+  }
   
 }
 
@@ -1549,6 +1740,98 @@ p {
     line-height: 1.4;
   }
 
+  .artist-container {
+    padding: var(--space-5) var(--space-3) var(--space-6);
+  }
+
+  .grid-card {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+    max-width: 850px;
+  }
+
+  .artist-card {
+    padding: var(--space-2);
+  }
+
+  .artist-card img {
+    height: 380px;
+  }
+
+  .artist-card h3 {
+    font-size: 1.25rem;
+  }
+
+  .schedule {
+    padding: var(--space-5) var(--space-3) var(--space-6);
+  }
+
+  .container-days {
+    grid-template-columns: 1fr;
+    max-width: 700px;
+    gap: var(--space-4);
+  }
+
+  .day-header {
+    padding: var(--space-3);
+    text-align: center;
+  }
+
+  .day-date {
+    font-size: 1.15rem;
+  }
+
+  .day-content {
+    padding: 28px;
+  }
+
+  .bar {
+    grid-template-columns: 100px 1fr;
+  }
+
+  .bar-artist {
+    font-size: 1rem;
+  }
+
+  .container-download {
+    margin-top: var(--space-5);
+  }
+
+  .info {
+    padding: var(--space-5) var(--space-3) var(--space-6);
+  }
+
+  .header-info {
+    margin: var(--space-4) 0;
+  }
+
+  .imgs-info {
+    max-width: 720px;
+  }
+
+  .maps {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+    padding: var(--space-3);
+  }
+
+  .location {
+    padding: var(--space-3);
+    gap: var(--space-3);
+  }
+
+  .map-frame iframe {
+    height: 350px;
+  }
+
+  .faqs-container {
+    width: min(100%, 680px);
+  }
+
+  .faqs-container summary {
+    padding: var(--space-3);
+  }
+
   
 }
 
@@ -1698,7 +1981,86 @@ p {
     font-size: 1.35rem;
   }
 
+  .artist-container {
+    padding: var(--space-5) var(--space-3) var(--space-7);
+  }
+
+  .grid-card {
+    max-width: 1050px;
+    gap: var(--space-4);
+  }
+
+  .artist-card {
+    padding: var(--space-2);
+  }
+
+  .artist-card img {
+    height: 420px;
+  }
+
+  .artist-card h3 {
+    font-size: 1.35rem;
+  }
   
+  .schedule {
+    padding: var(--space-5) var(--space-3) var(--space-7);
+  }
+
+  .container-days {
+    max-width: 1180px;
+    gap: var(--space-4);
+  }
+
+  .day-header {
+    padding: var(--space-3);
+  }
+
+  .day-date {
+    font-size: 1.05rem;
+  }
+
+  .day-content {
+    padding: 28px;
+  }
+
+  .bar {
+    grid-template-columns: 90px 1fr;
+    gap: var(--space-1);
+  }
+
+  .bar-time {
+    font-size: 0.85rem;
+    padding: var(--space-1);
+  }
+
+  .bar-artist {
+    font-size: 0.95rem;
+  }
+
+  .info {
+    padding: var(--space-5) var(--space-3) var(--space-7);
+  }
+
+  .header-info {
+    margin: var(--space-5) var(--space-3);
+  }
+
+  .imgs-info {
+    max-width: 1150px;
+  }
+
+  .maps {
+    gap: var(--space-4);
+    padding: var(--space-3);
+  }
+
+  .location {
+    padding: var(--space-3);
+  }
+
+  .faqs-container {
+    width: min(100%, 650px);
+  }
   
 }
 
