@@ -248,13 +248,11 @@ p {
   height: var(--space-9);
   z-index: 4;
   background: linear-gradient(
-    90deg,
-    var(--color-banda) 0%,
-    var(--color-principal) 25%,
-    var(--color-secundario) 50%,
-    var(--color-destacado) 75%,
-    var(--color-banda) 100%
-  );
+    90deg, 
+    var(--color-destacado), 
+    var(--color-banda), 
+    var(--color-secundario)
+  ) 
 }
 
 /* ESTILOS SECCIÓN FOOTER */
