@@ -1,5 +1,8 @@
+import controller.GestionAppController;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Bienvenida a SoroFest");
+        GestionAppController gestionAppController = new GestionAppController();
+        gestionAppController.iniciar();
     }
 }
