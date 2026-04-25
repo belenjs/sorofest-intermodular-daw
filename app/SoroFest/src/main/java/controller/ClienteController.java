@@ -123,4 +123,24 @@ public class ClienteController {
             System.out.println("No se ha encontrado ningún cliente con dicho dni");
         }
     }
+
+    public void eliminarCliente(){
+        System.out.println("Introduce el dni del cliente a modificar");
+        String dniCliente = scanner.nextLine();
+        Cliente clienteAEliminar = null;
+
+        for(Cliente cliente : listaClientes) {
+            if (cliente.getDni().equalsIgnoreCase(dniCliente)) {
+                listaClientes.remove(cliente);
+                clienteAEliminar = cliente;
+                break;
+            }
+        }
+        if(clienteAEliminar != null) {
+            listaClientes.remove(clienteAEliminar);
+            System.out.println("Cliente eliminado correctamente");
+        } else {
+            System.out.println("No se ha encontrado ningún cliente con dicho dni");
+        }
+    }
 }
