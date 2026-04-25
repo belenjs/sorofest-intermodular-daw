@@ -8,11 +8,14 @@ public class GestionAppController {
     private Scanner scanner;
     private MenuGestion menuGestion;
     private ClienteController clienteController;
+    private EdicionController edicionController;
 
     public GestionAppController(){
         scanner = new Scanner(System.in);
         menuGestion = new MenuGestion();
-        clienteController = new ClienteController();
+        clienteController = new ClienteController(scanner);
+        edicionController = new EdicionController(scanner);
+
     }
 
     public void iniciar(){
@@ -24,7 +27,7 @@ public class GestionAppController {
                 scanner.nextLine();
 
                 switch (opcion) {
-                    case 1 -> System.out.println("Gestión de ediciones");
+                    case 1 -> edicionController.iniciarMenuEdicion();
                     case 2 -> System.out.println("Gestión de artistas");
                     case 3 -> System.out.println("Gestión de conciertos");
                     case 4 -> clienteController.iniciarMenuCliente();
