@@ -59,15 +59,16 @@ SoroFest es un proyecto intermodular de 1º de DAW centrado en el diseño y desa
   - `/docs` → documentación técnica y profesional por módulos
 
 
-  # Posibles secciones de la web
+  # Secciones de la web
 
   - Inicio
-  - Artistas
-  - Programación
-  - Entradas
   - Manifiesto
+  - Cartel
+  - Artistas
+  - Horarios
   - Información práctica
   - Contacto
+  - Entradas
 
 
   ## Estado actual
@@ -84,7 +85,10 @@ SoroFest es un proyecto intermodular de 1º de DAW centrado en el diseño y desa
   Pendiente de implementación inicial.
 
   ### Base de datos
-  Pendiente de diseño y modelado.
+  Entregado y finalizado parte de BBDD, organizado de tal manera:
+  - /docs/bbdd: archivo analisis-datos.md donde se describe las decisiones tomadas para llevar a cabo la organizacion de la base de datos del festival.
+  - /diagrams: donde se encuentran los diagramas entidad-relación y relacional.
+  - /sql: donde se encuentran los scripts para la creación de bbdd y tablas, la inserción de datos y diferentes queries.
 
 
   ## Módulos implicados
