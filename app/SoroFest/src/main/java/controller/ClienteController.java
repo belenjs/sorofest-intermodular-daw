@@ -30,7 +30,7 @@ public class ClienteController {
                 switch (opcion) {
                     case 1 -> darAltaCliente();
                     case 2 -> listarClientes();
-                    case 3 -> System.out.println("Buscar cliente");
+                    case 3 -> buscarCliente();
                     case 4 -> System.out.println("Modificar cliente");
                     case 5 -> System.out.println("Eliminar cliente");
                     case 0 -> System.out.println("Volviendo al menú principal...");
@@ -75,6 +75,23 @@ public class ClienteController {
             for(Cliente cliente : listaClientes) {
                 System.out.println(cliente);
             }
+        }
+    }
+
+    public void buscarCliente(){
+        System.out.println("Introduce el dni del cliente");
+        String dniCliente = scanner.nextLine();
+        boolean encontrado = false;
+
+        for(Cliente cliente : listaClientes) {
+            if(cliente.getDni().equalsIgnoreCase(dniCliente)) {
+                System.out.println(cliente);
+                encontrado = true;
+                break;
+            }
+        }
+        if(!encontrado) {
+            System.out.println("No se ha encontrado ningún cliente con dicho dni");
         }
     }
 }
