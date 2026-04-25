@@ -68,6 +68,7 @@ public class ClienteController {
     }
 
     public void listarClientes(){
+        System.out.println("LISTADO DE CLIENTES");
         if(listaClientes.isEmpty()){
             System.out.println("No hay clientes registrados");
         } else {
