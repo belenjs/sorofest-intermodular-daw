@@ -7,10 +7,12 @@ import java.util.Scanner;
 public class GestionAppController {
     private Scanner scanner;
     private MenuGestion menuGestion;
+    private ClienteController clienteController;
 
     public GestionAppController(){
         scanner = new Scanner(System.in);
         menuGestion = new MenuGestion();
+        clienteController = new ClienteController();
     }
 
     public void iniciar(){
@@ -25,7 +27,7 @@ public class GestionAppController {
                     case 1 -> System.out.println("Gestión de ediciones");
                     case 2 -> System.out.println("Gestión de artistas");
                     case 3 -> System.out.println("Gestión de conciertos");
-                    case 4 -> System.out.println("Gestión de clientes");
+                    case 4 -> clienteController.iniciarMenuCliente();
                     case 5 -> System.out.println("Gestión de entradas");
                     case 6 -> System.out.println("Gestión de compras");
                     case 0 -> System.out.println("Saliendo de la app");
@@ -34,5 +36,7 @@ public class GestionAppController {
                 }
             }
         } while(opcion != 0);
+
+        scanner.close();
     }
 }
