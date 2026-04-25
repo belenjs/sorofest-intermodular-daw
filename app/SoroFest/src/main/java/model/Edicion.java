@@ -40,7 +40,7 @@ public class Edicion {
                 ", stockEntradas=" + stockEntradas +
                 '}';
     }
-    
+
     public int getIdEdicion() {
         return idEdicion;
     }
