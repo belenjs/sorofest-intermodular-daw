@@ -37,7 +37,7 @@ public class ConciertoController {
                 switch (opcion) {
                     case 1 -> darAltaConcierto();
                     case 2 -> listarConciertos();
-                    case 3 -> System.out.println("3. Buscar concierto");
+                    case 3 -> buscarConcierto();
                     case 4 -> System.out.println("4. Modificar concierto");
                     case 5 -> System.out.println("5. Eliminar concierto");
                     case 0 -> System.out.println("Volviendo al menú principal...");
@@ -103,6 +103,24 @@ public class ConciertoController {
         }
     }
 
+    public void buscarConcierto(){
+        System.out.print("Introduce el id del concierto: ");
+        if (scanner.hasNextInt()) {
+            int idConcierto = scanner.nextInt();
+            scanner.nextLine();
+            Concierto concierto = buscarConciertoPorId(idConcierto);
+
+            if (concierto != null) {
+                System.out.println(concierto);
+            } else {
+                System.out.println("No se ha encontrado ningún concierto con dicho id.");
+            }
+        } else {
+            System.out.println("Debes introducir un número entero.");
+            scanner.nextLine();
+        }
+    }
+
     private boolean hayEdicionDisponible() {
         return edicion != null;
     }
@@ -143,6 +161,15 @@ public class ConciertoController {
         for (Artista artista : listaArtistas) {
             if (artista.getIdArtista() == idBuscado) {
                 return artista;
+            }
+        }
+        return null;
+    }
+
+    private Concierto buscarConciertoPorId(int idConcierto) {
+        for (Concierto concierto : listaConciertos) {
+            if (concierto.getIdConcierto() == idConcierto) {
+                return concierto;
             }
         }
         return null;
