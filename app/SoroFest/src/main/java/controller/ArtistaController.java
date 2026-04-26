@@ -32,7 +32,7 @@ public class ArtistaController {
                     case 1 -> darAltaArtista();
                     case 2 -> listarArtistas();
                     case 3 -> buscarArtista();
-                    case 4 -> System.out.println("4. Modificar artista");
+                    case 4 -> modificarArtista();
                     case 5 -> System.out.println("5. Eliminar rtista");
                     case 0 -> System.out.println("0. Volviendo al menú principal...");
                     default -> System.out.println("Opción no válida.");
@@ -94,6 +94,35 @@ public class ArtistaController {
             if(artista.getNombreArtista().equalsIgnoreCase(nombreArtistico)) {
                 System.out.println(artista);
                 encontrado = true;
+                break;
+            }
+        }
+        if(!encontrado) {
+            System.out.println("No se ha encontrado ninguna artista con dicho nombre artístico");
+        }
+    }
+
+    public void modificarArtista(){
+        System.out.println("Introduce el nombre artístico de la artista a modificar");
+        String nombreArtistico = scanner.nextLine();
+        boolean encontrado = false;
+
+        for(Artista artista : listaArtistas) {
+            if (artista.getNombreArtista().equalsIgnoreCase(nombreArtistico)) {
+                encontrado = true;
+                System.out.println("Nuevo nombre artístico: ");
+                artista.setNombreArtista(scanner.nextLine());
+                System.out.println("Nuevo tipo de artista ");
+                artista.setTipoArtista(scanner.nextLine());
+                System.out.println("Nuevo género musical: ");
+                artista.setGeneroMusical(scanner.nextLine());
+                System.out.println("¿Es cabeza de cartel (true/false)?: ");
+                artista.setEsCabezaCartel(scanner.nextBoolean());
+                System.out.println("Nueva descripción: ");
+                artista.setDescripcion(scanner.nextLine());
+
+                System.out.println("Artista modificada correctamente");
+                System.out.println(artista);
                 break;
             }
         }
