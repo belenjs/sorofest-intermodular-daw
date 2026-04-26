@@ -36,7 +36,7 @@ public class ConciertoController {
 
                 switch (opcion) {
                     case 1 -> darAltaConcierto();
-                    case 2 -> System.out.println("2. Listar conciertos");
+                    case 2 -> listarConciertos();
                     case 3 -> System.out.println("3. Buscar concierto");
                     case 4 -> System.out.println("4. Modificar concierto");
                     case 5 -> System.out.println("5. Eliminar concierto");
@@ -68,6 +68,7 @@ public class ConciertoController {
         Artista artista = buscarArtistaPorId(idArtista);
         if(artista == null) {
             System.out.println("No existe ninguna artista con dicho id");
+            return;
         }
         System.out.print("Fecha del concierto (yyyy-MM-dd): ");
         LocalDate fecha = LocalDate.parse(scanner.nextLine());
@@ -89,6 +90,17 @@ public class ConciertoController {
         guardarConcierto(concierto);
         System.out.println("Concierto dado de alta correctamente.");
         System.out.println(concierto);
+    }
+
+    public void listarConciertos(){
+        System.out.println("LISTADO DE CONCIERTOS");
+        if (listaConciertos.isEmpty()) {
+            System.out.println("No hay conciertos registrados.");
+        } else {
+            for (Concierto concierto : listaConciertos) {
+                System.out.println(concierto);
+            }
+        }
     }
 
     private boolean hayEdicionDisponible() {
