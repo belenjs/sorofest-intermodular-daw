@@ -10,6 +10,7 @@ public class GestionAppController {
     private ClienteController clienteController;
     private EdicionController edicionController;
     private ArtistaController artistaController;
+    private ConciertoController conciertoController;
 
     public GestionAppController(){
         scanner = new Scanner(System.in);
@@ -17,8 +18,11 @@ public class GestionAppController {
         clienteController = new ClienteController(scanner);
         edicionController = new EdicionController(scanner);
         artistaController = new ArtistaController(scanner);
-
-
+        conciertoController = new ConciertoController(
+                scanner,
+                artistaController.getListaArtistas(),
+                edicionController.getEdicion()
+        );
     }
 
     public void iniciar(){

@@ -164,4 +164,9 @@ public class ArtistaController {
         }
 
     }
+
+    public List<Artista> getListaArtistas() {
+        return listaArtistas;
+    }
 }
+

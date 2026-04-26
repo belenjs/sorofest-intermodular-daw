@@ -1,8 +1,12 @@
 package controller;
 
+import model.Artista;
 import model.Concierto;
+import model.Edicion;
 import view.ConciertoView;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -11,15 +15,15 @@ public class ConciertoController {
     private Scanner scanner;
     private ConciertoView conciertoView;
     private List<Concierto> listaConciertos;
-    private EdicionController edicionController;
-    private ArtistaController artistaController;
+    private List<Artista> listaArtistas;
+    private Edicion edicion;
 
-    public ConciertoController(Scanner scanner, EdicionController edicionController, ArtistaController artistaController){
+    public ConciertoController(Scanner scanner, List<Artista> listaArtistas, Edicion edicion ){
         this.scanner = scanner;
         this.conciertoView = new ConciertoView();
         this.listaConciertos = new ArrayList<>();
-        this.edicionController = edicionController;
-        this.artistaController = artistaController;
+        this.listaArtistas = listaArtistas;
+        this.edicion = edicion;
     }
 
     public void iniciarMenuConciertos() {
@@ -31,7 +35,7 @@ public class ConciertoController {
                 scanner.nextLine();
 
                 switch (opcion) {
-                    case 1 -> System.out.println("1. Dar de alta concierto");
+                    case 1 -> darAltaConcierto();
                     case 2 -> System.out.println("2. Listar conciertos");
                     case 3 -> System.out.println("3. Buscar concierto");
                     case 4 -> System.out.println("4. Modificar concierto");
@@ -46,4 +50,91 @@ public class ConciertoController {
             }
         } while (opcion != 0);
     }
+
+    public void darAltaConcierto(){
+        if(!hayEdicionDisponible()){
+            System.out.println("No hay ninguna edición de festival disponible");
+            return;
+        }
+        if(!hayArtistasDisponibles()) {
+            System.out.println("No hay artistas registradas. Debes dar de alta al menos a una artista");
+            return;
+        }
+        mostrarArtistasDisponibles();
+
+        int idArtista = pedirIdArtista();
+        if(idArtista == -1) return;
+
+        Artista artista = buscarArtistaPorId(idArtista);
+        if(artista == null) {
+            System.out.println("No existe ninguna artista con dicho id");
+        }
+        System.out.print("Fecha del concierto (yyyy-MM-dd): ");
+        LocalDate fecha = LocalDate.parse(scanner.nextLine());
+        System.out.print("Hora de inicio (HH:mm): ");
+        LocalTime horaInicio = LocalTime.parse(scanner.nextLine());
+        System.out.print("Hora de fin (HH:mm): ");
+        LocalTime horaFin = LocalTime.parse(scanner.nextLine());
+
+        int idConcierto = generarNuevoConcierto();
+        Concierto concierto = new Concierto(
+                idConcierto,
+                edicion,
+                artista,
+                fecha,
+                horaInicio,
+                horaFin
+        );
+
+        guardarConcierto(concierto);
+        System.out.println("Concierto dado de alta correctamente.");
+        System.out.println(concierto);
+    }
+
+    private boolean hayEdicionDisponible() {
+        return edicion != null;
+    }
+
+    private boolean hayArtistasDisponibles() {
+        return !listaArtistas.isEmpty();
+    }
+
+    private void mostrarArtistasDisponibles() {
+        System.out.println("Artistas disponibles:");
+        for (Artista artista : listaArtistas) {
+            System.out.println("ID Artista: " + artista.getIdArtista() + " - Nombre artístico: " + artista.getNombreArtista());
+        }
+    }
+
+    private int pedirIdArtista() {
+        System.out.print("Introduce el id de la artista: ");
+        if (scanner.hasNextInt()) {
+            int idArtista = scanner.nextInt();
+            scanner.nextLine();
+            return idArtista;
+        } else {
+            System.out.println("Debes introducir un número entero.");
+            scanner.nextLine();
+            return -1;
+        }
+    }
+
+    private int generarNuevoConcierto() {
+        return listaConciertos.size() + 1;
+    }
+
+    private void guardarConcierto(Concierto concierto) {
+        listaConciertos.add(concierto);
+    }
+
+    private Artista buscarArtistaPorId(int idBuscado) {
+        for (Artista artista : listaArtistas) {
+            if (artista.getIdArtista() == idBuscado) {
+                return artista;
+            }
+        }
+        return null;
+    }
+
+
 }

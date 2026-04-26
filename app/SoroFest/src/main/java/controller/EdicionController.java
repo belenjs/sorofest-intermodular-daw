@@ -74,5 +74,7 @@ public class EdicionController {
         System.out.println("Edición modificada correctamente.");
     }
 
-
+    public Edicion getEdicion() {
+        return edicion;
+    }
 }
