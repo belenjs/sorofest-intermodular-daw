@@ -85,31 +85,43 @@ public class ArtistaController {
         }
     }
 
-    public void buscarArtista(){
-        System.out.println("Introduce el nombre artístico");
-        String nombreArtistico = scanner.nextLine();
-        boolean encontrado = false;
-
-        for(Artista artista : listaArtistas) {
-            if(artista.getNombreArtista().equalsIgnoreCase(nombreArtistico)) {
-                System.out.println(artista);
-                encontrado = true;
-                break;
+    private Artista buscarArtistaPorId(int idArtista) {
+        for (Artista artista : listaArtistas) {
+            if (artista.getIdArtista() == idArtista) {
+                return artista;
             }
         }
-        if(!encontrado) {
-            System.out.println("No se ha encontrado ninguna artista con dicho nombre artístico.");
+        return null;
+    }
+
+    public void buscarArtista(){
+        System.out.println("Introduce el id de la artista a buscar: ");
+
+        if(scanner.hasNextInt()) {
+            int idArtista = scanner.nextInt();
+            scanner.nextLine();
+            Artista artista = buscarArtistaPorId(idArtista);
+
+            if (artista != null) {
+                System.out.println(artista);
+            } else {
+                System.out.println("No se ha encontrado ninguna artista con dicho id.");
+            }
+        } else {
+            System.out.println("Debes introducir un número entero.");
+            scanner.nextLine();
         }
     }
 
     public void modificarArtista(){
-        System.out.println("Introduce el nombre artístico de la artista a modificar");
-        String nombreArtistico = scanner.nextLine();
-        boolean encontrado = false;
+        System.out.println("Introduce el id de la artista a modificar: ");
 
-        for(Artista artista : listaArtistas) {
-            if (artista.getNombreArtista().equalsIgnoreCase(nombreArtistico)) {
-                encontrado = true;
+        if(scanner.hasNextInt()) {
+            int idArtista = scanner.nextInt();
+            scanner.nextLine();
+            Artista artista = buscarArtistaPorId(idArtista);
+
+            if (artista.getIdArtista() == idArtista) {
                 System.out.println("Nuevo nombre artístico: ");
                 artista.setNombreArtista(scanner.nextLine());
                 System.out.println("Nuevo tipo de artista ");
@@ -123,30 +135,33 @@ public class ArtistaController {
 
                 System.out.println("Artista modificada correctamente");
                 System.out.println(artista);
-                break;
+            } else {
+                System.out.println("No se ha encontrado ninguna artista con dicho id.");
             }
-        }
-        if(!encontrado) {
-            System.out.println("No se ha encontrado ninguna artista con dicho nombre artístico.");
+        } else {
+            System.out.println("Debes introducir un número entero.");
+            scanner.nextLine();
         }
     }
 
     public void eliminarArtista(){
-        System.out.print("Introduce el nombre artístico de la artista que quieres eliminar: ");
-        String nombreArtista = scanner.nextLine();
-        Artista artistaAEliminar = null;
+        System.out.print("Introduce el id de la artista a eliminar: ");
 
-        for (Artista artista : listaArtistas) {
-            if (artista.getNombreArtista().equalsIgnoreCase(nombreArtista)) {
-                artistaAEliminar = artista;
-                break;
+        if(scanner.hasNextInt()) {
+            int idArtista = scanner.nextInt();
+            scanner.nextLine();
+            Artista artista = buscarArtistaPorId(idArtista);
+
+            if (artista != null) {
+                listaArtistas.remove(artista);
+                System.out.println("Artista eliminada correctamente.");
+            } else {
+                System.out.println("No se ha encontrado ninguna artista con dicho nombre artístico.");
             }
-        }
-        if (artistaAEliminar != null) {
-            listaArtistas.remove(artistaAEliminar);
-            System.out.println("Artista eliminada correctamente.");
         } else {
-            System.out.println("No se ha encontrado ninguna artista con dicho nombre artístico.");
+            System.out.println("Debes introducir un número entero.");
+            scanner.nextLine();
         }
+
     }
 }
