@@ -33,7 +33,7 @@ public class ArtistaController {
                     case 2 -> listarArtistas();
                     case 3 -> buscarArtista();
                     case 4 -> modificarArtista();
-                    case 5 -> System.out.println("5. Eliminar rtista");
+                    case 5 -> eliminarArtista();
                     case 0 -> System.out.println("0. Volviendo al menú principal...");
                     default -> System.out.println("Opción no válida.");
                 }
@@ -98,7 +98,7 @@ public class ArtistaController {
             }
         }
         if(!encontrado) {
-            System.out.println("No se ha encontrado ninguna artista con dicho nombre artístico");
+            System.out.println("No se ha encontrado ninguna artista con dicho nombre artístico.");
         }
     }
 
@@ -127,7 +127,26 @@ public class ArtistaController {
             }
         }
         if(!encontrado) {
-            System.out.println("No se ha encontrado ninguna artista con dicho nombre artístico");
+            System.out.println("No se ha encontrado ninguna artista con dicho nombre artístico.");
+        }
+    }
+
+    public void eliminarArtista(){
+        System.out.print("Introduce el nombre artístico de la artista que quieres eliminar: ");
+        String nombreArtista = scanner.nextLine();
+        Artista artistaAEliminar = null;
+
+        for (Artista artista : listaArtistas) {
+            if (artista.getNombreArtista().equalsIgnoreCase(nombreArtista)) {
+                artistaAEliminar = artista;
+                break;
+            }
+        }
+        if (artistaAEliminar != null) {
+            listaArtistas.remove(artistaAEliminar);
+            System.out.println("Artista eliminada correctamente.");
+        } else {
+            System.out.println("No se ha encontrado ninguna artista con dicho nombre artístico.");
         }
     }
 }
