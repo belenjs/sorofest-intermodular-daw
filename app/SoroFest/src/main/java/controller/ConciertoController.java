@@ -38,7 +38,7 @@ public class ConciertoController {
                     case 1 -> darAltaConcierto();
                     case 2 -> listarConciertos();
                     case 3 -> buscarConcierto();
-                    case 4 -> System.out.println("4. Modificar concierto");
+                    case 4 -> modificarConcierto();
                     case 5 -> System.out.println("5. Eliminar concierto");
                     case 0 -> System.out.println("Volviendo al menú principal...");
                     default -> System.out.println("Opción no válida.");
@@ -115,6 +115,54 @@ public class ConciertoController {
             } else {
                 System.out.println("No se ha encontrado ningún concierto con dicho id.");
             }
+        } else {
+            System.out.println("Debes introducir un número entero.");
+            scanner.nextLine();
+        }
+    }
+
+    public void modificarConcierto(){
+        System.out.print("Introduce el id del concierto que quieres modificar: ");
+
+        if (scanner.hasNextInt()) {
+            int idConcierto = scanner.nextInt();
+            scanner.nextLine();
+            Concierto concierto = buscarConciertoPorId(idConcierto);
+
+            if (concierto == null) {
+                System.out.println("No se ha encontrado ningún concierto con dicho id.");
+                return;
+            }
+            System.out.println("Concierto encontrado:");
+            System.out.println(concierto);
+
+            if (!hayArtistasDisponibles()) {
+                System.out.println("No hay artistas registradas.");
+                return;
+            }
+            mostrarArtistasDisponibles();
+
+            int nuevoIdArtista = pedirIdArtista();
+            if (nuevoIdArtista == -1) {
+                return;
+            }
+
+            Artista nuevaArtista = buscarArtistaPorId(nuevoIdArtista);
+            if (nuevaArtista == null) {
+                System.out.println("No existe ninguna artista con dicho id.");
+                return;
+            }
+
+            System.out.print("Nueva fecha (yyyy-MM-dd): ");
+            concierto.setFecha(LocalDate.parse(scanner.nextLine()));
+            System.out.print("Nueva hora de inicio (HH:mm): ");
+            concierto.setHoraInicio(LocalTime.parse(scanner.nextLine()));
+            System.out.print("Nueva hora de fin (HH:mm): ");
+            concierto.setHoraFin(LocalTime.parse(scanner.nextLine()));
+            concierto.setArtista(nuevaArtista);
+            System.out.println("Concierto modificado correctamente.");
+            System.out.println(concierto);
+
         } else {
             System.out.println("Debes introducir un número entero.");
             scanner.nextLine();
