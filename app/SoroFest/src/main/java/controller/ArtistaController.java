@@ -31,7 +31,7 @@ public class ArtistaController {
                 switch (opcion) {
                     case 1 -> darAltaArtista();
                     case 2 -> listarArtistas();
-                    case 3 -> System.out.println("3. Buscar artistas");
+                    case 3 -> buscarArtista();
                     case 4 -> System.out.println("4. Modificar artista");
                     case 5 -> System.out.println("5. Eliminar rtista");
                     case 0 -> System.out.println("0. Volviendo al menú principal...");
@@ -82,6 +82,23 @@ public class ArtistaController {
             for (Artista artista : listaArtistas) {
                 System.out.println(artista);
             }
+        }
+    }
+
+    public void buscarArtista(){
+        System.out.println("Introduce el nombre artístico");
+        String nombreArtistico = scanner.nextLine();
+        boolean encontrado = false;
+
+        for(Artista artista : listaArtistas) {
+            if(artista.getNombreArtista().equalsIgnoreCase(nombreArtistico)) {
+                System.out.println(artista);
+                encontrado = true;
+                break;
+            }
+        }
+        if(!encontrado) {
+            System.out.println("No se ha encontrado ninguna artista con dicho nombre artístico");
         }
     }
 }
