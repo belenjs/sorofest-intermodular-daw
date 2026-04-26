@@ -30,7 +30,7 @@ public class ArtistaController {
 
                 switch (opcion) {
                     case 1 -> darAltaArtista();
-                    case 2 -> System.out.println("2. Listar artistas");
+                    case 2 -> listarArtistas();
                     case 3 -> System.out.println("3. Buscar artistas");
                     case 4 -> System.out.println("4. Modificar artista");
                     case 5 -> System.out.println("5. Eliminar rtista");
@@ -72,5 +72,16 @@ public class ArtistaController {
 
         System.out.println("Artista dada de alta correctamente.");
         System.out.println(artista);
+    }
+
+    public void listarArtistas(){
+        System.out.println("LISTADO DE ARTISTAS");
+        if (listaArtistas.isEmpty()) {
+            System.out.println("No hay artistas registradas.");
+        } else {
+            for (Artista artista : listaArtistas) {
+                System.out.println(artista);
+            }
+        }
     }
 }
