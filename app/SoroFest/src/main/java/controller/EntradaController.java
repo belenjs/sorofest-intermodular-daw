@@ -16,11 +16,11 @@ public class EntradaController {
     private List<Compra> listaCompras;
     private Edicion edicion;
 
-    public EntradaController(){
+    public EntradaController() {
 
     }
 
-    public EntradaController(Scanner scanner, List<Compra> listaCompras, Edicion edicion){
+    public EntradaController(Scanner scanner, List<Compra> listaCompras, Edicion edicion) {
         this.scanner = scanner;
         this.entradaView = new EntradaView();
         this.listaEntradas = new ArrayList<>();
@@ -40,8 +40,8 @@ public class EntradaController {
 
                 switch (opcion) {
                     case 1 -> darAltaEntrada();
-                    case 2 -> System.out.println("2. Listar entradas");
-                    case 3 -> System.out.println("3. Buscar entrada");
+                    case 2 -> listarEntradas();
+                    case 3 -> buscarEntrada();
                     case 4 -> System.out.println("4. Modificar entrada");
                     case 5 -> System.out.println("5. Eliminar entrada");
                     case 0 -> System.out.println("Volviendo al menú principal...");
@@ -56,7 +56,7 @@ public class EntradaController {
         } while (opcion != 0);
     }
 
-    public void darAltaEntrada(){
+    public void darAltaEntrada() {
         if (!hayComprasDisponibles()) {
             System.out.println("No hay compras registradas.");
             return;
@@ -99,7 +99,7 @@ public class EntradaController {
         System.out.println("Se han generado " + cantidadEntradas + " entradas correctamente.");
     }
 
-    public void listarEntradas(){
+    public void listarEntradas() {
         System.out.println("LISTADO DE ENTRADAS");
         if (listaEntradas.isEmpty()) {
             System.out.println("No hay entradas registradas.");
@@ -107,6 +107,25 @@ public class EntradaController {
             for (Entrada entrada : listaEntradas) {
                 System.out.println(entrada);
             }
+        }
+    }
+
+    private void buscarEntrada() {
+        System.out.print("Introduce el id de la entrada: ");
+        if (scanner.hasNextInt()) {
+            int idEntrada = scanner.nextInt();
+            scanner.nextLine();
+            Entrada entrada = buscarEntradaPorId(idEntrada);
+
+            if (entrada != null) {
+                System.out.println("Entrada encontrada:");
+                System.out.println(entrada);
+            } else {
+                System.out.println("No se ha encontrado ninguna entrada con dicho id.");
+            }
+        } else {
+            System.out.println("Debes introducir un número entero.");
+            scanner.nextLine();
         }
     }
 
@@ -171,5 +190,19 @@ public class EntradaController {
         return null;
     }
 
+    private Entrada buscarEntradaPorId(int idEntrada) {
+        for (Entrada entrada : listaEntradas) {
+            if (entrada.getIdEntrada() == idEntrada) {
+                return entrada;
+            }
+        }
+        return null;
+    }
 
 }
+
+
+
+
+
+
