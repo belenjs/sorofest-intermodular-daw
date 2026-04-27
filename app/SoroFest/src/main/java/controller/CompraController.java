@@ -38,8 +38,8 @@ public class CompraController {
                 scanner.nextLine();
 
                 switch (opcion) {
-                    case 1 -> System.out.println("1. Dar de alta compra de entradas\"");
-                    case 2 -> System.out.println("2. Listar compras de entradas");
+                    case 1 -> darAltaCompra();
+                    case 2 -> listarCompras();
                     case 3 -> System.out.println("3. Buscar compra");
                     case 4 -> System.out.println("4. Modificar compra");
                     case 5 -> System.out.println("5. Eliminar compra");
@@ -110,6 +110,18 @@ public class CompraController {
 
         System.out.println("Compra dada de alta correctamente.");
         System.out.println(compra);
+    }
+
+    public void listarCompras(){
+        System.out.println("LISTADO DE COMPRAS");
+
+        if (listaCompras.isEmpty()) {
+            System.out.println("No hay compras registradas.");
+        } else {
+            for (Compra compra : listaCompras) {
+                System.out.println(compra);
+            }
+        }
     }
 
     private boolean hayClientesDisponibles() {

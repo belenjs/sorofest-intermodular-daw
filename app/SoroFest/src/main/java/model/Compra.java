@@ -25,7 +25,7 @@ public class Compra {
     public String toString() {
         return "Compra{" +
                 "idCompra=" + idCompra +
-                ", cliente=" + cliente +
+                ", cliente=" + cliente.getNombre() + " " + cliente.getApellidos() +
                 ", fechaCompra=" + fechaCompra +
                 ", importeTotal=" + importeTotal +
                 ", metodoPago='" + metodoPago + '\'' +
