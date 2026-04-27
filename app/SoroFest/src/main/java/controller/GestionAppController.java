@@ -46,7 +46,7 @@ public class GestionAppController {
                     case 3 -> conciertoController.iniciarMenuConciertos();
                     case 4 -> clienteController.iniciarMenuCliente();
                     case 5 -> System.out.println("Gestión de entradas");
-                    case 6 -> System.out.println("Gestión de compras");
+                    case 6 -> compraController.iniciarMenuCompras();
                     case 0 -> System.out.println("Saliendo de la app");
                     default -> System.out.println("Opción no válida");
 

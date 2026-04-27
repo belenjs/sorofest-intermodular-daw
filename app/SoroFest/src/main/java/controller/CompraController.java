@@ -41,8 +41,8 @@ public class CompraController {
                     case 1 -> darAltaCompra();
                     case 2 -> listarCompras();
                     case 3 -> buscarCompra();
-                    case 4 -> System.out.println("4. Modificar compra");
-                    case 5 -> System.out.println("5. Eliminar compra");
+                    case 4 -> modificarCompra();
+                    case 5 -> eliminarCompra();
                     case 0 -> System.out.println("Volviendo al menú principal...");
                     default -> System.out.println("Opción no válida.");
                 }
@@ -202,6 +202,25 @@ public class CompraController {
             System.out.println("Compra modificada correctamente.");
             System.out.println(compra);
 
+        } else {
+            System.out.println("Debes introducir un número entero.");
+            scanner.nextLine();
+        }
+    }
+
+    public void eliminarCompra(){
+        System.out.print("Introduce el id de la compra que quieres eliminar: ");
+        if (scanner.hasNextInt()) {
+            int idCompra = scanner.nextInt();
+            scanner.nextLine();
+            Compra compra = buscarCompraPorId(idCompra);
+
+            if (compra != null) {
+                listaCompras.remove(compra);
+                System.out.println("Compra eliminada correctamente.");
+            } else {
+                System.out.println("No se ha encontrado ninguna compra con dicho id.");
+            }
         } else {
             System.out.println("Debes introducir un número entero.");
             scanner.nextLine();
