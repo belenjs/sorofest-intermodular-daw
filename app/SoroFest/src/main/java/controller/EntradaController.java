@@ -42,8 +42,7 @@ public class EntradaController {
                     case 1 -> darAltaEntrada();
                     case 2 -> listarEntradas();
                     case 3 -> buscarEntrada();
-                    case 4 -> System.out.println("4. Modificar entrada");
-                    case 5 -> System.out.println("5. Eliminar entrada");
+                    case 4 -> System.out.println("5. Eliminar entrada");
                     case 0 -> System.out.println("Volviendo al menú principal...");
                     default -> System.out.println("Opción no válida.");
                 }
