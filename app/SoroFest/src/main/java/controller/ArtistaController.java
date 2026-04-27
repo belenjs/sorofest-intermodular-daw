@@ -1,6 +1,7 @@
 package controller;
 
 import model.Artista;
+import model.Concierto;
 import view.ArtistaView;
 
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ public class ArtistaController {
     private Scanner scanner;
     private ArtistaView artistaView;
     private List<Artista> listaArtistas;
+    private List<Concierto> listaConciertos;
 
     public ArtistaController(Scanner scanner){
         this.scanner = scanner;
@@ -142,6 +144,10 @@ public class ArtistaController {
             Artista artista = buscarArtistaPorId(idArtista);
 
             if (artista != null) {
+                if (tieneConciertosAsociados(artista)) {
+                    System.out.println("No se puede eliminar la artista porque tiene conciertos asociados.");
+                    return;
+                }
                 listaArtistas.remove(artista);
                 System.out.println("Artista eliminada correctamente.");
             } else {
@@ -180,8 +186,24 @@ public class ArtistaController {
         }
     }
 
+    private boolean tieneConciertosAsociados(Artista artista) {
+        if (listaConciertos == null) {
+            return false;
+        }
+        for (Concierto concierto : listaConciertos) {
+            if (concierto.getArtista().getIdArtista() == artista.getIdArtista()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public List<Artista> getListaArtistas() {
         return listaArtistas;
+    }
+
+    public void setListaConciertos(List<Concierto> listaConciertos) {
+        this.listaConciertos = listaConciertos;
     }
 }
 

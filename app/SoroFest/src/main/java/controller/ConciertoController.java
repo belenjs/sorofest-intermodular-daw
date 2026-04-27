@@ -275,4 +275,8 @@ public class ConciertoController {
             }
         }
     }
+
+    public List<Concierto> getListaConciertos() {
+        return listaConciertos;
+    }
 }

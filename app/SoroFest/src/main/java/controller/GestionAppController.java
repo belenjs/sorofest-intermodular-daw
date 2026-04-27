@@ -38,6 +38,7 @@ public class GestionAppController {
         );
 
         clienteController.setListaCompras(compraController.getListaCompras());
+        artistaController.setListaConciertos(conciertoController.getListaConciertos());
     }
 
     public void iniciar(){
