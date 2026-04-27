@@ -36,6 +36,8 @@ public class GestionAppController {
                 compraController.getListaCompras(),
                 edicionController.getEdicion()
         );
+
+        clienteController.setListaCompras(compraController.getListaCompras());
     }
 
     public void iniciar(){

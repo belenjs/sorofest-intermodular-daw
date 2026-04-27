@@ -1,6 +1,7 @@
 package controller;
 
 import model.Cliente;
+import model.Compra;
 import view.ClienteView;
 
 import java.time.LocalDate;
@@ -13,6 +14,7 @@ public class ClienteController {
     private Scanner scanner;
     private ClienteView clienteView;
     private List<Cliente> listaClientes;
+    private List<Compra> listaCompras;
 
     public ClienteController(){
 
@@ -148,6 +150,10 @@ public class ClienteController {
             }
         }
         if(clienteAEliminar != null) {
+            if (tieneComprasAsociadas(clienteAEliminar)) {
+                System.out.println("No se puede eliminar el cliente porque tiene compras asociadas.");
+                return;
+            }
             listaClientes.remove(clienteAEliminar);
             System.out.println("Cliente eliminado correctamente");
         } else {
@@ -200,7 +206,23 @@ public class ClienteController {
         return false;
     }
 
+    private boolean tieneComprasAsociadas(Cliente cliente) {
+        if (listaCompras == null) {
+            return false;
+        }
+        for (Compra compra : listaCompras) {
+            if (compra.getCliente().getIdCliente() == cliente.getIdCliente()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public List<Cliente> getListaClientes() {
         return listaClientes;
+    }
+
+    public void setListaCompras(List<Compra> listaCompras) {
+        this.listaCompras = listaCompras;
     }
 }
