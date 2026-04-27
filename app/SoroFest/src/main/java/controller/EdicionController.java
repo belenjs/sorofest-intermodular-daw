@@ -4,6 +4,7 @@ import model.Edicion;
 import view.EdicionView;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 public class EdicionController {
@@ -54,24 +55,94 @@ public class EdicionController {
     }
 
     public void modificarDatosEdicion(){
-        System.out.print("Nuevo nombre de la edición: ");
-        edicion.setNombreEdicion(scanner.nextLine());
-        System.out.print("Nueva fecha de inicio (yyyy-MM-dd): ");
-        edicion.setFechaInicio(LocalDate.parse(scanner.nextLine()));
-        System.out.print("Nueva fecha de fin (yyyy-MM-dd): ");
-        edicion.setFechaFin(LocalDate.parse(scanner.nextLine()));
-        System.out.print("Nueva ciudad: ");
-        edicion.setCiudad(scanner.nextLine());
-        System.out.print("Nuevo recinto: ");
-        edicion.setRecinto(scanner.nextLine());
-        System.out.print("Nuevo precio de entrada: ");
-        edicion.setPrecioEntrada(scanner.nextDouble());
-        scanner.nextLine();
-        System.out.print("Nuevo stock de entradas: ");
-        edicion.setStockEntradas(scanner.nextInt());
-        scanner.nextLine();
+        String nuevoNombre = leerTexto("Nuevo nombre de la edición: ");
+        LocalDate nuevaFechaInicio = leerFecha("Nueva fecha inicio de edición (yyyy-MM-dd): ");
+        LocalDate nuevaFechaFin = leerFecha("Nueva fecha fin de edición (yyyy-MM-dd): ");
+
+        if (!nuevaFechaFin.isAfter(nuevaFechaInicio)) {
+            System.out.println("La fecha de fin debe ser posterior a la fecha de inicio.");
+            return;
+        }
+        String nuevaCiudad = leerTexto("Nueva ciudad: ");
+        String nuevoRecinto = leerTexto("Nuevo recinto: ");
+        double nuevoPrecioEntrada = leerDoublePositivo("Nuevo precio de entrada: ");
+        int nuevoStockEntradas = leerIntNoNegativo("Nuevo stock de entradas: ");
+
+        edicion.setNombreEdicion(nuevoNombre);
+        edicion.setFechaInicio(nuevaFechaInicio);
+        edicion.setFechaFin(nuevaFechaFin);
+        edicion.setCiudad(nuevaCiudad);
+        edicion.setRecinto(nuevoRecinto);
+        edicion.setPrecioEntrada(nuevoPrecioEntrada);
+        edicion.setStockEntradas(nuevoStockEntradas);
 
         System.out.println("Edición modificada correctamente.");
+    }
+
+    private String leerTexto(String mensaje) {
+        String texto;
+        do {
+            System.out.print(mensaje);
+            texto = scanner.nextLine().trim();
+
+            if (texto.isEmpty()) {
+                System.out.println("Este campo no puede estar vacío.");
+            }
+        } while (texto.isEmpty());
+
+        return texto;
+    }
+
+    private LocalDate leerFecha(String mensaje) {
+        while (true) {
+            System.out.print(mensaje);
+            String fechaTexto = scanner.nextLine().trim();
+
+            try {
+                return LocalDate.parse(fechaTexto);
+            } catch (DateTimeParseException e) {
+                System.out.println("Formato de fecha no válido. Usa yyyy-MM-dd.");
+            }
+        }
+    }
+
+    private double leerDoublePositivo(String mensaje) {
+        while (true) {
+            System.out.print(mensaje);
+            if (scanner.hasNextDouble()) {
+                double valor = scanner.nextDouble();
+                scanner.nextLine();
+
+                if (valor > 0) {
+                    return valor;
+                } else {
+                    System.out.println("El valor debe ser mayor que 0.");
+                }
+            } else {
+                System.out.println("Debes introducir un número válido.");
+                scanner.nextLine();
+            }
+        }
+    }
+
+    private int leerIntNoNegativo(String mensaje) {
+        while (true) {
+            System.out.print(mensaje);
+
+            if (scanner.hasNextInt()) {
+                int valor = scanner.nextInt();
+                scanner.nextLine();
+
+                if (valor >= 0) {
+                    return valor;
+                } else {
+                    System.out.println("El valor no puede ser negativo.");
+                }
+            } else {
+                System.out.println("Debes introducir un número entero.");
+                scanner.nextLine();
+            }
+        }
     }
 
     public Edicion getEdicion() {
