@@ -21,8 +21,9 @@ public class Entrada {
     public String toString() {
         return "Entrada{" +
                 "idEntrada=" + idEntrada +
-                ", edicion=" + edicion +
-                ", compra=" + compra +
+                ", edicion=" + edicion.getNombreEdicion() +
+                ", compra=" + compra.getIdCompra() +
+                ", cliente='" + compra.getCliente().getNombre() + " " + compra.getCliente().getApellidos() +
                 ", codigoEntrada='" + codigoEntrada + '\'' +
                 '}';
     }
