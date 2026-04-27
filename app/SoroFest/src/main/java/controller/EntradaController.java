@@ -76,6 +76,10 @@ public class EntradaController {
             System.out.println("No existe ninguna compra con dicho id.");
             return;
         }
+        if (existenEntradasCompra(compra)) {
+            System.out.println("Ya se han generado entradas para dicha compra.");
+            return;
+        }
 
         int cantidadEntradas = calcularCantidadEntradas(compra);
         if (cantidadEntradas <= 0) {
@@ -109,7 +113,7 @@ public class EntradaController {
         }
     }
 
-    private void buscarEntrada() {
+    public void buscarEntrada() {
         System.out.print("Introduce el id de la entrada: ");
         if (scanner.hasNextInt()) {
             int idEntrada = scanner.nextInt();
@@ -169,7 +173,12 @@ public class EntradaController {
         if (scanner.hasNextInt()) {
             int idCompra = scanner.nextInt();
             scanner.nextLine();
-            return idCompra;
+            if (idCompra > 0) {
+                return idCompra;
+            } else {
+                System.out.println("El id debe ser mayor que 0.");
+                return -1;
+            }
         } else {
             System.out.println("Debes introducir un número entero.");
             scanner.nextLine();
@@ -178,7 +187,7 @@ public class EntradaController {
     }
 
     private int calcularCantidadEntradas(Compra compra) {
-        if (edicion == null || edicion.getPrecioEntrada() <= 0) {
+        if (edicion == null || edicion.getPrecioEntrada() <= 0 || compra.getImporteTotal() <= 0) {
             return 0;
         }
 
@@ -217,6 +226,14 @@ public class EntradaController {
         return null;
     }
 
+    private boolean existenEntradasCompra(Compra compra) {
+        for (Entrada entrada : listaEntradas) {
+            if (entrada.getCompra().getIdCompra() == compra.getIdCompra()) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
 
 
