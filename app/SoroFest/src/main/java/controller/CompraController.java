@@ -142,6 +142,72 @@ public class CompraController {
         }
     }
 
+    public void modificarCompra(){
+        System.out.print("Introduce el id de la compra que quieres modificar: ");
+        if (scanner.hasNextInt()) {
+            int idCompra = scanner.nextInt();
+            scanner.nextLine();
+            Compra compra = buscarCompraPorId(idCompra);
+
+            if (compra == null) {
+                System.out.println("No se ha encontrado ninguna compra con dicho id.");
+                return;
+            }
+            System.out.println(compra);
+
+            if (!hayClientesDisponibles()) {
+                System.out.println("No hay clientes registrados.");
+                return;
+            }
+            if (!hayEdicionDisponible()) {
+                System.out.println("No hay ninguna edición disponible.");
+                return;
+            }
+            mostrarClientesDisponibles();
+
+            int nuevoIdCliente = pedirIdCliente();
+            if (nuevoIdCliente == -1) {
+                return;
+            }
+
+            Cliente nuevoCliente = buscarClientePorId(nuevoIdCliente);
+            if (nuevoCliente == null) {
+                System.out.println("No existe ningún cliente con dicho id.");
+                return;
+            }
+            System.out.print("Nueva fecha y hora de compra (yyyy-MM-ddTHH:mm): ");
+            compra.setFechaCompra(LocalDateTime.parse(scanner.nextLine()));
+            System.out.print("Nueva cantidad de entradas: ");
+            if (!scanner.hasNextInt()) {
+                System.out.println("Debes introducir un número entero.");
+                scanner.nextLine();
+                return;
+            }
+
+            int cantidadEntradas = scanner.nextInt();
+            scanner.nextLine();
+            if (cantidadEntradas <= 0) {
+                System.out.println("La cantidad de entradas debe ser mayor que 0.");
+                return;
+            }
+
+            double nuevoImporteTotal = cantidadEntradas * edicion.getPrecioEntrada();
+            compra.setImporteTotal(nuevoImporteTotal);
+
+            System.out.println("Nuevo importe total calculado: " + nuevoImporteTotal + " €");
+            System.out.print("Nuevo método de pago: ");
+            compra.setMetodoPago(scanner.nextLine());
+            compra.setCliente(nuevoCliente);
+
+            System.out.println("Compra modificada correctamente.");
+            System.out.println(compra);
+
+        } else {
+            System.out.println("Debes introducir un número entero.");
+            scanner.nextLine();
+        }
+    }
+
     private boolean hayClientesDisponibles() {
         return !listaClientes.isEmpty();
     }
