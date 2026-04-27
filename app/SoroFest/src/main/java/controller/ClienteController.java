@@ -143,4 +143,8 @@ public class ClienteController {
             System.out.println("No se ha encontrado ningún cliente con dicho dni");
         }
     }
+
+    public List<Cliente> getListaClientes() {
+        return listaClientes;
+    }
 }

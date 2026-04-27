@@ -2,8 +2,10 @@ package controller;
 
 import model.Cliente;
 import model.Compra;
+import model.Edicion;
 import view.CompraView;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -13,16 +15,18 @@ public class CompraController {
     private CompraView compraView;
     private List<Compra> listaCompras;
     private List<Cliente> listaClientes;
+    private Edicion edicion;
 
     public CompraController(){
 
     }
 
-    public CompraController(Scanner scanner, List<Cliente> listaClientes){
+    public CompraController(Scanner scanner, List<Cliente> listaClientes, Edicion edicion){
         this.scanner = scanner;
         this.compraView = new CompraView();
         this.listaCompras = new ArrayList<>();
         this.listaClientes = listaClientes;
+        this.edicion = edicion;
     }
 
     public void iniciarMenuCompras() {
@@ -34,11 +38,11 @@ public class CompraController {
                 scanner.nextLine();
 
                 switch (opcion) {
-                    case 1 -> System.out.println("1. Dar de alta compra de entradas\""); ;
+                    case 1 -> System.out.println("1. Dar de alta compra de entradas\"");
                     case 2 -> System.out.println("2. Listar compras de entradas");
-                    case 3 -> System.out.println("3. Buscar compra");;
-                    case 4 -> System.out.println("4. Modificar compra");;
-                    case 5 -> System.out.println("5. Eliminar compra");;
+                    case 3 -> System.out.println("3. Buscar compra");
+                    case 4 -> System.out.println("4. Modificar compra");
+                    case 5 -> System.out.println("5. Eliminar compra");
                     case 0 -> System.out.println("Volviendo al menú principal...");
                     default -> System.out.println("Opción no válida.");
                 }
@@ -49,4 +53,108 @@ public class CompraController {
             }
         } while (opcion != 0);
     }
+
+    public void darAltaCompra(){
+        if (!hayClientesDisponibles()) {
+            System.out.println("No hay clientes registrados. Debes dar de alta al menos a un cliente.");
+            return;
+        }
+        if (!hayEdicionDisponible()) {
+            System.out.println("No hay ninguna edición disponible.");
+            return;
+        }
+
+        mostrarClientesDisponibles();
+        int idCliente = pedirIdCliente();
+        if (idCliente == -1) {
+            return;
+        }
+
+        Cliente cliente = buscarClientePorId(idCliente);
+        if (cliente == null) {
+            System.out.println("No existe ningún cliente con dicho id.");
+            return;
+        }
+
+        System.out.print("Fecha y hora de compra (yyyy-MM-ddTHH:mm): ");
+        LocalDateTime fechaCompra = LocalDateTime.parse(scanner.nextLine());
+
+        System.out.print("Cantidad de entradas: ");
+        if (!scanner.hasNextInt()) {
+            System.out.println("Debes introducir un número entero.");
+            scanner.nextLine();
+            return;
+        }
+        int cantidadEntradas = scanner.nextInt();
+        scanner.nextLine();
+        if (cantidadEntradas <= 0) {
+            System.out.println("La cantidad de entradas debe ser mayor que 0.");
+            return;
+        }
+
+        double importeTotal = cantidadEntradas * edicion.getPrecioEntrada();
+        System.out.println("Importe total calculado: " + importeTotal + " €");
+
+        System.out.print("Método de pago: ");
+        String metodoPago = scanner.nextLine();
+
+        int idCompra = generarNuevoIdCompra();
+        Compra compra = new Compra(
+                idCompra,
+                cliente,
+                fechaCompra,
+                importeTotal,
+                metodoPago
+        );
+        guardarCompra(compra);
+
+        System.out.println("Compra dada de alta correctamente.");
+        System.out.println(compra);
+    }
+
+    private boolean hayClientesDisponibles() {
+        return !listaClientes.isEmpty();
+    }
+
+    private boolean hayEdicionDisponible() {
+        return edicion != null;
+    }
+
+    private void mostrarClientesDisponibles() {
+        System.out.println("Clientes disponibles:");
+        for (Cliente cliente : listaClientes) {
+            System.out.println("ID Cliente: " + cliente.getIdCliente() + " - Nombre: " + cliente.getNombre() + " " + cliente.getApellidos());
+        }
+    }
+
+    private int pedirIdCliente() {
+        System.out.print("Introduce el id del cliente: ");
+        if (scanner.hasNextInt()) {
+            int idCliente = scanner.nextInt();
+            scanner.nextLine();
+            return idCliente;
+        } else {
+            System.out.println("Debes introducir un número entero.");
+            scanner.nextLine();
+            return -1;
+        }
+    }
+
+    private int generarNuevoIdCompra() {
+        return listaCompras.size() + 1;
+    }
+
+    private void guardarCompra(Compra compra) {
+        listaCompras.add(compra);
+    }
+
+    private Cliente buscarClientePorId(int idBuscado) {
+        for (Cliente cliente : listaClientes) {
+            if (cliente.getIdCliente() == idBuscado) {
+                return cliente;
+            }
+        }
+        return null;
+    }
+
 }

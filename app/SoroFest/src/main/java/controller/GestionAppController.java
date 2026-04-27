@@ -2,6 +2,7 @@ package controller;
 
 import view.MenuGestion;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class GestionAppController {
@@ -11,6 +12,7 @@ public class GestionAppController {
     private EdicionController edicionController;
     private ArtistaController artistaController;
     private ConciertoController conciertoController;
+    private CompraController compraController;
 
     public GestionAppController(){
         scanner = new Scanner(System.in);
@@ -21,6 +23,11 @@ public class GestionAppController {
         conciertoController = new ConciertoController(
                 scanner,
                 artistaController.getListaArtistas(),
+                edicionController.getEdicion()
+        );
+        compraController = new CompraController (
+                scanner,
+                clienteController.getListaClientes(),
                 edicionController.getEdicion()
         );
     }
