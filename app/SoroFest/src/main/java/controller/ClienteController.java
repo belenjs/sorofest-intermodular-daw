@@ -4,6 +4,7 @@ import model.Cliente;
 import view.ClienteView;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -14,7 +15,7 @@ public class ClienteController {
     private List<Cliente> listaClientes;
 
     public ClienteController(){
-        
+
     }
 
     public ClienteController(Scanner scanner){
@@ -49,18 +50,23 @@ public class ClienteController {
     }
 
     public void darAltaCliente(){
-        System.out.println("Introduce DNI: ");
-        String dni = scanner.nextLine();
-        System.out.println("Introduce nombre: ");
-        String nombre = scanner.nextLine();
-        System.out.println("Introduce apellidos: ");
-        String apellidos = scanner.nextLine();
-        System.out.println("Introduce email: ");
-        String email = scanner.nextLine();
-        System.out.println("Introduce teléfono: ");
-        String telefono = scanner.nextLine();
-        System.out.println("Introduce fecha de nacimiento (yyyy-MM-dd)");
-        LocalDate fechaNacimiento = LocalDate.parse(scanner.nextLine());
+        String dni = leerTexto("Introduce DNI: ");
+        if (existeDni(dni)) {
+            System.out.println("Ya existe un cliente con ese DNI.");
+            return;
+        }
+        String nombre = leerTexto("Introduce nombre: ");
+        String apellidos = leerTexto("Introduce apellidos: ");
+
+        String email = leerTexto("Introduce email: ");
+        if (existeEmail(email)) {
+            System.out.println("Ya existe un cliente con ese email.");
+            return;
+        }
+        System.out.print("Introduce teléfono: ");
+        String telefono = scanner.nextLine().trim();
+
+        LocalDate fechaNacimiento = leerFecha("Introduce fecha de nacimiento (yyyy-MM-dd): ");
 
         int idCliente = listaClientes.size() + 1;
         Cliente cliente = new Cliente(idCliente, dni, nombre, apellidos, email, telefono, fechaNacimiento);
@@ -68,7 +74,6 @@ public class ClienteController {
 
         System.out.println("Cliente dado de alta correctamente");
         System.out.println(cliente);
-
     }
 
     public void listarClientes(){
@@ -83,8 +88,7 @@ public class ClienteController {
     }
 
     public void buscarCliente(){
-        System.out.println("Introduce el dni del cliente");
-        String dniCliente = scanner.nextLine();
+        String dniCliente = leerTexto("Introduce el DNI del cliente: ");
         boolean encontrado = false;
 
         for(Cliente cliente : listaClientes) {
@@ -100,23 +104,28 @@ public class ClienteController {
     }
 
     public void modificarDatosCliente(){
-        System.out.println("Introduce el dni del cliente a modificar");
-        String dniCliente = scanner.nextLine();
+        String dniCliente = leerTexto("Introduce el DNI del cliente a modificar: ");
         boolean encontrado = false;
 
         for(Cliente cliente : listaClientes) {
             if (cliente.getDni().equalsIgnoreCase(dniCliente)) {
                 encontrado = true;
-                System.out.println("Nuevo nombre: ");
-                cliente.setNombre(scanner.nextLine());
-                System.out.println("Nuevos apellidos: ");
-                cliente.setApellidos(scanner.nextLine());
-                System.out.println("Nuevo email: ");
-                cliente.setEmail(scanner.nextLine());
-                System.out.println("Nuevo teléfono: ");
-                cliente.setTelefono(scanner.nextLine());
-                System.out.println("Nueva fecha de nacimiento (yyyy-MM-dd): ");
-                cliente.setFechaNacimiento(LocalDate.parse(scanner.nextLine()));
+                String nuevoNombre = leerTexto("Nuevo nombre: ");
+                String nuevosApellidos = leerTexto("Nuevos apellidos: ");
+                String nuevoEmail = leerTexto("Nuevo email: ");
+
+                if (!cliente.getEmail().equalsIgnoreCase(nuevoEmail) && existeEmail(nuevoEmail)) {
+                    System.out.println("Ya existe otro cliente con ese email.");
+                    return;
+                }
+                System.out.print("Nuevo teléfono: ");
+                String nuevoTelefono = scanner.nextLine().trim();
+                LocalDate nuevaFechaNacimiento = leerFecha("Nueva fecha de nacimiento (yyyy-MM-dd): ");
+                cliente.setNombre(nuevoNombre);
+                cliente.setApellidos(nuevosApellidos);
+                cliente.setEmail(nuevoEmail);
+                cliente.setTelefono(nuevoTelefono);
+                cliente.setFechaNacimiento(nuevaFechaNacimiento);
 
                 System.out.println("Cliente modificado correctamente");
                 System.out.println(cliente);
@@ -129,13 +138,11 @@ public class ClienteController {
     }
 
     public void eliminarCliente(){
-        System.out.println("Introduce el dni del cliente a modificar");
-        String dniCliente = scanner.nextLine();
+        String dniCliente = leerTexto("Introduce el DNI del cliente a eliminar: ");
         Cliente clienteAEliminar = null;
 
         for(Cliente cliente : listaClientes) {
             if (cliente.getDni().equalsIgnoreCase(dniCliente)) {
-                listaClientes.remove(cliente);
                 clienteAEliminar = cliente;
                 break;
             }
@@ -146,6 +153,51 @@ public class ClienteController {
         } else {
             System.out.println("No se ha encontrado ningún cliente con dicho dni");
         }
+    }
+
+    private String leerTexto(String mensaje) {
+        String texto;
+        do {
+            System.out.print(mensaje);
+            texto = scanner.nextLine().trim();
+
+            if (texto.isEmpty()) {
+                System.out.println("Este campo no puede estar vacío.");
+            }
+        } while (texto.isEmpty());
+
+        return texto;
+    }
+
+    private LocalDate leerFecha(String mensaje) {
+        while (true) {
+            System.out.print(mensaje);
+            String fechaTexto = scanner.nextLine().trim();
+
+            try {
+                return LocalDate.parse(fechaTexto);
+            } catch (DateTimeParseException e) {
+                System.out.println("Formato de fecha no válido. Usa yyyy-MM-dd.");
+            }
+        }
+    }
+
+    private boolean existeDni(String dni) {
+        for (Cliente cliente : listaClientes) {
+            if (cliente.getDni().equalsIgnoreCase(dni)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean existeEmail(String email) {
+        for (Cliente cliente : listaClientes) {
+            if (cliente.getEmail().equalsIgnoreCase(email)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public List<Cliente> getListaClientes() {
