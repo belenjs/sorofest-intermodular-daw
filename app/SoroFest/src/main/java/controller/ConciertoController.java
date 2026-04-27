@@ -7,6 +7,7 @@ import view.ConciertoView;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -70,12 +71,17 @@ public class ConciertoController {
             System.out.println("No existe ninguna artista con dicho id");
             return;
         }
-        System.out.print("Fecha del concierto (yyyy-MM-dd): ");
-        LocalDate fecha = LocalDate.parse(scanner.nextLine());
-        System.out.print("Hora de inicio (HH:mm): ");
-        LocalTime horaInicio = LocalTime.parse(scanner.nextLine());
-        System.out.print("Hora de fin (HH:mm): ");
-        LocalTime horaFin = LocalTime.parse(scanner.nextLine());
+        LocalDate fecha = leerFecha("Fecha del concierto (yyyy-MM-dd): ");
+        if (fecha.isBefore(edicion.getFechaInicio()) || fecha.isAfter(edicion.getFechaFin())) {
+            System.out.println("La fecha del concierto debe estar dentro de las fechas de la edición.");
+            return;
+        }
+        LocalTime horaInicio = leerHora("Hora de inicio (HH:mm): ");
+        LocalTime horaFin = leerHora("Hora de fin (HH:mm): ");
+        if (!horaFin.isAfter(horaInicio)) {
+            System.out.println("La hora de fin debe ser posterior a la hora de inicio.");
+            return;
+        }
 
         int idConcierto = generarNuevoConcierto();
         Concierto concierto = new Concierto(
@@ -243,5 +249,30 @@ public class ConciertoController {
         return null;
     }
 
+    private LocalDate leerFecha(String mensaje) {
+        while (true) {
+            System.out.print(mensaje);
+            String fechaTexto = scanner.nextLine().trim();
 
+            try {
+                return LocalDate.parse(fechaTexto);
+            } catch (DateTimeParseException e) {
+                System.out.println("Formato de fecha no válido. Usa yyyy-MM-dd.");
+            }
+        }
+
+    }
+
+    private LocalTime leerHora(String mensaje) {
+        while (true) {
+            System.out.print(mensaje);
+            String horaTexto = scanner.nextLine().trim();
+
+            try {
+                return LocalTime.parse(horaTexto);
+            } catch (DateTimeParseException e) {
+                System.out.println("Formato de hora no válido. Usa HH:mm.");
+            }
+        }
+    }
 }
