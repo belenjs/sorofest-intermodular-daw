@@ -281,4 +281,8 @@ public class CompraController {
         return null;
     }
 
+    public List<Compra> getListaCompras() {
+        return listaCompras;
+    }
+
 }

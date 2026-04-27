@@ -39,7 +39,7 @@ public class EntradaController {
                 scanner.nextLine();
 
                 switch (opcion) {
-                    case 1 -> System.out.println("1. Dar de alta entrada");
+                    case 1 -> darAltaEntrada();
                     case 2 -> System.out.println("2. Listar entradas");
                     case 3 -> System.out.println("3. Buscar entrada");
                     case 4 -> System.out.println("4. Modificar entrada");
@@ -55,5 +55,110 @@ public class EntradaController {
 
         } while (opcion != 0);
     }
+
+    public void darAltaEntrada(){
+        if (!hayComprasDisponibles()) {
+            System.out.println("No hay compras registradas.");
+            return;
+        }
+        if (!hayEdicionDisponible()) {
+            System.out.println("No hay ninguna edición disponible.");
+            return;
+        }
+        mostrarComprasDisponibles();
+
+        int idCompra = pedirIdCompra();
+        if (idCompra == -1) {
+            return;
+        }
+
+        Compra compra = buscarCompraPorId(idCompra);
+        if (compra == null) {
+            System.out.println("No existe ninguna compra con dicho id.");
+            return;
+        }
+
+        int cantidadEntradas = calcularCantidadEntradas(compra);
+        if (cantidadEntradas <= 0) {
+            System.out.println("La compra no permite generar entradas válidas.");
+            return;
+        }
+        for (int i = 0; i < cantidadEntradas; i++) {
+            int idEntrada = generarNuevoIdEntrada();
+            String codigoEntrada = generarCodigoEntrada();
+
+            Entrada entrada = new Entrada(
+                    idEntrada,
+                    edicion,
+                    compra,
+                    codigoEntrada
+            );
+
+            guardarEntrada(entrada);
+        }
+        System.out.println("Se han generado " + cantidadEntradas + " entradas correctamente.");
+    }
+
+    private boolean hayComprasDisponibles() {
+        return !listaCompras.isEmpty();
+    }
+
+    private boolean hayEdicionDisponible() {
+        return edicion != null;
+    }
+
+    private void mostrarComprasDisponibles() {
+        System.out.println("Compras disponibles:");
+        for (Compra compra : listaCompras) {
+            System.out.println("ID Compra: " + compra.getIdCompra()
+                    + " - Cliente: " + compra.getCliente().getNombre() + " " + compra.getCliente().getApellidos()
+                    + " - Importe: " + compra.getImporteTotal() + " €");
+        }
+    }
+
+    private int pedirIdCompra() {
+        System.out.print("Introduce el id de la compra: ");
+        if (scanner.hasNextInt()) {
+            int idCompra = scanner.nextInt();
+            scanner.nextLine();
+            return idCompra;
+        } else {
+            System.out.println("Debes introducir un número entero.");
+            scanner.nextLine();
+            return -1;
+        }
+    }
+
+    private int calcularCantidadEntradas(Compra compra) {
+        if (edicion == null || edicion.getPrecioEntrada() <= 0) {
+            return 0;
+        }
+
+        double cantidad = compra.getImporteTotal() / edicion.getPrecioEntrada();
+        return (int) cantidad;
+    }
+
+    private int generarNuevoIdEntrada() {
+        return listaEntradas.size() + 1;
+    }
+
+    private String generarCodigoEntrada() {
+        int numero = listaEntradas.size() + 1;
+        return String.format("SORO2026-%04d", numero);
+    }
+
+    private void guardarEntrada(Entrada entrada) {
+        listaEntradas.add(entrada);
+    }
+
+    private Compra buscarCompraPorId(int idCompra) {
+        for (Compra compra : listaCompras) {
+            if (compra.getIdCompra() == idCompra) {
+                return compra;
+            }
+        }
+        return null;
+    }
+
 
 }
