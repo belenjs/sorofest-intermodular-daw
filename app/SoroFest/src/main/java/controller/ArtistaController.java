@@ -47,17 +47,11 @@ public class ArtistaController {
     }
 
     public void darAltaArtista(){
-        System.out.print("Nombre artístico: ");
-        String nombreArtista = scanner.nextLine();
-        System.out.print("Tipo de artista: ");
-        String tipoArtista = scanner.nextLine();
-        System.out.print("Género musical: ");
-        String generoMusical = scanner.nextLine();
-        System.out.print("¿Es cabeza de cartel? (true/false): ");
-        boolean esCabezaCartel = scanner.nextBoolean();
-        scanner.nextLine();
-        System.out.print("Descripción: ");
-        String descripcion = scanner.nextLine();
+        String nombreArtista = leerTexto("Nombre artístico: ");
+        String tipoArtista = leerTexto("Tipo de artista: ");
+        String generoMusical = leerTexto("Género musical: ");
+        boolean esCabezaCartel = leerBoolean("¿Es cabeza de cartel? (true/false): ");
+        String descripcion = leerTexto("Descripción: ");
 
         int idArtista = listaArtistas.size() + 1;
         Artista artista = new Artista(
@@ -121,17 +115,12 @@ public class ArtistaController {
             scanner.nextLine();
             Artista artista = buscarArtistaPorId(idArtista);
 
-            if (artista.getIdArtista() == idArtista) {
-                System.out.println("Nuevo nombre artístico: ");
-                artista.setNombreArtista(scanner.nextLine());
-                System.out.println("Nuevo tipo de artista ");
-                artista.setTipoArtista(scanner.nextLine());
-                System.out.println("Nuevo género musical: ");
-                artista.setGeneroMusical(scanner.nextLine());
-                System.out.println("¿Es cabeza de cartel (true/false)?: ");
-                artista.setEsCabezaCartel(scanner.nextBoolean());
-                System.out.println("Nueva descripción: ");
-                artista.setDescripcion(scanner.nextLine());
+            if (artista != null) {
+                artista.setNombreArtista(leerTexto("Nuevo nombre artístico: "));
+                artista.setTipoArtista(leerTexto("Nuevo tipo de artista: "));
+                artista.setGeneroMusical(leerTexto("Nuevo género musical: "));
+                artista.setEsCabezaCartel(leerBoolean("¿Es cabeza de cartel? (true/false): "));
+                artista.setDescripcion(leerTexto("Nueva descripción: "));
 
                 System.out.println("Artista modificada correctamente");
                 System.out.println(artista);
@@ -163,6 +152,32 @@ public class ArtistaController {
             scanner.nextLine();
         }
 
+    }
+
+    private String leerTexto(String mensaje) {
+        String texto;
+        do {
+            System.out.print(mensaje);
+            texto = scanner.nextLine().trim();
+            if (texto.isEmpty()) {
+                System.out.println("Este campo no puede estar vacío.");
+            }
+        } while (texto.isEmpty());
+        return texto;
+    }
+
+    private boolean leerBoolean(String mensaje) {
+        while (true) {
+            System.out.print(mensaje);
+            String valor = scanner.nextLine().trim().toLowerCase();
+            if (valor.equals("true")) {
+                return true;
+            } else if (valor.equals("false")) {
+                return false;
+            } else {
+                System.out.println("Debes introducir true o false.");
+            }
+        }
     }
 
     public List<Artista> getListaArtistas() {
