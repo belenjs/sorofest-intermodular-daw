@@ -13,6 +13,7 @@ public class GestionAppController {
     private ArtistaController artistaController;
     private ConciertoController conciertoController;
     private CompraController compraController;
+    private EntradaController entradaController;
 
     public GestionAppController(){
         scanner = new Scanner(System.in);
@@ -30,6 +31,11 @@ public class GestionAppController {
                 clienteController.getListaClientes(),
                 edicionController.getEdicion()
         );
+        entradaController = new EntradaController(
+                scanner,
+                compraController.getListaCompras(),
+                edicionController.getEdicion()
+        );
     }
 
     public void iniciar(){
@@ -45,15 +51,13 @@ public class GestionAppController {
                     case 2 -> artistaController.iniciarMenuArtista();
                     case 3 -> conciertoController.iniciarMenuConciertos();
                     case 4 -> clienteController.iniciarMenuCliente();
-                    case 5 -> System.out.println("Gestión de entradas");
+                    case 5 -> entradaController.iniciarMenuEntradas();
                     case 6 -> compraController.iniciarMenuCompras();
                     case 0 -> System.out.println("Saliendo de la app");
                     default -> System.out.println("Opción no válida");
-
                 }
             }
         } while(opcion != 0);
-
         scanner.close();
     }
 }

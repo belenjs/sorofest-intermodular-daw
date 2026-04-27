@@ -42,7 +42,7 @@ public class EntradaController {
                     case 1 -> darAltaEntrada();
                     case 2 -> listarEntradas();
                     case 3 -> buscarEntrada();
-                    case 4 -> System.out.println("5. Eliminar entrada");
+                    case 4 -> eliminarEntrada();
                     case 0 -> System.out.println("Volviendo al menú principal...");
                     default -> System.out.println("Opción no válida.");
                 }
@@ -119,6 +119,25 @@ public class EntradaController {
             if (entrada != null) {
                 System.out.println("Entrada encontrada:");
                 System.out.println(entrada);
+            } else {
+                System.out.println("No se ha encontrado ninguna entrada con dicho id.");
+            }
+        } else {
+            System.out.println("Debes introducir un número entero.");
+            scanner.nextLine();
+        }
+    }
+
+    public void eliminarEntrada(){
+        System.out.print("Introduce el id de la entrada que quieres eliminar: ");
+        if (scanner.hasNextInt()) {
+            int idEntrada = scanner.nextInt();
+            scanner.nextLine();
+            Entrada entrada = buscarEntradaPorId(idEntrada);
+
+            if (entrada != null) {
+                listaEntradas.remove(entrada);
+                System.out.println("Entrada eliminada correctamente.");
             } else {
                 System.out.println("No se ha encontrado ninguna entrada con dicho id.");
             }
