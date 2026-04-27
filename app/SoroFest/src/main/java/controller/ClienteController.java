@@ -32,7 +32,7 @@ public class ClienteController {
                     case 2 -> listarClientes();
                     case 3 -> buscarCliente();
                     case 4 -> modificarDatosCliente();
-                    case 5 -> System.out.println("Eliminar cliente");
+                    case 5 -> eliminarCliente();
                     case 0 -> System.out.println("Volviendo al menú principal...");
                     default -> System.out.println("Opción no válida.");
                 }
