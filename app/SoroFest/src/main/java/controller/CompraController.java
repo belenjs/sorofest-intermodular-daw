@@ -40,7 +40,7 @@ public class CompraController {
                 switch (opcion) {
                     case 1 -> darAltaCompra();
                     case 2 -> listarCompras();
-                    case 3 -> System.out.println("3. Buscar compra");
+                    case 3 -> buscarCompra();
                     case 4 -> System.out.println("4. Modificar compra");
                     case 5 -> System.out.println("5. Eliminar compra");
                     case 0 -> System.out.println("Volviendo al menú principal...");
@@ -124,6 +124,24 @@ public class CompraController {
         }
     }
 
+    public void buscarCompra(){
+        System.out.print("Introduce el id de la compra: ");
+        if (scanner.hasNextInt()) {
+            int idCompra = scanner.nextInt();
+            scanner.nextLine();
+            Compra compra = buscarCompraPorId(idCompra);
+
+            if (compra != null) {
+                System.out.println(compra);
+            } else {
+                System.out.println("No se ha encontrado ninguna compra con dicho id.");
+            }
+        } else {
+            System.out.println("Debes introducir un número entero.");
+            scanner.nextLine();
+        }
+    }
+
     private boolean hayClientesDisponibles() {
         return !listaClientes.isEmpty();
     }
@@ -164,6 +182,15 @@ public class CompraController {
         for (Cliente cliente : listaClientes) {
             if (cliente.getIdCliente() == idBuscado) {
                 return cliente;
+            }
+        }
+        return null;
+    }
+
+    private Compra buscarCompraPorId(int idCompra) {
+        for (Compra compra : listaCompras) {
+            if (compra.getIdCompra() == idCompra) {
+                return compra;
             }
         }
         return null;
