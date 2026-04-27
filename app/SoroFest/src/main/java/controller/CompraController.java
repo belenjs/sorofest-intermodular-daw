@@ -6,6 +6,7 @@ import model.Edicion;
 import view.CompraView;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -76,8 +77,7 @@ public class CompraController {
             return;
         }
 
-        System.out.print("Fecha y hora de compra (yyyy-MM-ddTHH:mm): ");
-        LocalDateTime fechaCompra = LocalDateTime.parse(scanner.nextLine());
+        LocalDateTime fechaCompra = leerFechaHora("Fecha y hora de compra (yyyy-MM-ddTHH:mm): ");
 
         System.out.print("Cantidad de entradas: ");
         if (!scanner.hasNextInt()) {
@@ -95,8 +95,7 @@ public class CompraController {
         double importeTotal = cantidadEntradas * edicion.getPrecioEntrada();
         System.out.println("Importe total calculado: " + importeTotal + " €");
 
-        System.out.print("Método de pago: ");
-        String metodoPago = scanner.nextLine();
+        String metodoPago = leerMetodoPago("Método de pago (Tarjeta, Bizum, PayPal, Transferencia): ");
 
         int idCompra = generarNuevoIdCompra();
         Compra compra = new Compra(
@@ -175,8 +174,7 @@ public class CompraController {
                 System.out.println("No existe ningún cliente con dicho id.");
                 return;
             }
-            System.out.print("Nueva fecha y hora de compra (yyyy-MM-ddTHH:mm): ");
-            compra.setFechaCompra(LocalDateTime.parse(scanner.nextLine()));
+            LocalDateTime nuevaFechaCompra = leerFechaHora("Nueva fecha y hora de compra (yyyy-MM-ddTHH:mm): ");
             System.out.print("Nueva cantidad de entradas: ");
             if (!scanner.hasNextInt()) {
                 System.out.println("Debes introducir un número entero.");
@@ -195,9 +193,11 @@ public class CompraController {
             compra.setImporteTotal(nuevoImporteTotal);
 
             System.out.println("Nuevo importe total calculado: " + nuevoImporteTotal + " €");
-            System.out.print("Nuevo método de pago: ");
-            compra.setMetodoPago(scanner.nextLine());
+            String nuevoMetodoPago = leerMetodoPago("Nuevo método de pago (Tarjeta, Bizum, PayPal, Transferencia): ");
             compra.setCliente(nuevoCliente);
+            compra.setFechaCompra(nuevaFechaCompra);
+            compra.setImporteTotal(nuevoImporteTotal);
+            compra.setMetodoPago(nuevoMetodoPago);
 
             System.out.println("Compra modificada correctamente.");
             System.out.println(compra);
@@ -279,6 +279,35 @@ public class CompraController {
             }
         }
         return null;
+    }
+
+    private LocalDateTime leerFechaHora(String mensaje) {
+        while (true) {
+            System.out.print(mensaje);
+            String fechaHoraTexto = scanner.nextLine().trim();
+
+            try {
+                return LocalDateTime.parse(fechaHoraTexto);
+            } catch (DateTimeParseException e) {
+                System.out.println("Formato de fecha y hora no válido. Usa yyyy-MM-ddTHH:mm.");
+            }
+        }
+    }
+
+    private String leerMetodoPago(String mensaje) {
+        while (true) {
+            System.out.print(mensaje);
+            String metodoPago = scanner.nextLine().trim();
+
+            if (metodoPago.equalsIgnoreCase("Tarjeta")
+                    || metodoPago.equalsIgnoreCase("Bizum")
+                    || metodoPago.equalsIgnoreCase("PayPal")
+                    || metodoPago.equalsIgnoreCase("Transferencia")) {
+                return metodoPago;
+            } else {
+                System.out.println("Método de pago no válido.");
+            }
+        }
     }
 
     public List<Compra> getListaCompras() {
