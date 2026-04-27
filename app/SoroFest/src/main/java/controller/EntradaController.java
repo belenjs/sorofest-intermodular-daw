@@ -99,6 +99,17 @@ public class EntradaController {
         System.out.println("Se han generado " + cantidadEntradas + " entradas correctamente.");
     }
 
+    public void listarEntradas(){
+        System.out.println("LISTADO DE ENTRADAS");
+        if (listaEntradas.isEmpty()) {
+            System.out.println("No hay entradas registradas.");
+        } else {
+            for (Entrada entrada : listaEntradas) {
+                System.out.println(entrada);
+            }
+        }
+    }
+
     private boolean hayComprasDisponibles() {
         return !listaCompras.isEmpty();
     }
