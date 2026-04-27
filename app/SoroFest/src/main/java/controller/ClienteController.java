@@ -13,6 +13,10 @@ public class ClienteController {
     private ClienteView clienteView;
     private List<Cliente> listaClientes;
 
+    public ClienteController(){
+        
+    }
+
     public ClienteController(Scanner scanner){
         this.scanner = scanner;
         this.clienteView = new ClienteView();
