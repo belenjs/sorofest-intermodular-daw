@@ -28,8 +28,8 @@ public class Concierto {
     public String toString() {
         return "Concierto{" +
                 "idConcierto=" + idConcierto +
-                ", edicion=" + edicion +
-                ", artista=" + artista +
+                ", edicion=" + edicion.getNombreEdicion() +
+                ", artista=" + artista.getNombreArtista() +
                 ", fecha=" + fecha +
                 ", horaInicio=" + horaInicio +
                 ", horaFin=" + horaFin +
