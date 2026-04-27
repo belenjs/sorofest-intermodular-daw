@@ -234,6 +234,10 @@ public class EntradaController {
         }
         return false;
     }
+
+    public List<Entrada> getListaEntradas() {
+        return listaEntradas;
+    }
 }
 
 

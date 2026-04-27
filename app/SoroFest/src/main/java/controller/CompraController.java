@@ -3,6 +3,7 @@ package controller;
 import model.Cliente;
 import model.Compra;
 import model.Edicion;
+import model.Entrada;
 import view.CompraView;
 
 import java.time.LocalDateTime;
@@ -17,6 +18,7 @@ public class CompraController {
     private List<Compra> listaCompras;
     private List<Cliente> listaClientes;
     private Edicion edicion;
+    private List<Entrada> listaEntradas;
 
     public CompraController(){
 
@@ -216,6 +218,10 @@ public class CompraController {
             Compra compra = buscarCompraPorId(idCompra);
 
             if (compra != null) {
+                if (tieneEntradasAsociadas(compra)) {
+                    System.out.println("No se puede eliminar la compra porque tiene entradas asociadas.");
+                    return;
+                }
                 listaCompras.remove(compra);
                 System.out.println("Compra eliminada correctamente.");
             } else {
@@ -310,8 +316,24 @@ public class CompraController {
         }
     }
 
+    private boolean tieneEntradasAsociadas(Compra compra) {
+        if (listaEntradas == null) {
+            return false;
+        }
+        for (Entrada entrada : listaEntradas) {
+            if (entrada.getCompra().getIdCompra() == compra.getIdCompra()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public List<Compra> getListaCompras() {
         return listaCompras;
+    }
+
+    public void setListaEntradas(List<Entrada> listaEntradas) {
+        this.listaEntradas = listaEntradas;
     }
 
 }
