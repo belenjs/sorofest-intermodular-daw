@@ -39,7 +39,7 @@ public class ConciertoController {
                     case 2 -> listarConciertos();
                     case 3 -> buscarConcierto();
                     case 4 -> modificarConcierto();
-                    case 5 -> System.out.println("5. Eliminar concierto");
+                    case 5 -> eliminarConcierto();
                     case 0 -> System.out.println("Volviendo al menú principal...");
                     default -> System.out.println("Opción no válida.");
                 }
@@ -163,6 +163,26 @@ public class ConciertoController {
             System.out.println("Concierto modificado correctamente.");
             System.out.println(concierto);
 
+        } else {
+            System.out.println("Debes introducir un número entero.");
+            scanner.nextLine();
+        }
+    }
+
+    public void eliminarConcierto(){
+        System.out.print("Introduce el id del concierto que quieres eliminar: ");
+
+        if (scanner.hasNextInt()) {
+            int idBuscado = scanner.nextInt();
+            scanner.nextLine();
+            Concierto concierto = buscarConciertoPorId(idBuscado);
+
+            if (concierto != null) {
+                listaConciertos.remove(concierto);
+                System.out.println("Concierto eliminado correctamente.");
+            } else {
+                System.out.println("No se ha encontrado ningún concierto con dicho id.");
+            }
         } else {
             System.out.println("Debes introducir un número entero.");
             scanner.nextLine();

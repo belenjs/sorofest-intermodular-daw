@@ -36,7 +36,7 @@ public class GestionAppController {
                 switch (opcion) {
                     case 1 -> edicionController.iniciarMenuEdicion();
                     case 2 -> artistaController.iniciarMenuArtista();
-                    case 3 -> System.out.println("Gestión de conciertos");
+                    case 3 -> conciertoController.iniciarMenuConciertos();
                     case 4 -> clienteController.iniciarMenuCliente();
                     case 5 -> System.out.println("Gestión de entradas");
                     case 6 -> System.out.println("Gestión de compras");
