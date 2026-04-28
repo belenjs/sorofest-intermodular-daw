@@ -8,8 +8,13 @@ public class ConexionBD {
     private static Connection connection;
 
     public static Connection getConnection(){
-        if(connection == null){
-            createConnection();
+        try {
+            if(connection == null || connection.isClosed()){
+                createConnection();
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al compronbar el estado de la conexión");
+            System.out.println(e.getMessage());
         }
         return connection;
     }
