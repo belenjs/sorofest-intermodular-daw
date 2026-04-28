@@ -129,4 +129,18 @@ public class ClienteDAO {
         }
         return listaClientes;
     }
+
+    public int eliminarCliente(String dniCliente){
+        String query = String.format("DELETE FROM %s WHERE %s = ?", SchemaBD.TAB_CLIENTE, SchemaBD.COL_DNI);
+
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, dniCliente);
+            return preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error al eliminar cliente");
+            System.out.println(e.getMessage());
+        }
+        return -1;
+    }
 }
