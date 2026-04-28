@@ -5,6 +5,8 @@ import database.SchemaBD;
 import model.Cliente;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClienteDAO {
     private Connection connection;
@@ -17,8 +19,8 @@ public class ClienteDAO {
 
     public boolean insertarCliente(Cliente cliente) throws SQLException {
         String query = String.format(
-                "INSERT INTO %s (%s, %s, %s, %s, %s, %s, %s) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                SchemaBD.COL_ID_CLIENTE,
+                "INSERT INTO %s (%s, %s, %s, %s, %s, %s) VALUES (?, ?, ?, ?, ?, ?)",
+                SchemaBD.TAB_CLIENTE,
                 SchemaBD.COL_DNI,
                 SchemaBD.COL_NOMBRE,
                 SchemaBD.COL_APELLIDOS,
@@ -36,5 +38,95 @@ public class ClienteDAO {
         preparedStatement.setDate(6, Date.valueOf(cliente.getFechaNacimiento()));
 
         return preparedStatement.execute();
+    }
+
+    public int actualizarCliente(String dni, String nuevoNombre) {
+        String query = String.format(
+                "UPDATE %s SET %s=? WHERE %s=?",
+                SchemaBD.TAB_CLIENTE,
+                SchemaBD.COL_NOMBRE,
+                SchemaBD.COL_DNI
+        );
+
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, nuevoNombre);
+            preparedStatement.setString(2, dni);
+
+            return preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error en la query");
+            System.out.println(e.getMessage());
+        }
+        return -1;
+    }
+
+    public Cliente obtenerClientePorDni(String dniBuscado) {
+        String query = String.format(
+                "SELECT * FROM %s WHERE %s = ?",
+                SchemaBD.TAB_CLIENTE,
+                SchemaBD.COL_DNI
+        );
+
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, dniBuscado);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                int idCliente = resultSet.getInt(SchemaBD.COL_ID_CLIENTE);
+                String dni = resultSet.getString(SchemaBD.COL_DNI);
+                String nombre = resultSet.getString(SchemaBD.COL_NOMBRE);
+                String apellidos = resultSet.getString(SchemaBD.COL_APELLIDOS);
+                String email = resultSet.getString(SchemaBD.COL_EMAIL);
+                String telefono = resultSet.getString(SchemaBD.COL_TELEFONO);
+                Date fechaNacimientoSQL = resultSet.getDate(SchemaBD.COL_FECHA_NACIMIENTO);
+                return new Cliente(
+                        idCliente,
+                        dni,
+                        nombre,
+                        apellidos,
+                        email,
+                        telefono,
+                        fechaNacimientoSQL.toLocalDate()
+                );
+            }
+        } catch (SQLException e) {
+            System.out.println("Error en la SQL");
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+    public List<Cliente> obtenerClientes(){
+        List<Cliente> listaClientes = new ArrayList<>();
+        String query = String.format("SELECT * FROM %s", SchemaBD.TAB_CLIENTE);
+
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int idCliente = resultSet.getInt(SchemaBD.COL_ID_CLIENTE);
+                String dni = resultSet.getString(SchemaBD.COL_DNI);
+                String nombre = resultSet.getString(SchemaBD.COL_NOMBRE);
+                String apellidos = resultSet.getString(SchemaBD.COL_APELLIDOS);
+                String email = resultSet.getString(SchemaBD.COL_EMAIL);
+                String telefono = resultSet.getString(SchemaBD.COL_TELEFONO);
+                Date fechaNacimientoSQL = resultSet.getDate(SchemaBD.COL_FECHA_NACIMIENTO);
+                Cliente cliente = new Cliente(
+                        idCliente,
+                        dni,
+                        nombre,
+                        apellidos,
+                        email,
+                        telefono,
+                        fechaNacimientoSQL.toLocalDate()
+                );
+                listaClientes.add(cliente);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error en la SQL");
+            System.out.println(e.getMessage());
+        }
+        return listaClientes;
     }
 }
