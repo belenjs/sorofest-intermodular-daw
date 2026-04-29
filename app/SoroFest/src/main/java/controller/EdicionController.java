@@ -14,6 +14,10 @@ public class EdicionController {
     private Edicion edicion;
     private EdicionDAO edicionDAO;
 
+    public EdicionController(){
+
+    }
+
     public EdicionController(Scanner scanner){
         this.scanner = scanner;
         this.edicionView = new EdicionView();

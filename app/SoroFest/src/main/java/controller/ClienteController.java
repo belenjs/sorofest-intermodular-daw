@@ -1,23 +1,21 @@
 package controller;
 
 import dao.ClienteDAO;
+import dao.CompraDAO;
 import model.Cliente;
-import model.Compra;
 import view.ClienteView;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class ClienteController {
     private Scanner scanner;
     private ClienteView clienteView;
-    private List<Cliente> listaClientes;
-    private List<Compra> listaCompras;
     private ClienteDAO clienteDAO;
+    private CompraDAO compraDAO;
 
     public ClienteController() {
 
@@ -26,8 +24,8 @@ public class ClienteController {
     public ClienteController(Scanner scanner) {
         this.scanner = scanner;
         this.clienteView = new ClienteView();
-        this.listaClientes = new ArrayList<>();
         this.clienteDAO = new ClienteDAO();
+        this.compraDAO = new CompraDAO();
     }
 
     public void iniciarMenuCliente() {
@@ -190,14 +188,6 @@ public class ClienteController {
     }
 
     private boolean tieneComprasAsociadas(Cliente cliente) {
-        if (listaCompras == null) {
-            return false;
-        }
-        for (Compra compra : listaCompras) {
-            if (compra.getCliente().getIdCliente() == cliente.getIdCliente()) {
-                return true;
-            }
-        }
-        return false;
+        return compraDAO.existeCompraPorCliente(cliente.getIdCliente());
     }
 }

@@ -3,11 +3,9 @@ package controller;
 import dao.ArtistaDAO;
 import dao.ConciertoDAO;
 import model.Artista;
-import model.Concierto;
 import view.ArtistaView;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,6 +14,10 @@ public class ArtistaController {
     private ArtistaView artistaView;
     private ArtistaDAO artistaDAO;
     private ConciertoDAO conciertoDAO;
+
+    public ArtistaController(){
+
+    }
 
     public ArtistaController(Scanner scanner){
         this.scanner = scanner;

@@ -11,22 +11,23 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class ConciertoController {
     private Scanner scanner;
     private ConciertoView conciertoView;
-    private List<Concierto> listaConciertos;
     private Edicion edicion;
     private ConciertoDAO conciertoDAO;
     private ArtistaDAO artistaDAO;
 
+    public ConciertoController(){
+
+    }
+
     public ConciertoController(Scanner scanner, Edicion edicion ){
         this.scanner = scanner;
         this.conciertoView = new ConciertoView();
-        this.listaConciertos = new ArrayList<>();
         this.edicion = edicion;
         this.conciertoDAO = new ConciertoDAO();
         this.artistaDAO = new ArtistaDAO();
@@ -114,7 +115,7 @@ public class ConciertoController {
     public void listarConciertos(){
         System.out.println("LISTADO DE CONCIERTOS");
         List<Concierto> conciertos = conciertoDAO.obtenerConciertos();
-        if (listaConciertos.isEmpty()) {
+        if (conciertos.isEmpty()) {
             System.out.println("No hay conciertos registrados.");
         } else {
             for (Concierto concierto : conciertos) {

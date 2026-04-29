@@ -29,16 +29,15 @@ public class Edicion {
 
     @Override
     public String toString() {
-        return "Edicion{" +
-                "idEdicion=" + idEdicion +
-                ", nombreEdicion='" + nombreEdicion + '\'' +
-                ", fechaInicio=" + fechaInicio +
-                ", fechaFin=" + fechaFin +
-                ", ciudad='" + ciudad + '\'' +
-                ", recinto='" + recinto + '\'' +
-                ", precioEntrada=" + precioEntrada +
-                ", stockEntradas=" + stockEntradas +
-                '}';
+        return "\n--- EDICIÓN ---" +
+                "\nID Edición: " + idEdicion +
+                "\nNombre edición: " + nombreEdicion +
+                "\nFecha inicio: " + fechaFin +
+                "\nFecha fin: " + fechaFin +
+                "\nCiudad: " + ciudad +
+                "\nRecinto: " + recinto +
+                "\nPrecio entradas: " + precioEntrada +
+                "\nStock entradas: " + stockEntradas;
     }
 
     public int getIdEdicion() {

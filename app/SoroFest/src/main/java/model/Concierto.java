@@ -26,14 +26,13 @@ public class Concierto {
 
     @Override
     public String toString() {
-        return "Concierto{" +
-                "idConcierto=" + idConcierto +
-                ", edicion=" + edicion.getNombreEdicion() +
-                ", artista=" + artista.getNombreArtista() +
-                ", fecha=" + fecha +
-                ", horaInicio=" + horaInicio +
-                ", horaFin=" + horaFin +
-                '}';
+        return "\n--- CONCIERTO ---" +
+                "\nID Concierto: " + idConcierto +
+                "\nEdición: " + edicion.getNombreEdicion() +
+                "\nArtista: " + artista.getNombreArtista() +
+                "\nFecha: " + fecha +
+                "\nHora de inicio: " + horaInicio +
+                "\nHora fin: " + horaFin;
     }
 
     public int getIdConcierto() {

@@ -178,5 +178,22 @@ public class CompraDAO {
 
         return -1;
     }
+
+    public boolean existeCompraPorCliente(int idCliente) {
+        String query = String.format("SELECT 1 FROM %s WHERE %s = ?", SchemaBD.TAB_COMPRA, SchemaBD.COL_ID_CLIENTE_FK);
+
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, idCliente);
+            resultSet = preparedStatement.executeQuery();
+
+            return resultSet.next();
+
+        } catch (SQLException e) {
+            System.out.println("Error al comprobar compras del cliente");
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
 }
 

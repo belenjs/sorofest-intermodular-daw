@@ -19,7 +19,7 @@ public class Entrada {
 
     @Override
     public String toString() {
-        return "\n--- Entrada ---" +
+        return "\n--- ENTRADA ---" +
                 "\nID Entrada: " + idEntrada +
                 "\nEdición: " + edicion.getNombreEdicion() +
                 "\nID Compra: " + compra.getIdCompra() +

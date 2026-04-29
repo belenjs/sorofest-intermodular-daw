@@ -23,7 +23,7 @@ public class Artista {
 
     @Override
     public String toString() {
-        return "\n--- CLIENTE ---" +
+        return "\n--- ARTISTA ---" +
                 "\nID Artista: " + idArtista +
                 "\nNombre artístico: " + nombreArtista +
                 "\nTipo de artista: " + tipoArtista +
