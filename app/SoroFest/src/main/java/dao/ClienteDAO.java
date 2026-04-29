@@ -17,7 +17,7 @@ public class ClienteDAO {
         connection = ConexionBD.getConnection();
     }
 
-    public boolean insertarCliente(Cliente cliente) throws SQLException {
+    public int insertarCliente(Cliente cliente) throws SQLException {
         String query = String.format(
                 "INSERT INTO %s (%s, %s, %s, %s, %s, %s) VALUES (?, ?, ?, ?, ?, ?)",
                 SchemaBD.TAB_CLIENTE,
@@ -37,21 +37,29 @@ public class ClienteDAO {
         preparedStatement.setString(5, cliente.getTelefono());
         preparedStatement.setDate(6, Date.valueOf(cliente.getFechaNacimiento()));
 
-        return preparedStatement.execute();
+        return preparedStatement.executeUpdate();
     }
 
-    public int actualizarCliente(String dni, String nuevoNombre) {
+    public int actualizarCliente(Cliente cliente) {
         String query = String.format(
-                "UPDATE %s SET %s=? WHERE %s=?",
+                "UPDATE %s SET %s = ?, %s = ?, %s = ?, %s = ?, %s = ? WHERE %s = ?",
                 SchemaBD.TAB_CLIENTE,
                 SchemaBD.COL_NOMBRE,
+                SchemaBD.COL_APELLIDOS,
+                SchemaBD.COL_EMAIL,
+                SchemaBD.COL_TELEFONO,
+                SchemaBD.COL_FECHA_NACIMIENTO,
                 SchemaBD.COL_DNI
         );
 
         try {
             preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, nuevoNombre);
-            preparedStatement.setString(2, dni);
+            preparedStatement.setString(1, cliente.getNombre());
+            preparedStatement.setString(2, cliente.getApellidos());
+            preparedStatement.setString(3, cliente.getEmail());
+            preparedStatement.setString(4, cliente.getTelefono());
+            preparedStatement.setDate(5, java.sql.Date.valueOf(cliente.getFechaNacimiento()));
+            preparedStatement.setString(6, cliente.getDni());
 
             return preparedStatement.executeUpdate();
         } catch (SQLException e) {

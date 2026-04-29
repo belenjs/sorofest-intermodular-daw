@@ -1,9 +1,11 @@
 package controller;
 
+import dao.ClienteDAO;
 import model.Cliente;
 import model.Compra;
 import view.ClienteView;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -15,6 +17,7 @@ public class ClienteController {
     private ClienteView clienteView;
     private List<Cliente> listaClientes;
     private List<Compra> listaCompras;
+    private ClienteDAO clienteDAO;
 
     public ClienteController(){
 
@@ -24,6 +27,7 @@ public class ClienteController {
         this.scanner = scanner;
         this.clienteView = new ClienteView();
         this.listaClientes = new ArrayList<>();
+        this.clienteDAO = new ClienteDAO();
     }
 
     public void iniciarMenuCliente(){
@@ -53,37 +57,39 @@ public class ClienteController {
 
     public void darAltaCliente(){
         String dni = leerTexto("Introduce DNI: ");
-        if (existeDni(dni)) {
+        if (clienteDAO.obtenerClientePorDni(dni) != null) {
             System.out.println("Ya existe un cliente con ese DNI.");
             return;
         }
         String nombre = leerTexto("Introduce nombre: ");
         String apellidos = leerTexto("Introduce apellidos: ");
-
         String email = leerTexto("Introduce email: ");
-        if (existeEmail(email)) {
-            System.out.println("Ya existe un cliente con ese email.");
-            return;
-        }
         System.out.print("Introduce teléfono: ");
         String telefono = scanner.nextLine().trim();
-
         LocalDate fechaNacimiento = leerFecha("Introduce fecha de nacimiento (yyyy-MM-dd): ");
 
-        int idCliente = listaClientes.size() + 1;
-        Cliente cliente = new Cliente(idCliente, dni, nombre, apellidos, email, telefono, fechaNacimiento);
-        listaClientes.add(cliente);
+        Cliente cliente = new Cliente(0, dni, nombre, apellidos, email, telefono, fechaNacimiento);
 
-        System.out.println("Cliente dado de alta correctamente");
-        System.out.println(cliente);
+        try {
+            int filasInsertadas = clienteDAO.insertarCliente(cliente);
+            if (filasInsertadas > 0) {
+                System.out.println("Cliente dado de alta correctamente.");
+            } else {
+                System.out.println("No se ha podido dar de alta el cliente.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al insertar nuevo cliente en la base de datos");
+            System.out.println(e.getMessage());
+        }
     }
 
     public void listarClientes(){
         System.out.println("LISTADO DE CLIENTES");
-        if(listaClientes.isEmpty()){
+        List<Cliente> clientes = clienteDAO.obtenerClientes();
+        if(clientes.isEmpty()){
             System.out.println("No hay clientes registrados");
         } else {
-            for(Cliente cliente : listaClientes) {
+            for(Cliente cliente : clientes) {
                 System.out.println(cliente);
             }
         }
@@ -91,73 +97,68 @@ public class ClienteController {
 
     public void buscarCliente(){
         String dniCliente = leerTexto("Introduce el DNI del cliente: ");
-        boolean encontrado = false;
+        Cliente cliente = clienteDAO.obtenerClientePorDni(dniCliente);
 
-        for(Cliente cliente : listaClientes) {
-            if(cliente.getDni().equalsIgnoreCase(dniCliente)) {
-                System.out.println(cliente);
-                encontrado = true;
-                break;
-            }
-        }
-        if(!encontrado) {
+        if(cliente != null) {
+            System.out.println(cliente);
+        } else {
             System.out.println("No se ha encontrado ningún cliente con dicho dni");
         }
+
     }
 
     public void modificarDatosCliente(){
         String dniCliente = leerTexto("Introduce el DNI del cliente a modificar: ");
-        boolean encontrado = false;
-
-        for(Cliente cliente : listaClientes) {
-            if (cliente.getDni().equalsIgnoreCase(dniCliente)) {
-                encontrado = true;
-                String nuevoNombre = leerTexto("Nuevo nombre: ");
-                String nuevosApellidos = leerTexto("Nuevos apellidos: ");
-                String nuevoEmail = leerTexto("Nuevo email: ");
-
-                if (!cliente.getEmail().equalsIgnoreCase(nuevoEmail) && existeEmail(nuevoEmail)) {
-                    System.out.println("Ya existe otro cliente con ese email.");
-                    return;
-                }
-                System.out.print("Nuevo teléfono: ");
-                String nuevoTelefono = scanner.nextLine().trim();
-                LocalDate nuevaFechaNacimiento = leerFecha("Nueva fecha de nacimiento (yyyy-MM-dd): ");
-                cliente.setNombre(nuevoNombre);
-                cliente.setApellidos(nuevosApellidos);
-                cliente.setEmail(nuevoEmail);
-                cliente.setTelefono(nuevoTelefono);
-                cliente.setFechaNacimiento(nuevaFechaNacimiento);
-
-                System.out.println("Cliente modificado correctamente");
-                System.out.println(cliente);
-                break;
-            }
+        Cliente cliente = clienteDAO.obtenerClientePorDni(dniCliente);
+        if (cliente == null) {
+            System.out.println("No se ha encontrado ningún cliente con dicho DNI");
+            return;
         }
-        if(!encontrado) {
-            System.out.println("No se ha encontrado ningún cliente con dicho dni");
+
+        String nuevoNombre = leerTexto("Nuevo nombre: ");
+        String nuevosApellidos = leerTexto("Nuevos apellidos: ");
+        String nuevoEmail = leerTexto("Nuevo email: ");
+        System.out.print("Nuevo teléfono: ");
+        String nuevoTelefono = scanner.nextLine().trim();
+        LocalDate nuevaFechaNacimiento = leerFecha("Nueva fecha de nacimiento (yyyy-MM-dd): ");
+
+        cliente.setNombre(nuevoNombre);
+        cliente.setApellidos(nuevosApellidos);
+        cliente.setEmail(nuevoEmail);
+        cliente.setTelefono(nuevoTelefono);
+        cliente.setFechaNacimiento(nuevaFechaNacimiento);
+
+        int filasActualizadas = clienteDAO.actualizarCliente(cliente);
+
+        if (filasActualizadas > 0) {
+            System.out.println("Cliente modificado correctamente");
+            System.out.println(cliente);
+        } else {
+            System.out.println("No se ha podido modificar el cliente.");
         }
     }
 
     public void eliminarCliente(){
         String dniCliente = leerTexto("Introduce el DNI del cliente a eliminar: ");
-        Cliente clienteAEliminar = null;
-
-        for(Cliente cliente : listaClientes) {
-            if (cliente.getDni().equalsIgnoreCase(dniCliente)) {
-                clienteAEliminar = cliente;
-                break;
-            }
+        Cliente cliente = clienteDAO.obtenerClientePorDni(dniCliente);
+        if (cliente == null) {
+            System.out.println("No se ha encontrado ningún cliente con dicho DNI");
+            return;
         }
-        if(clienteAEliminar != null) {
-            if (tieneComprasAsociadas(clienteAEliminar)) {
-                System.out.println("No se puede eliminar el cliente porque tiene compras asociadas.");
-                return;
-            }
-            listaClientes.remove(clienteAEliminar);
+
+        if (tieneComprasAsociadas(cliente)) {
+            System.out.println("No se puede eliminar el cliente porque tiene compras asociadas.");
+            return;
+        }
+
+        int filasEliminadas = clienteDAO.eliminarCliente(dniCliente);
+
+        if (filasEliminadas > 0) {
             System.out.println("Cliente eliminado correctamente");
+        } else if (filasEliminadas == 0) {
+            System.out.println("No se ha encontrado ningún cliente con ese DNI");
         } else {
-            System.out.println("No se ha encontrado ningún cliente con dicho dni");
+            System.out.println("No se ha podido eliminar el cliente");
         }
     }
 
@@ -186,24 +187,6 @@ public class ClienteController {
                 System.out.println("Formato de fecha no válido. Usa yyyy-MM-dd.");
             }
         }
-    }
-
-    private boolean existeDni(String dni) {
-        for (Cliente cliente : listaClientes) {
-            if (cliente.getDni().equalsIgnoreCase(dni)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean existeEmail(String email) {
-        for (Cliente cliente : listaClientes) {
-            if (cliente.getEmail().equalsIgnoreCase(email)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     private boolean tieneComprasAsociadas(Cliente cliente) {
