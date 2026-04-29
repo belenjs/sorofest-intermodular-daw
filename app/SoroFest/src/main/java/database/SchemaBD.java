@@ -46,5 +46,13 @@ public interface SchemaBD {
     String COL_ES_CABEZA_CARTEL = "es_cabeza_cartel";
     String COL_DESCRIPCION = "descripcion";
 
+    // TABLA CONCIERTO
+    String TAB_CONCIERTO = "Concierto";
+    String COL_ID_CONCIERTO = "id_concierto";
+    String COL_ID_EDICION_FK = "id_edicion";
+    String COL_ID_ARTISTA_FK = "id_artista";
+    String COL_FECHA = "fecha";
+    String COL_HORA_INICIO = "hora_inicio";
+    String COL_HORA_FIN = "hora_fin";
 }
 

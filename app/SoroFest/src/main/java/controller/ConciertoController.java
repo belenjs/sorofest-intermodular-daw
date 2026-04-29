@@ -1,10 +1,13 @@
 package controller;
 
+import dao.ArtistaDAO;
+import dao.ConciertoDAO;
 import model.Artista;
 import model.Concierto;
 import model.Edicion;
 import view.ConciertoView;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
@@ -16,15 +19,17 @@ public class ConciertoController {
     private Scanner scanner;
     private ConciertoView conciertoView;
     private List<Concierto> listaConciertos;
-    private List<Artista> listaArtistas;
     private Edicion edicion;
+    private ConciertoDAO conciertoDAO;
+    private ArtistaDAO artistaDAO;
 
-    public ConciertoController(Scanner scanner, List<Artista> listaArtistas, Edicion edicion ){
+    public ConciertoController(Scanner scanner, Edicion edicion ){
         this.scanner = scanner;
         this.conciertoView = new ConciertoView();
         this.listaConciertos = new ArrayList<>();
-        this.listaArtistas = listaArtistas;
         this.edicion = edicion;
+        this.conciertoDAO = new ConciertoDAO();
+        this.artistaDAO = new ArtistaDAO();
     }
 
     public void iniciarMenuConciertos() {
@@ -83,9 +88,8 @@ public class ConciertoController {
             return;
         }
 
-        int idConcierto = generarNuevoConcierto();
         Concierto concierto = new Concierto(
-                idConcierto,
+                0,
                 edicion,
                 artista,
                 fecha,
@@ -93,17 +97,27 @@ public class ConciertoController {
                 horaFin
         );
 
-        guardarConcierto(concierto);
-        System.out.println("Concierto dado de alta correctamente.");
-        System.out.println(concierto);
+        try {
+            int filasInsertadas = conciertoDAO.insertarConcierto(concierto);
+
+            if (filasInsertadas > 0) {
+                System.out.println("Concierto dado de alta correctamente.");
+            } else {
+                System.out.println("No se ha podido dar de alta el concierto.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al insertar concierto en la base de datos.");
+            System.out.println(e.getMessage());
+        }
     }
 
     public void listarConciertos(){
         System.out.println("LISTADO DE CONCIERTOS");
+        List<Concierto> conciertos = conciertoDAO.obtenerConciertos();
         if (listaConciertos.isEmpty()) {
             System.out.println("No hay conciertos registrados.");
         } else {
-            for (Concierto concierto : listaConciertos) {
+            for (Concierto concierto : conciertos) {
                 System.out.println(concierto);
             }
         }
@@ -114,7 +128,7 @@ public class ConciertoController {
         if (scanner.hasNextInt()) {
             int idConcierto = scanner.nextInt();
             scanner.nextLine();
-            Concierto concierto = buscarConciertoPorId(idConcierto);
+            Concierto concierto = conciertoDAO.obtenerConciertoPorId(idConcierto);
 
             if (concierto != null) {
                 System.out.println(concierto);
@@ -133,7 +147,7 @@ public class ConciertoController {
         if (scanner.hasNextInt()) {
             int idConcierto = scanner.nextInt();
             scanner.nextLine();
-            Concierto concierto = buscarConciertoPorId(idConcierto);
+            Concierto concierto = conciertoDAO.obtenerConciertoPorId(idConcierto);
 
             if (concierto == null) {
                 System.out.println("No se ha encontrado ningún concierto con dicho id.");
@@ -144,6 +158,10 @@ public class ConciertoController {
 
             if (!hayArtistasDisponibles()) {
                 System.out.println("No hay artistas registradas.");
+                return;
+            }
+            if (!hayEdicionDisponible()) {
+                System.out.println("No hay ninguna edición disponible.");
                 return;
             }
             mostrarArtistasDisponibles();
@@ -159,16 +177,31 @@ public class ConciertoController {
                 return;
             }
 
-            System.out.print("Nueva fecha (yyyy-MM-dd): ");
-            concierto.setFecha(LocalDate.parse(scanner.nextLine()));
-            System.out.print("Nueva hora de inicio (HH:mm): ");
-            concierto.setHoraInicio(LocalTime.parse(scanner.nextLine()));
-            System.out.print("Nueva hora de fin (HH:mm): ");
-            concierto.setHoraFin(LocalTime.parse(scanner.nextLine()));
-            concierto.setArtista(nuevaArtista);
-            System.out.println("Concierto modificado correctamente.");
-            System.out.println(concierto);
+            LocalDate nuevaFecha = leerFecha("Nueva fecha (yyyy-MM-dd): ");
+            if (nuevaFecha.isBefore(edicion.getFechaInicio()) || nuevaFecha.isAfter(edicion.getFechaFin())) {
+                System.out.println("La fecha del concierto debe estar dentro de las fechas de la edición.");
+                return;
+            }
 
+            LocalTime nuevaHoraInicio = leerHora("Nueva hora de inicio (HH:mm): ");
+            LocalTime nuevaHoraFin = leerHora("Nueva hora de fin (HH:mm): ");
+
+            if (!nuevaHoraFin.isAfter(nuevaHoraInicio)) {
+                System.out.println("La hora de fin debe ser posterior a la hora de inicio.");
+                return;
+            }
+            concierto.setArtista(nuevaArtista);
+            concierto.setFecha(nuevaFecha);
+            concierto.setHoraInicio(nuevaHoraInicio);
+            concierto.setHoraFin(nuevaHoraFin);
+
+            int filasActualizadas = conciertoDAO.actualizarConcierto(concierto);
+            if (filasActualizadas > 0) {
+                System.out.println("Concierto modificado correctamente.");
+                System.out.println(concierto);
+            } else {
+                System.out.println("No se ha podido modificar el concierto.");
+            }
         } else {
             System.out.println("Debes introducir un número entero.");
             scanner.nextLine();
@@ -179,15 +212,22 @@ public class ConciertoController {
         System.out.print("Introduce el id del concierto que quieres eliminar: ");
 
         if (scanner.hasNextInt()) {
-            int idBuscado = scanner.nextInt();
+            int idConcierto = scanner.nextInt();
             scanner.nextLine();
-            Concierto concierto = buscarConciertoPorId(idBuscado);
+            Concierto concierto = conciertoDAO.obtenerConciertoPorId(idConcierto);
 
-            if (concierto != null) {
-                listaConciertos.remove(concierto);
-                System.out.println("Concierto eliminado correctamente.");
-            } else {
+            if (concierto == null) {
                 System.out.println("No se ha encontrado ningún concierto con dicho id.");
+                return;
+            }
+
+            int filasEliminadas = conciertoDAO.eliminarConcierto(idConcierto);
+            if (filasEliminadas > 0) {
+                System.out.println("Concierto eliminado correctamente.");
+            } else if (filasEliminadas == 0) {
+                System.out.println("No se ha encontrado ningún concierto con dicho id.");
+            } else {
+                System.out.println("No se ha podido eliminar el concierto.");
             }
         } else {
             System.out.println("Debes introducir un número entero.");
@@ -200,12 +240,13 @@ public class ConciertoController {
     }
 
     private boolean hayArtistasDisponibles() {
-        return !listaArtistas.isEmpty();
+        return !artistaDAO.obtenerArtistas().isEmpty();
     }
 
     private void mostrarArtistasDisponibles() {
+        List<Artista> artistas = artistaDAO.obtenerArtistas();
         System.out.println("Artistas disponibles:");
-        for (Artista artista : listaArtistas) {
+        for (Artista artista : artistas) {
             System.out.println("ID Artista: " + artista.getIdArtista() + " - Nombre artístico: " + artista.getNombreArtista());
         }
     }
@@ -223,30 +264,8 @@ public class ConciertoController {
         }
     }
 
-    private int generarNuevoConcierto() {
-        return listaConciertos.size() + 1;
-    }
-
-    private void guardarConcierto(Concierto concierto) {
-        listaConciertos.add(concierto);
-    }
-
     private Artista buscarArtistaPorId(int idBuscado) {
-        for (Artista artista : listaArtistas) {
-            if (artista.getIdArtista() == idBuscado) {
-                return artista;
-            }
-        }
-        return null;
-    }
-
-    private Concierto buscarConciertoPorId(int idConcierto) {
-        for (Concierto concierto : listaConciertos) {
-            if (concierto.getIdConcierto() == idConcierto) {
-                return concierto;
-            }
-        }
-        return null;
+        return artistaDAO.obtenerArtistaPorId(idBuscado);
     }
 
     private LocalDate leerFecha(String mensaje) {
@@ -274,9 +293,5 @@ public class ConciertoController {
                 System.out.println("Formato de hora no válido. Usa HH:mm.");
             }
         }
-    }
-
-    public List<Concierto> getListaConciertos() {
-        return listaConciertos;
     }
 }
