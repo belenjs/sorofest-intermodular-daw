@@ -23,14 +23,13 @@ public class Compra {
 
     @Override
     public String toString() {
-        return "Compra{" +
-                "idCompra=" + idCompra +
-                "idCliente=" + cliente.getIdCliente() +
-                ", cliente=" + cliente.getNombre() + " " + cliente.getApellidos() +
-                ", fechaCompra=" + fechaCompra +
-                ", importeTotal=" + importeTotal +
-                ", metodoPago='" + metodoPago + '\'' +
-                '}';
+        return "\n--- COMPRA ---" +
+                "\nID: " + idCompra +
+                "\nID Cliente: " + cliente.getIdCliente()  +
+                "\nCliente: " + cliente.getNombre() + " " + cliente.getApellidos() +
+                "\nFecha de compra: " + fechaCompra +
+                "\nImporte total: " + importeTotal +
+                "\nMétodo de pago: " + metodoPago;
     }
 
     public int getIdCompra() {
