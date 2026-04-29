@@ -1,9 +1,11 @@
 package controller;
 
+import dao.ArtistaDAO;
 import model.Artista;
 import model.Concierto;
 import view.ArtistaView;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -13,11 +15,13 @@ public class ArtistaController {
     private ArtistaView artistaView;
     private List<Artista> listaArtistas;
     private List<Concierto> listaConciertos;
+    private ArtistaDAO artistaDAO;
 
     public ArtistaController(Scanner scanner){
         this.scanner = scanner;
         this.artistaView = new ArtistaView();
         this.listaArtistas = new ArrayList<>();
+        this.artistaDAO = new ArtistaDAO();
     }
 
     public void iniciarMenuArtista(){
@@ -55,39 +59,38 @@ public class ArtistaController {
         boolean esCabezaCartel = leerBoolean("¿Es cabeza de cartel? (true/false): ");
         String descripcion = leerTexto("Descripción: ");
 
-        int idArtista = listaArtistas.size() + 1;
         Artista artista = new Artista(
-                idArtista,
+                0,
                 nombreArtista,
                 tipoArtista,
                 generoMusical,
                 esCabezaCartel,
                 descripcion
         );
-        listaArtistas.add(artista);
 
-        System.out.println("Artista dada de alta correctamente.");
-        System.out.println(artista);
+        try {
+            int filasInsertadas = artistaDAO.insertarArtista(artista);
+            if (filasInsertadas > 0) {
+                System.out.println("Artista dada de alta correctamente.");
+            } else {
+                System.out.println("No se ha podido dar de alta la artista.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al insertar artista en la base de datos.");
+            System.out.println(e.getMessage());
+        }
     }
 
     public void listarArtistas(){
         System.out.println("LISTADO DE ARTISTAS");
-        if (listaArtistas.isEmpty()) {
+        List<Artista> artistas = artistaDAO.obtenerArtistas();
+        if (artistas.isEmpty()) {
             System.out.println("No hay artistas registradas.");
         } else {
-            for (Artista artista : listaArtistas) {
+            for (Artista artista : artistas) {
                 System.out.println(artista);
             }
         }
-    }
-
-    private Artista buscarArtistaPorId(int idArtista) {
-        for (Artista artista : listaArtistas) {
-            if (artista.getIdArtista() == idArtista) {
-                return artista;
-            }
-        }
-        return null;
     }
 
     public void buscarArtista(){
@@ -96,7 +99,7 @@ public class ArtistaController {
         if(scanner.hasNextInt()) {
             int idArtista = scanner.nextInt();
             scanner.nextLine();
-            Artista artista = buscarArtistaPorId(idArtista);
+            Artista artista = artistaDAO.obtenerArtistaPorId(idArtista);
 
             if (artista != null) {
                 System.out.println(artista);
@@ -115,7 +118,7 @@ public class ArtistaController {
         if(scanner.hasNextInt()) {
             int idArtista = scanner.nextInt();
             scanner.nextLine();
-            Artista artista = buscarArtistaPorId(idArtista);
+            Artista artista = artistaDAO.obtenerArtistaPorId(idArtista);
 
             if (artista != null) {
                 artista.setNombreArtista(leerTexto("Nuevo nombre artístico: "));
@@ -124,8 +127,13 @@ public class ArtistaController {
                 artista.setEsCabezaCartel(leerBoolean("¿Es cabeza de cartel? (true/false): "));
                 artista.setDescripcion(leerTexto("Nueva descripción: "));
 
-                System.out.println("Artista modificada correctamente");
-                System.out.println(artista);
+                int filasActualizadas = artistaDAO.actualizarArtista(artista);
+                if (filasActualizadas > 0) {
+                    System.out.println("Artista modificada correctamente.");
+                    System.out.println(artista);
+                } else {
+                    System.out.println("No se ha podido modificar la artista.");
+                }
             } else {
                 System.out.println("No se ha encontrado ninguna artista con dicho id.");
             }
@@ -141,17 +149,23 @@ public class ArtistaController {
         if(scanner.hasNextInt()) {
             int idArtista = scanner.nextInt();
             scanner.nextLine();
-            Artista artista = buscarArtistaPorId(idArtista);
+            Artista artista = artistaDAO.obtenerArtistaPorId(idArtista);
 
             if (artista != null) {
                 if (tieneConciertosAsociados(artista)) {
                     System.out.println("No se puede eliminar la artista porque tiene conciertos asociados.");
                     return;
                 }
-                listaArtistas.remove(artista);
-                System.out.println("Artista eliminada correctamente.");
+                int filasEliminadas = artistaDAO.eliminarArtista(idArtista);
+                if (filasEliminadas > 0) {
+                    System.out.println("Artista eliminada correctamente.");
+                } else if (filasEliminadas == 0) {
+                    System.out.println("No se ha encontrado ninguna artista con dicho id.");
+                } else {
+                    System.out.println("No se ha podido eliminar la artista.");
+                }
             } else {
-                System.out.println("No se ha encontrado ninguna artista con dicho nombre artístico.");
+                System.out.println("No se ha encontrado ninguna artista con dicho id.");
             }
         } else {
             System.out.println("Debes introducir un número entero.");
@@ -200,10 +214,6 @@ public class ArtistaController {
 
     public List<Artista> getListaArtistas() {
         return listaArtistas;
-    }
-
-    public void setListaConciertos(List<Concierto> listaConciertos) {
-        this.listaConciertos = listaConciertos;
     }
 }
 

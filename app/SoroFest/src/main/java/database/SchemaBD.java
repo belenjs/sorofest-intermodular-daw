@@ -36,5 +36,15 @@ public interface SchemaBD {
     String COL_ID_EDICION_ENTRADA_FK = "id_edicion";
     String COL_ID_COMPRA_FK = "id_compra";
     String COL_CODIGO_ENTRADA = "codigo_entrada";
+
+    // TABLA ARTISTA
+    String TAB_ARTISTA = "Artista";
+    String COL_ID_ARTISTA = "id_artista";
+    String COL_NOMBRE_ARTISTA = "nombre_artista";
+    String COL_TIPO_ARTISTA = "tipo_artista";
+    String COL_GENERO_MUSICAL = "genero_musical";
+    String COL_ES_CABEZA_CARTEL = "es_cabeza_cartel";
+    String COL_DESCRIPCION = "descripcion";
+
 }
 

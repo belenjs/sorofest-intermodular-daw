@@ -33,8 +33,6 @@ public class GestionAppController {
                 scanner,
                 edicionController.getEdicion()
         );
-
-        artistaController.setListaConciertos(conciertoController.getListaConciertos());
     }
 
     public void iniciar(){
