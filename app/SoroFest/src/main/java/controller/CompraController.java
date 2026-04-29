@@ -1,24 +1,27 @@
 package controller;
 
+import dao.ClienteDAO;
+import dao.CompraDAO;
 import model.Cliente;
 import model.Compra;
 import model.Edicion;
 import model.Entrada;
 import view.CompraView;
 
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class CompraController {
     private Scanner scanner;
     private CompraView compraView;
-    private List<Compra> listaCompras;
     private List<Cliente> listaClientes;
     private Edicion edicion;
     private List<Entrada> listaEntradas;
+    private CompraDAO compraDAO;
+    private ClienteDAO clienteDAO;
 
     public CompraController(){
 
@@ -27,9 +30,10 @@ public class CompraController {
     public CompraController(Scanner scanner, List<Cliente> listaClientes, Edicion edicion){
         this.scanner = scanner;
         this.compraView = new CompraView();
-        this.listaCompras = new ArrayList<>();
         this.listaClientes = listaClientes;
         this.edicion = edicion;
+        this.compraDAO = new CompraDAO();
+        this.clienteDAO = new ClienteDAO();
     }
 
     public void iniciarMenuCompras() {
@@ -98,28 +102,34 @@ public class CompraController {
         System.out.println("Importe total calculado: " + importeTotal + " €");
 
         String metodoPago = leerMetodoPago("Método de pago (Tarjeta, Bizum, PayPal, Transferencia): ");
-
-        int idCompra = generarNuevoIdCompra();
         Compra compra = new Compra(
-                idCompra,
+                0,
                 cliente,
                 fechaCompra,
                 importeTotal,
                 metodoPago
         );
-        guardarCompra(compra);
-
-        System.out.println("Compra dada de alta correctamente.");
-        System.out.println(compra);
+        try {
+            int filasInsertadas = compraDAO.insertarCompra(compra);
+            if (filasInsertadas > 0) {
+                System.out.println("Compra dada de alta correctamente.");
+            } else {
+                System.out.println("No se ha podido dar de alta la compra.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al insertar la compra en la base de datos.");
+            System.out.println(e.getMessage());
+        }
     }
 
     public void listarCompras(){
         System.out.println("LISTADO DE COMPRAS");
+        List<Compra> compras = compraDAO.obtenerCompras();
 
-        if (listaCompras.isEmpty()) {
+        if (compras.isEmpty()) {
             System.out.println("No hay compras registradas.");
         } else {
-            for (Compra compra : listaCompras) {
+            for (Compra compra : compras) {
                 System.out.println(compra);
             }
         }
@@ -130,7 +140,7 @@ public class CompraController {
         if (scanner.hasNextInt()) {
             int idCompra = scanner.nextInt();
             scanner.nextLine();
-            Compra compra = buscarCompraPorId(idCompra);
+            Compra compra = compraDAO.obtenerCompraPorId(idCompra);
 
             if (compra != null) {
                 System.out.println(compra);
@@ -148,7 +158,7 @@ public class CompraController {
         if (scanner.hasNextInt()) {
             int idCompra = scanner.nextInt();
             scanner.nextLine();
-            Compra compra = buscarCompraPorId(idCompra);
+            Compra compra = compraDAO.obtenerCompraPorId(idCompra);
 
             if (compra == null) {
                 System.out.println("No se ha encontrado ninguna compra con dicho id.");
@@ -192,7 +202,6 @@ public class CompraController {
             }
 
             double nuevoImporteTotal = cantidadEntradas * edicion.getPrecioEntrada();
-            compra.setImporteTotal(nuevoImporteTotal);
 
             System.out.println("Nuevo importe total calculado: " + nuevoImporteTotal + " €");
             String nuevoMetodoPago = leerMetodoPago("Nuevo método de pago (Tarjeta, Bizum, PayPal, Transferencia): ");
@@ -201,9 +210,13 @@ public class CompraController {
             compra.setImporteTotal(nuevoImporteTotal);
             compra.setMetodoPago(nuevoMetodoPago);
 
-            System.out.println("Compra modificada correctamente.");
-            System.out.println(compra);
-
+            int filasActualizadas = compraDAO.actualizarCompra(compra);
+            if (filasActualizadas > 0) {
+                System.out.println("Compra modificada correctamente.");
+                System.out.println(compra);
+            } else {
+                System.out.println("No se ha podido modificar la compra.");
+            }
         } else {
             System.out.println("Debes introducir un número entero.");
             scanner.nextLine();
@@ -215,17 +228,23 @@ public class CompraController {
         if (scanner.hasNextInt()) {
             int idCompra = scanner.nextInt();
             scanner.nextLine();
-            Compra compra = buscarCompraPorId(idCompra);
+            Compra compra = compraDAO.obtenerCompraPorId(idCompra);
 
-            if (compra != null) {
-                if (tieneEntradasAsociadas(compra)) {
-                    System.out.println("No se puede eliminar la compra porque tiene entradas asociadas.");
-                    return;
-                }
-                listaCompras.remove(compra);
-                System.out.println("Compra eliminada correctamente.");
-            } else {
+            if (compra == null) {
                 System.out.println("No se ha encontrado ninguna compra con dicho id.");
+                return;
+            }
+            if (tieneEntradasAsociadas(compra)) {
+                System.out.println("No se puede eliminar la compra porque tiene entradas asociadas.");
+                return;
+            }
+            int filasEliminadas = compraDAO.eliminarCompra(idCompra);
+            if (filasEliminadas > 0) {
+                System.out.println("Compra eliminada correctamente.");
+            } else if (filasEliminadas == 0) {
+                System.out.println("No se ha encontrado ninguna compra con dicho id.");
+            } else {
+                System.out.println("No se ha podido eliminar la compra.");
             }
         } else {
             System.out.println("Debes introducir un número entero.");
@@ -234,7 +253,7 @@ public class CompraController {
     }
 
     private boolean hayClientesDisponibles() {
-        return !listaClientes.isEmpty();
+        return !clienteDAO.obtenerClientes().isEmpty();
     }
 
     private boolean hayEdicionDisponible() {
@@ -242,8 +261,9 @@ public class CompraController {
     }
 
     private void mostrarClientesDisponibles() {
+        List<Cliente> clientes = clienteDAO.obtenerClientes();
         System.out.println("Clientes disponibles:");
-        for (Cliente cliente : listaClientes) {
+        for (Cliente cliente : clientes) {
             System.out.println("ID Cliente: " + cliente.getIdCliente() + " - Nombre: " + cliente.getNombre() + " " + cliente.getApellidos());
         }
     }
@@ -261,27 +281,11 @@ public class CompraController {
         }
     }
 
-    private int generarNuevoIdCompra() {
-        return listaCompras.size() + 1;
-    }
-
-    private void guardarCompra(Compra compra) {
-        listaCompras.add(compra);
-    }
-
     private Cliente buscarClientePorId(int idBuscado) {
-        for (Cliente cliente : listaClientes) {
+        List<Cliente> clientes = clienteDAO.obtenerClientes();
+        for (Cliente cliente : clientes) {
             if (cliente.getIdCliente() == idBuscado) {
                 return cliente;
-            }
-        }
-        return null;
-    }
-
-    private Compra buscarCompraPorId(int idCompra) {
-        for (Compra compra : listaCompras) {
-            if (compra.getIdCompra() == idCompra) {
-                return compra;
             }
         }
         return null;
@@ -326,10 +330,6 @@ public class CompraController {
             }
         }
         return false;
-    }
-
-    public List<Compra> getListaCompras() {
-        return listaCompras;
     }
 
     public void setListaEntradas(List<Entrada> listaEntradas) {
