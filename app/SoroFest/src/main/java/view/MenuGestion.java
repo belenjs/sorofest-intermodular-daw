@@ -12,6 +12,6 @@ public class MenuGestion {
         System.out.println("5. Gestionar entradas");
         System.out.println("6. Gestionar compras");
         System.out.println("0. Salir");
-        System.out.println("Por favor, selecciona una opción: ");
+        System.out.print("Por favor, selecciona una opción: ");
     }
 }

@@ -89,8 +89,9 @@ public class EntradaController {
             return;
         }
         int totalInsertadas = 0;
+        int baseCodigo = entradaDAO.obtenerSiguienteNumeroEntrada();
         for (int i = 0; i < cantidadEntradas; i++) {
-            String codigoEntrada = generarCodigoEntrada();
+            String codigoEntrada = String.format("SORO2026-%04d", baseCodigo + i);
             Entrada entrada = new Entrada(
                     0,
                     edicion,
@@ -213,22 +214,11 @@ public class EntradaController {
         return (int) cantidad;
     }
 
-    private String generarCodigoEntrada() {
-        int numero = entradaDAO.obtenerEntradas().size() + 1;
-        return String.format("SORO2026-%04d", numero);
-    }
-
     private Compra buscarCompraPorId(int idCompra) {
         return compraDAO.obtenerCompraPorId(idCompra);
     }
 
     private boolean existenEntradasCompra(Compra compra) {
-        List<Entrada> entradas = entradaDAO.obtenerEntradas();
-        for (Entrada entrada : entradas) {
-            if (entrada.getCompra().getIdCompra() == compra.getIdCompra()) {
-                return true;
-            }
-        }
-        return false;
+        return entradaDAO.existeEntradaPorCompra(compra.getIdCompra());
     }
 }

@@ -7,6 +7,6 @@ public class EdicionView {
         System.out.println("1. Ver datos de la edición");
         System.out.println("2. Modificar edición");
         System.out.println("0. Volver");
-        System.out.println("Selecciona una opción");
+        System.out.print("Selecciona una opción: ");
     }
 }

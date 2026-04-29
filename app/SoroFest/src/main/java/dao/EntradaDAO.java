@@ -264,4 +264,25 @@ public class EntradaDAO {
         }
         return false;
     }
+
+    public int obtenerSiguienteNumeroEntrada() {
+        String query = String.format(
+                "SELECT MAX(%s) AS ultimo_id FROM %s",
+                SchemaBD.COL_ID_ENTRADA,
+                SchemaBD.TAB_ENTRADA
+        );
+
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                int ultimoId = resultSet.getInt("ultimo_id");
+                return ultimoId + 1;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener el siguiente número de entrada");
+            System.out.println(e.getMessage());
+        }
+        return 1;
+    }
 }

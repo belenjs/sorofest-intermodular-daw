@@ -257,7 +257,12 @@ public class ConciertoController {
         if (scanner.hasNextInt()) {
             int idArtista = scanner.nextInt();
             scanner.nextLine();
-            return idArtista;
+            if (idArtista > 0) {
+                return idArtista;
+            } else {
+                System.out.println("El id debe ser mayor que 0.");
+                return -1;
+            }
         } else {
             System.out.println("Debes introducir un número entero.");
             scanner.nextLine();

@@ -32,7 +32,7 @@ public class Edicion {
         return "\n--- EDICIÓN ---" +
                 "\nID Edición: " + idEdicion +
                 "\nNombre edición: " + nombreEdicion +
-                "\nFecha inicio: " + fechaFin +
+                "\nFecha inicio: " + fechaInicio +
                 "\nFecha fin: " + fechaFin +
                 "\nCiudad: " + ciudad +
                 "\nRecinto: " + recinto +

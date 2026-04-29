@@ -13,7 +13,7 @@ public class ConexionBD {
                 createConnection();
             }
         } catch (SQLException e) {
-            System.out.println("Error al compronbar el estado de la conexión");
+            System.out.println("Error al comprobar el estado de la conexión");
             System.out.println(e.getMessage());
         }
         return connection;

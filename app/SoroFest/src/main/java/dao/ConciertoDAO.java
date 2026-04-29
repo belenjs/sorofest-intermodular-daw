@@ -43,7 +43,7 @@ public class ConciertoDAO {
         List<Concierto> conciertos = new ArrayList<>();
         String query = String.format(
                 "SELECT co.*, " +
-                        "ar.%s, ar.%s, ar.%s, ar.%s, ar.%s, " +
+                        "ar.%s, ar.%s, ar.%s, ar.%s, ar.%s, ar.%s, " +
                         "ed.%s, ed.%s, ed.%s, ed.%s, ed.%s, ed.%s, ed.%s, ed.%s " +
                         "FROM %s co " +
                         "INNER JOIN %s ar ON co.%s = ar.%s " +
@@ -118,7 +118,7 @@ public class ConciertoDAO {
     public Concierto obtenerConciertoPorId(int idConciertoBuscado) {
         String query = String.format(
                 "SELECT co.*, " +
-                        "ar.%s, ar.%s, ar.%s, ar.%s, ar.%s, " +
+                        "ar.%s, ar.%s, ar.%s, ar.%s, ar.%s, ar.%s, " +
                         "ed.%s, ed.%s, ed.%s, ed.%s, ed.%s, ed.%s, ed.%s, ed.%s " +
                         "FROM %s co " +
                         "INNER JOIN %s ar ON co.%s = ar.%s " +
