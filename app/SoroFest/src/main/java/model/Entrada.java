@@ -19,13 +19,12 @@ public class Entrada {
 
     @Override
     public String toString() {
-        return "Entrada{" +
-                "idEntrada=" + idEntrada +
-                ", edicion=" + edicion.getNombreEdicion() +
-                ", compra=" + compra.getIdCompra() +
-                ", cliente='" + compra.getCliente().getNombre() + " " + compra.getCliente().getApellidos() +
-                ", codigoEntrada='" + codigoEntrada + '\'' +
-                '}';
+        return "\n--- Entrada ---" +
+                "\nID Entrada: " + idEntrada +
+                "\nEdición: " + edicion.getNombreEdicion() +
+                "\nID Compra: " + compra.getIdCompra() +
+                "\nCliente: " + compra.getCliente().getNombre() + " " + compra.getCliente().getApellidos() +
+                "\nCódigo entrada: " + codigoEntrada;
     }
 
     public int getIdEntrada() {
