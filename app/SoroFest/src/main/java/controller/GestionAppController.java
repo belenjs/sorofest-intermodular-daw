@@ -22,7 +22,6 @@ public class GestionAppController {
         artistaController = new ArtistaController(scanner);
         conciertoController = new ConciertoController(
                 scanner,
-                artistaController.getListaArtistas(),
                 edicionController.getEdicion()
         );
         compraController = new CompraController (

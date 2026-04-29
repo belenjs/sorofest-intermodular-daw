@@ -23,14 +23,13 @@ public class Artista {
 
     @Override
     public String toString() {
-        return "Artista{" +
-                "idArtista=" + idArtista +
-                ", nombreArtista='" + nombreArtista + '\'' +
-                ", tipoArtista='" + tipoArtista + '\'' +
-                ", generoMusical='" + generoMusical + '\'' +
-                ", esCabezaCartel=" + esCabezaCartel +
-                ", descripcion='" + descripcion + '\'' +
-                '}';
+        return "\n--- CLIENTE ---" +
+                "\nID Artista: " + idArtista +
+                "\nNombre artístico: " + nombreArtista +
+                "\nTipo de artista: " + tipoArtista +
+                "\nGénero musical: " + generoMusical +
+                "\n¿Es cabeza de cartel?: " + esCabezaCartel +
+                "\nDescripción: " + descripcion;
     }
 
     public int getIdArtista() {

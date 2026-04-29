@@ -1,6 +1,7 @@
 package controller;
 
 import dao.ArtistaDAO;
+import dao.ConciertoDAO;
 import model.Artista;
 import model.Concierto;
 import view.ArtistaView;
@@ -13,15 +14,14 @@ import java.util.Scanner;
 public class ArtistaController {
     private Scanner scanner;
     private ArtistaView artistaView;
-    private List<Artista> listaArtistas;
-    private List<Concierto> listaConciertos;
     private ArtistaDAO artistaDAO;
+    private ConciertoDAO conciertoDAO;
 
     public ArtistaController(Scanner scanner){
         this.scanner = scanner;
         this.artistaView = new ArtistaView();
-        this.listaArtistas = new ArrayList<>();
         this.artistaDAO = new ArtistaDAO();
+        this.conciertoDAO = new ConciertoDAO();
     }
 
     public void iniciarMenuArtista(){
@@ -201,19 +201,7 @@ public class ArtistaController {
     }
 
     private boolean tieneConciertosAsociados(Artista artista) {
-        if (listaConciertos == null) {
-            return false;
-        }
-        for (Concierto concierto : listaConciertos) {
-            if (concierto.getArtista().getIdArtista() == artista.getIdArtista()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public List<Artista> getListaArtistas() {
-        return listaArtistas;
+        return conciertoDAO.existeConciertoPorArtista(artista.getIdArtista());
     }
 }
 
