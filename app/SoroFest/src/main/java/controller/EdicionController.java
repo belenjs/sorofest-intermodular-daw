@@ -1,5 +1,6 @@
 package controller;
 
+import dao.EdicionDAO;
 import model.Edicion;
 import view.EdicionView;
 
@@ -11,19 +12,13 @@ public class EdicionController {
     private Scanner scanner;
     private EdicionView edicionView;
     private Edicion edicion;
+    private EdicionDAO edicionDAO;
 
     public EdicionController(Scanner scanner){
         this.scanner = scanner;
         this.edicionView = new EdicionView();
-        this.edicion = new Edicion(1,
-                "SoroFest Cádiz 2026",
-                LocalDate.of(2026, 7, 17),
-                LocalDate.of(2026, 7, 19),
-                "Cádiz",
-                "Muelle Reina Victoria",
-                40.0,
-                1000
-        );
+        this.edicionDAO = new EdicionDAO();
+        this.edicion = edicionDAO.obtenerEdicion();
     }
 
     public void iniciarMenuEdicion(){
@@ -51,6 +46,7 @@ public class EdicionController {
 
     public void verDatosEdicion(){
         System.out.println("--- DATOS DE LA EDICIÓN ---");
+        edicion = edicionDAO.obtenerEdicion();
         System.out.println(edicion);
     }
 
@@ -76,7 +72,12 @@ public class EdicionController {
         edicion.setPrecioEntrada(nuevoPrecioEntrada);
         edicion.setStockEntradas(nuevoStockEntradas);
 
-        System.out.println("Edición modificada correctamente.");
+        int filasActualizadas = edicionDAO.actualizarEdicion(edicion);
+        if (filasActualizadas > 0) {
+            System.out.println("Edición modificada correctamente.");
+        } else {
+            System.out.println("No se ha podido modificar la edición.");
+        }
     }
 
     private String leerTexto(String mensaje) {
