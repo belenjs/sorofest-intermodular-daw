@@ -2,7 +2,6 @@ package controller;
 
 import view.MenuGestion;
 
-import java.util.List;
 import java.util.Scanner;
 
 public class GestionAppController {
@@ -28,18 +27,14 @@ public class GestionAppController {
         );
         compraController = new CompraController (
                 scanner,
-                clienteController.getListaClientes(),
                 edicionController.getEdicion()
         );
         entradaController = new EntradaController(
                 scanner,
-                compraController.getListaCompras(),
                 edicionController.getEdicion()
         );
 
-        clienteController.setListaCompras(compraController.getListaCompras());
         artistaController.setListaConciertos(conciertoController.getListaConciertos());
-        compraController.setListaEntradas(entradaController.getListaEntradas());
     }
 
     public void iniciar(){
@@ -47,7 +42,7 @@ public class GestionAppController {
         do {
             menuGestion.mostrarMenuPrincipal();
             if(scanner.hasNextInt()) {
-                opcion = scanner.nextInt();;
+                opcion = scanner.nextInt();
                 scanner.nextLine();
 
                 switch (opcion) {
@@ -60,6 +55,10 @@ public class GestionAppController {
                     case 0 -> System.out.println("Saliendo de la app");
                     default -> System.out.println("Opción no válida");
                 }
+            } else {
+                System.out.println("Debes introducir un número.");
+                scanner.nextLine();
+                opcion = -1;
             }
         } while(opcion != 0);
         scanner.close();

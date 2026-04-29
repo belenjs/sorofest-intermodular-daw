@@ -2,10 +2,10 @@ package controller;
 
 import dao.ClienteDAO;
 import dao.CompraDAO;
+import dao.EntradaDAO;
 import model.Cliente;
 import model.Compra;
 import model.Edicion;
-import model.Entrada;
 import view.CompraView;
 
 import java.sql.SQLException;
@@ -17,23 +17,22 @@ import java.util.Scanner;
 public class CompraController {
     private Scanner scanner;
     private CompraView compraView;
-    private List<Cliente> listaClientes;
     private Edicion edicion;
-    private List<Entrada> listaEntradas;
     private CompraDAO compraDAO;
     private ClienteDAO clienteDAO;
+    private EntradaDAO entradaDAO;
 
     public CompraController(){
 
     }
 
-    public CompraController(Scanner scanner, List<Cliente> listaClientes, Edicion edicion){
+    public CompraController(Scanner scanner, Edicion edicion){
         this.scanner = scanner;
         this.compraView = new CompraView();
-        this.listaClientes = listaClientes;
         this.edicion = edicion;
         this.compraDAO = new CompraDAO();
         this.clienteDAO = new ClienteDAO();
+        this.entradaDAO = new EntradaDAO();
     }
 
     public void iniciarMenuCompras() {
@@ -273,7 +272,12 @@ public class CompraController {
         if (scanner.hasNextInt()) {
             int idCliente = scanner.nextInt();
             scanner.nextLine();
-            return idCliente;
+            if (idCliente > 0) {
+                return idCliente;
+            } else {
+                System.out.println("El id debe ser mayor que 0.");
+                return -1;
+            }
         } else {
             System.out.println("Debes introducir un número entero.");
             scanner.nextLine();
@@ -321,19 +325,6 @@ public class CompraController {
     }
 
     private boolean tieneEntradasAsociadas(Compra compra) {
-        if (listaEntradas == null) {
-            return false;
-        }
-        for (Entrada entrada : listaEntradas) {
-            if (entrada.getCompra().getIdCompra() == compra.getIdCompra()) {
-                return true;
-            }
-        }
-        return false;
+        return entradaDAO.existeEntradaPorCompra(compra.getIdCompra());
     }
-
-    public void setListaEntradas(List<Entrada> listaEntradas) {
-        this.listaEntradas = listaEntradas;
-    }
-
 }

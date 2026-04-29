@@ -1,31 +1,33 @@
 package controller;
 
+import dao.CompraDAO;
+import dao.EntradaDAO;
 import model.Compra;
 import model.Edicion;
 import model.Entrada;
 import view.EntradaView;
 
-import java.util.ArrayList;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
 public class EntradaController {
     private Scanner scanner;
     private EntradaView entradaView;
-    private List<Entrada> listaEntradas;
-    private List<Compra> listaCompras;
     private Edicion edicion;
+    private EntradaDAO entradaDAO;
+    private CompraDAO compraDAO;
 
     public EntradaController() {
 
     }
 
-    public EntradaController(Scanner scanner, List<Compra> listaCompras, Edicion edicion) {
+    public EntradaController(Scanner scanner, Edicion edicion) {
         this.scanner = scanner;
         this.entradaView = new EntradaView();
-        this.listaEntradas = new ArrayList<>();
-        this.listaCompras = listaCompras;
         this.edicion = edicion;
+        this.entradaDAO = new EntradaDAO();
+        this.compraDAO = new CompraDAO();
     }
 
     public void iniciarMenuEntradas() {
@@ -86,28 +88,36 @@ public class EntradaController {
             System.out.println("La compra no permite generar entradas válidas.");
             return;
         }
+        int totalInsertadas = 0;
         for (int i = 0; i < cantidadEntradas; i++) {
-            int idEntrada = generarNuevoIdEntrada();
             String codigoEntrada = generarCodigoEntrada();
-
             Entrada entrada = new Entrada(
-                    idEntrada,
+                    0,
                     edicion,
                     compra,
                     codigoEntrada
             );
 
-            guardarEntrada(entrada);
+            try {
+                int filasInsertadas = entradaDAO.insertarEntrada(entrada);
+                if (filasInsertadas > 0) {
+                    totalInsertadas++;
+                }
+            } catch (SQLException e) {
+                System.out.println("Error al insertar entrada en la base de datos.");
+                System.out.println(e.getMessage());
+            }
         }
-        System.out.println("Se han generado " + cantidadEntradas + " entradas correctamente.");
+        System.out.println("Se han generado " + totalInsertadas + " entradas correctamente.");
     }
 
     public void listarEntradas() {
         System.out.println("LISTADO DE ENTRADAS");
-        if (listaEntradas.isEmpty()) {
+        List<Entrada> entradas = entradaDAO.obtenerEntradas();
+        if (entradas.isEmpty()) {
             System.out.println("No hay entradas registradas.");
         } else {
-            for (Entrada entrada : listaEntradas) {
+            for (Entrada entrada : entradas) {
                 System.out.println(entrada);
             }
         }
@@ -118,7 +128,7 @@ public class EntradaController {
         if (scanner.hasNextInt()) {
             int idEntrada = scanner.nextInt();
             scanner.nextLine();
-            Entrada entrada = buscarEntradaPorId(idEntrada);
+            Entrada entrada = entradaDAO.obtenerEntradaPorId(idEntrada);
 
             if (entrada != null) {
                 System.out.println("Entrada encontrada:");
@@ -137,13 +147,20 @@ public class EntradaController {
         if (scanner.hasNextInt()) {
             int idEntrada = scanner.nextInt();
             scanner.nextLine();
-            Entrada entrada = buscarEntradaPorId(idEntrada);
+            Entrada entrada = entradaDAO.obtenerEntradaPorId(idEntrada);
 
-            if (entrada != null) {
-                listaEntradas.remove(entrada);
-                System.out.println("Entrada eliminada correctamente.");
-            } else {
+            if (entrada == null) {
                 System.out.println("No se ha encontrado ninguna entrada con dicho id.");
+                return;
+            }
+
+            int filasEliminadas = entradaDAO.eliminarEntrada(idEntrada);
+            if (filasEliminadas > 0) {
+                System.out.println("Entrada eliminada correctamente.");
+            } else if (filasEliminadas == 0) {
+                System.out.println("No se ha encontrado ninguna entrada con dicho id.");
+            } else {
+                System.out.println("No se ha podido eliminar la entrada.");
             }
         } else {
             System.out.println("Debes introducir un número entero.");
@@ -152,7 +169,7 @@ public class EntradaController {
     }
 
     private boolean hayComprasDisponibles() {
-        return !listaCompras.isEmpty();
+        return !compraDAO.obtenerCompras().isEmpty();
     }
 
     private boolean hayEdicionDisponible() {
@@ -160,8 +177,9 @@ public class EntradaController {
     }
 
     private void mostrarComprasDisponibles() {
+        List<Compra> compras = compraDAO.obtenerCompras();
         System.out.println("Compras disponibles:");
-        for (Compra compra : listaCompras) {
+        for (Compra compra : compras) {
             System.out.println("ID Compra: " + compra.getIdCompra()
                     + " - Cliente: " + compra.getCliente().getNombre() + " " + compra.getCliente().getApellidos()
                     + " - Importe: " + compra.getImporteTotal() + " €");
@@ -195,53 +213,22 @@ public class EntradaController {
         return (int) cantidad;
     }
 
-    private int generarNuevoIdEntrada() {
-        return listaEntradas.size() + 1;
-    }
-
     private String generarCodigoEntrada() {
-        int numero = listaEntradas.size() + 1;
+        int numero = entradaDAO.obtenerEntradas().size() + 1;
         return String.format("SORO2026-%04d", numero);
     }
 
-    private void guardarEntrada(Entrada entrada) {
-        listaEntradas.add(entrada);
-    }
-
     private Compra buscarCompraPorId(int idCompra) {
-        for (Compra compra : listaCompras) {
-            if (compra.getIdCompra() == idCompra) {
-                return compra;
-            }
-        }
-        return null;
-    }
-
-    private Entrada buscarEntradaPorId(int idEntrada) {
-        for (Entrada entrada : listaEntradas) {
-            if (entrada.getIdEntrada() == idEntrada) {
-                return entrada;
-            }
-        }
-        return null;
+        return compraDAO.obtenerCompraPorId(idCompra);
     }
 
     private boolean existenEntradasCompra(Compra compra) {
-        for (Entrada entrada : listaEntradas) {
+        List<Entrada> entradas = entradaDAO.obtenerEntradas();
+        for (Entrada entrada : entradas) {
             if (entrada.getCompra().getIdCompra() == compra.getIdCompra()) {
                 return true;
             }
         }
         return false;
     }
-
-    public List<Entrada> getListaEntradas() {
-        return listaEntradas;
-    }
 }
-
-
-
-
-
-

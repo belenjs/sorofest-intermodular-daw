@@ -19,18 +19,18 @@ public class ClienteController {
     private List<Compra> listaCompras;
     private ClienteDAO clienteDAO;
 
-    public ClienteController(){
+    public ClienteController() {
 
     }
 
-    public ClienteController(Scanner scanner){
+    public ClienteController(Scanner scanner) {
         this.scanner = scanner;
         this.clienteView = new ClienteView();
         this.listaClientes = new ArrayList<>();
         this.clienteDAO = new ClienteDAO();
     }
 
-    public void iniciarMenuCliente(){
+    public void iniciarMenuCliente() {
         int opcion;
         do {
             clienteView.mostrarMenuClientes();
@@ -55,7 +55,7 @@ public class ClienteController {
         } while (opcion != 0);
     }
 
-    public void darAltaCliente(){
+    public void darAltaCliente() {
         String dni = leerTexto("Introduce DNI: ");
         if (clienteDAO.obtenerClientePorDni(dni) != null) {
             System.out.println("Ya existe un cliente con ese DNI.");
@@ -83,23 +83,23 @@ public class ClienteController {
         }
     }
 
-    public void listarClientes(){
+    public void listarClientes() {
         System.out.println("LISTADO DE CLIENTES");
         List<Cliente> clientes = clienteDAO.obtenerClientes();
-        if(clientes.isEmpty()){
+        if (clientes.isEmpty()) {
             System.out.println("No hay clientes registrados");
         } else {
-            for(Cliente cliente : clientes) {
+            for (Cliente cliente : clientes) {
                 System.out.println(cliente);
             }
         }
     }
 
-    public void buscarCliente(){
+    public void buscarCliente() {
         String dniCliente = leerTexto("Introduce el DNI del cliente: ");
         Cliente cliente = clienteDAO.obtenerClientePorDni(dniCliente);
 
-        if(cliente != null) {
+        if (cliente != null) {
             System.out.println(cliente);
         } else {
             System.out.println("No se ha encontrado ningún cliente con dicho dni");
@@ -107,7 +107,7 @@ public class ClienteController {
 
     }
 
-    public void modificarDatosCliente(){
+    public void modificarDatosCliente() {
         String dniCliente = leerTexto("Introduce el DNI del cliente a modificar: ");
         Cliente cliente = clienteDAO.obtenerClientePorDni(dniCliente);
         if (cliente == null) {
@@ -138,7 +138,7 @@ public class ClienteController {
         }
     }
 
-    public void eliminarCliente(){
+    public void eliminarCliente() {
         String dniCliente = leerTexto("Introduce el DNI del cliente a eliminar: ");
         Cliente cliente = clienteDAO.obtenerClientePorDni(dniCliente);
         if (cliente == null) {
@@ -199,13 +199,5 @@ public class ClienteController {
             }
         }
         return false;
-    }
-
-    public List<Cliente> getListaClientes() {
-        return listaClientes;
-    }
-
-    public void setListaCompras(List<Compra> listaCompras) {
-        this.listaCompras = listaCompras;
     }
 }
