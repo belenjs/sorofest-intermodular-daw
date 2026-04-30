@@ -78,10 +78,11 @@ SoroFest es un proyecto intermodular de 1º de DAW centrado en el diseño y desa
 
   ## Cómo visualizar el proyecto
 
-  ### Parte web
-  Abrir `web/index.html` en el navegador.
+  ### Web - Lenguaje de Marcas
+  Entregado y finalizado módulo web del proyecto.
+  Se puede visualizar abriendo `web/index.html` en el navegador.
 
-  ### Parte Java
+  ### Java
   Entregado y finalizado módulo Java del proyecto, implementado como aplicación de consola para la gestión del festival.  Incluye gestión de:
   - edición
   - artistas
@@ -93,17 +94,17 @@ SoroFest es un proyecto intermodular de 1º de DAW centrado en el diseño y desa
   Para ejecutar el proyecto, lanzar la clase `Main.java`, teniendo previamente configurada la base de datos y la conexión en `ConexionBD.java`.
 
   ### Base de datos
-  Entregado y finalizado parte de BBDD, organizado de tal manera:
-  - /docs/bbdd: archivo analisis-datos.md donde se describe las decisiones tomadas para llevar a cabo la organizacion de la base de datos del festival.
-  - /diagrams: donde se encuentran los diagramas entidad-relación y relacional.
-  - /sql: donde se encuentran los scripts para la creación de bbdd y tablas, la inserción de datos y diferentes queries.
+  Entregado y finalizado módulo de base de datos del proyecto. La base de datos puede visualizarse y gestionarse en **XAMPP / phpMyAdmin**, una vez levantados los servicios de **Apache** y **MySQL**. Este módulo está organizado de la siguiente manera:
+  - `/docs/bbdd `: archivo analisis-datos.md donde se describe las decisiones tomadas para llevar a cabo la organizacion de la base de datos del festival.
+  - `/diagrams `: donde se encuentran los diagramas entidad-relación y relacional.
+  - `/sql `: donde se encuentran los scripts para la creación de bbdd y tablas, la inserción de datos y diferentes queries.
 
   ### MPO
   Arquitectura de la aplicación:
   Se trata de una aplicación manejada por consola y desarrollada en Java. La aplicación permite gestionar distintas entidades. El proyecto está organizado por capas y paquetes, separando responsabilidades:
   `model`:
   Contiene las clases del dominio de la aplicación, es decir, las entidades principales del sistema.
-  ### `view`:
+  `view`:
   Contiene las clases encargadas de mostrar los menús y la salida básica por consola. Su responsabilidad es únicamente la interacción visual con el usuario.
   `controller`:
   Contiene la lógica de la aplicación y el flujo de los menús. Los controladores coordinan:
