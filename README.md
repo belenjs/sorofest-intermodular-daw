@@ -82,7 +82,15 @@ SoroFest es un proyecto intermodular de 1º de DAW centrado en el diseño y desa
   Abrir `web/index.html` en el navegador.
 
   ### Parte Java
-  Pendiente de implementación inicial.
+  Entregado y finalizado módulo Java del proyecto, implementado como aplicación de consola para la gestión del festival.  Incluye gestión de:
+  - edición
+  - artistas
+  - conciertos
+  - clientes
+  - compras
+  - entradas
+  La aplicación está estructurada en paquetes (`model`, `view`, `controller`, `dao`, `database`) y conectada a base de datos mediante JDBC.
+  Para ejecutar el proyecto, lanzar la clase `Main.java`, teniendo previamente configurada la base de datos y la conexión en `ConexionBD.java`.
 
   ### Base de datos
   Entregado y finalizado parte de BBDD, organizado de tal manera:
@@ -92,26 +100,25 @@ SoroFest es un proyecto intermodular de 1º de DAW centrado en el diseño y desa
 
   ### MPO
   Arquitectura de la aplicación:
-  Se trata de una aplicación manejada por consola y desarrollada en Java para la gestión de un festival de música. La aplicación permite   gestionar distintas entidades.
-  El proyecto está organizado por capas y paquetes, separando responsabilidades:
-  ### `model`:
+  Se trata de una aplicación manejada por consola y desarrollada en Java. La aplicación permite gestionar distintas entidades. El proyecto está organizado por capas y paquetes, separando responsabilidades:
+  `model`:
   Contiene las clases del dominio de la aplicación, es decir, las entidades principales del sistema.
   ### `view`:
   Contiene las clases encargadas de mostrar los menús y la salida básica por consola. Su responsabilidad es únicamente la interacción visual con el usuario.
-  ### `controller`:
+  `controller`:
   Contiene la lógica de la aplicación y el flujo de los menús. Los controladores coordinan:
   - la lectura de datos por consola
   - las validaciones
   - las operaciones del sistema
   - la comunicación con la capa DAO
-  ### `dao`:
+  `dao`:
   Contiene las clases DAO (*Data Access Object*), encargadas del acceso a la base de datos.  Cada DAO gestiona las operaciones CRUD de una entidad:
   - insertar
   - obtener
   - actualizar
   - eliminar
   Además, algunos DAO incluyen comprobaciones de integridad, como verificar si una entidad tiene elementos asociados.
-  ### `database`:
+  `database`:
   Contiene la configuración de la base de datos:
   - `ConexionBD`, para gestionar la conexión JDBC con MySQL
   - `SchemaBD`, para centralizar los nombres de tablas y columnas
