@@ -4,13 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SoroFest</title>
+    <link rel="preload" as="image" href="assets/img/logo-sorofest.webp" fetchpriority="high">
     <link rel ="stylesheet" href="styles.css">
 </head>
 <body>
     <header class="topbar">
         <div class="topbar-left">
             <div class="logo">
-                <img src="assets/img/logo-sorofest.webp" alt="Logo puño sujetando micrófono">
+                <img 
+                src="assets/img/logo-sorofest.webp" 
+                alt="Logo puño sujetando micrófono"
+                width="120"
+                height="120"
+                decoding="async"
+                >
             </div>
         </div>
         <nav class="topbar-nav">
@@ -85,7 +92,14 @@
     </main>
     <footer class="footer">
         <div class="footer-logo">
-            <img src="assets/img/logo-sorofest.png" alt="Logo puño sujetando micrófono">
+            <img 
+            src="assets/img/logo-sorofest.webp" 
+            alt="Logo puño sujetando micrófono"
+            width="120"
+            height="120"
+            loading="lazy"
+            decoding="async"
+            >
             <div class="footer-text">
                 <p>© 2026 - SoroFest</p>
                 <p>Talento femenino en el centro del escenario</p>
