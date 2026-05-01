@@ -132,6 +132,61 @@ public class CompraDAO {
         return null;
     }
 
+    public List<Compra> obtenerComprasPorDniCliente(String dniCliente) {
+        List<Compra> compras = new ArrayList<>();
+
+        String query = String.format(
+                "SELECT co.*, c.%s, c.%s, c.%s, c.%s, c.%s, c.%s, c.%s " +
+                        "FROM %s co " +
+                        "INNER JOIN %s c ON co.%s = c.%s " +
+                        "WHERE c.%s = ?",
+                SchemaBD.COL_ID_CLIENTE,
+                SchemaBD.COL_DNI,
+                SchemaBD.COL_NOMBRE,
+                SchemaBD.COL_APELLIDOS,
+                SchemaBD.COL_EMAIL,
+                SchemaBD.COL_TELEFONO,
+                SchemaBD.COL_FECHA_NACIMIENTO,
+                SchemaBD.TAB_COMPRA,
+                SchemaBD.TAB_CLIENTE,
+                SchemaBD.COL_ID_CLIENTE_FK,
+                SchemaBD.COL_ID_CLIENTE,
+                SchemaBD.COL_DNI
+        );
+
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, dniCliente);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Cliente cliente = new Cliente(
+                        resultSet.getInt(SchemaBD.COL_ID_CLIENTE),
+                        resultSet.getString(SchemaBD.COL_DNI),
+                        resultSet.getString(SchemaBD.COL_NOMBRE),
+                        resultSet.getString(SchemaBD.COL_APELLIDOS),
+                        resultSet.getString(SchemaBD.COL_EMAIL),
+                        resultSet.getString(SchemaBD.COL_TELEFONO),
+                        resultSet.getDate(SchemaBD.COL_FECHA_NACIMIENTO).toLocalDate()
+                );
+
+                Compra compra = new Compra(
+                        resultSet.getInt(SchemaBD.COL_ID_COMPRA),
+                        cliente,
+                        resultSet.getTimestamp(SchemaBD.COL_FECHA_COMPRA).toLocalDateTime(),
+                        resultSet.getDouble(SchemaBD.COL_IMPORTE_TOTAL),
+                        resultSet.getString(SchemaBD.COL_METODO_PAGO)
+                );
+
+                compras.add(compra);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error en la SQL");
+            System.out.println(e.getMessage());
+        }
+        return compras;
+    }
+
     public int actualizarCompra(Compra compra) {
         String query = String.format(
                 "UPDATE %s SET %s = ?, %s = ?, %s = ?, %s = ? WHERE %s = ?",

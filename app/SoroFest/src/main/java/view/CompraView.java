@@ -9,6 +9,7 @@ public class CompraView {
         System.out.println("3. Buscar compra");
         System.out.println("4. Modificar compra");
         System.out.println("5. Eliminar compra");
+        System.out.println("6. Listar compras de un cliente por DNI");
         System.out.println("0. Volver");
         System.out.print("Selecciona una opción: ");
     }

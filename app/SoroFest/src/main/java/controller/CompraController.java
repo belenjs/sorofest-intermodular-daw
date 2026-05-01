@@ -49,6 +49,7 @@ public class CompraController {
                     case 3 -> buscarCompra();
                     case 4 -> modificarCompra();
                     case 5 -> eliminarCompra();
+                    case 6 -> listarComprasPorDniCliente();
                     case 0 -> System.out.println("Volviendo al menú principal...");
                     default -> System.out.println("Opción no válida.");
                 }
@@ -128,6 +129,25 @@ public class CompraController {
         if (compras.isEmpty()) {
             System.out.println("No hay compras registradas.");
         } else {
+            for (Compra compra : compras) {
+                System.out.println(compra);
+            }
+        }
+    }
+
+    public void listarComprasPorDniCliente() {
+        String dniCliente = leerTexto("Introduce el DNI del cliente: ");
+        Cliente cliente = clienteDAO.obtenerClientePorDni(dniCliente);
+        if (cliente == null) {
+            System.out.println("No existe ningún cliente con ese DNI.");
+            return;
+        }
+
+        List<Compra> compras = compraDAO.obtenerComprasPorDniCliente(dniCliente);
+        if (compras.isEmpty()) {
+            System.out.println("Ese cliente no tiene compras registradas.");
+        } else {
+            System.out.println("COMPRAS DEL CLIENTE " + cliente.getNombre() + " " + cliente.getApellidos());
             for (Compra compra : compras) {
                 System.out.println(compra);
             }
@@ -326,5 +346,18 @@ public class CompraController {
 
     private boolean tieneEntradasAsociadas(Compra compra) {
         return entradaDAO.existeEntradaPorCompra(compra.getIdCompra());
+    }
+
+    private String leerTexto(String mensaje) {
+        String texto;
+        do {
+            System.out.print(mensaje);
+            texto = scanner.nextLine().trim();
+
+            if (texto.isEmpty()) {
+                System.out.println("Este campo no puede estar vacío.");
+            }
+        } while (texto.isEmpty());
+        return texto;
     }
 }
