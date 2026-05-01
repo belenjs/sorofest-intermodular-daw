@@ -125,114 +125,93 @@ public class ConciertoController {
     }
 
     public void buscarConcierto(){
-        System.out.print("Introduce el id del concierto: ");
-        if (scanner.hasNextInt()) {
-            int idConcierto = scanner.nextInt();
-            scanner.nextLine();
-            Concierto concierto = conciertoDAO.obtenerConciertoPorId(idConcierto);
+        String nombreArtista = leerTexto("Introduce el nombre artístico: ");
+        LocalDate fecha = leerFecha("Introduce la fecha del concierto (yyyy-MM-dd): ");
+        Concierto concierto = conciertoDAO.obtenerConciertoPorArtistaYFecha(nombreArtista, fecha);
 
-            if (concierto != null) {
-                System.out.println(concierto);
-            } else {
-                System.out.println("No se ha encontrado ningún concierto con dicho id.");
-            }
-        } else {
-            System.out.println("Debes introducir un número entero.");
-            scanner.nextLine();
-        }
-    }
-
-    public void modificarConcierto(){
-        System.out.print("Introduce el id del concierto que quieres modificar: ");
-
-        if (scanner.hasNextInt()) {
-            int idConcierto = scanner.nextInt();
-            scanner.nextLine();
-            Concierto concierto = conciertoDAO.obtenerConciertoPorId(idConcierto);
-
-            if (concierto == null) {
-                System.out.println("No se ha encontrado ningún concierto con dicho id.");
-                return;
-            }
-            System.out.println("Concierto encontrado:");
+        if (concierto != null) {
             System.out.println(concierto);
-
-            if (!hayArtistasDisponibles()) {
-                System.out.println("No hay artistas registradas.");
-                return;
-            }
-            if (!hayEdicionDisponible()) {
-                System.out.println("No hay ninguna edición disponible.");
-                return;
-            }
-            mostrarArtistasDisponibles();
-
-            int nuevoIdArtista = pedirIdArtista();
-            if (nuevoIdArtista == -1) {
-                return;
-            }
-
-            Artista nuevaArtista = buscarArtistaPorId(nuevoIdArtista);
-            if (nuevaArtista == null) {
-                System.out.println("No existe ninguna artista con dicho id.");
-                return;
-            }
-
-            LocalDate nuevaFecha = leerFecha("Nueva fecha (yyyy-MM-dd): ");
-            if (nuevaFecha.isBefore(edicion.getFechaInicio()) || nuevaFecha.isAfter(edicion.getFechaFin())) {
-                System.out.println("La fecha del concierto debe estar dentro de las fechas de la edición.");
-                return;
-            }
-
-            LocalTime nuevaHoraInicio = leerHora("Nueva hora de inicio (HH:mm): ");
-            LocalTime nuevaHoraFin = leerHora("Nueva hora de fin (HH:mm): ");
-
-            if (!nuevaHoraFin.isAfter(nuevaHoraInicio)) {
-                System.out.println("La hora de fin debe ser posterior a la hora de inicio.");
-                return;
-            }
-            concierto.setArtista(nuevaArtista);
-            concierto.setFecha(nuevaFecha);
-            concierto.setHoraInicio(nuevaHoraInicio);
-            concierto.setHoraFin(nuevaHoraFin);
-
-            int filasActualizadas = conciertoDAO.actualizarConcierto(concierto);
-            if (filasActualizadas > 0) {
-                System.out.println("Concierto modificado correctamente.");
-                System.out.println(concierto);
-            } else {
-                System.out.println("No se ha podido modificar el concierto.");
-            }
         } else {
-            System.out.println("Debes introducir un número entero.");
-            scanner.nextLine();
+            System.out.println("No se ha encontrado ningún concierto para esa artista en esa fecha.");
         }
     }
 
-    public void eliminarConcierto(){
-        System.out.print("Introduce el id del concierto que quieres eliminar: ");
+    public void modificarConcierto() {
+        String nombreArtistaBuscado = leerTexto("Introduce el nombre artístico del concierto a modificar: ");
+        LocalDate fechaBuscada = leerFecha("Introduce la fecha del concierto a modificar (yyyy-MM-dd): ");
+        Concierto concierto = conciertoDAO.obtenerConciertoPorArtistaYFecha(nombreArtistaBuscado, fechaBuscada);
 
-        if (scanner.hasNextInt()) {
-            int idConcierto = scanner.nextInt();
-            scanner.nextLine();
-            Concierto concierto = conciertoDAO.obtenerConciertoPorId(idConcierto);
+        if (concierto == null) {
+            System.out.println("No se ha encontrado ningún concierto para esa artista en esa fecha.");
+            return;
+        }
+        System.out.println("Concierto encontrado:");
+        System.out.println(concierto);
 
-            if (concierto == null) {
-                System.out.println("No se ha encontrado ningún concierto con dicho id.");
-                return;
-            }
+        if (!hayArtistasDisponibles()) {
+            System.out.println("No hay artistas registradas.");
+            return;
+        }
+        if (!hayEdicionDisponible()) {
+            System.out.println("No hay ninguna edición disponible.");
+            return;
+        }
+        mostrarArtistasDisponibles();
 
-            int filasEliminadas = conciertoDAO.eliminarConcierto(idConcierto);
-            if (filasEliminadas > 0) {
-                System.out.println("Concierto eliminado correctamente.");
-            } else if (filasEliminadas == 0) {
-                System.out.println("No se ha encontrado ningún concierto con dicho id.");
-            } else {
-                System.out.println("No se ha podido eliminar el concierto.");
-            }
+        int nuevoIdArtista = pedirIdArtista();
+        if (nuevoIdArtista == -1) {
+            return;
+        }
+
+        Artista nuevaArtista = buscarArtistaPorId(nuevoIdArtista);
+        if (nuevaArtista == null) {
+            System.out.println("No existe ninguna artista con dicho id.");
+            return;
+        }
+
+        LocalDate nuevaFecha = leerFecha("Nueva fecha (yyyy-MM-dd): ");
+        if (nuevaFecha.isBefore(edicion.getFechaInicio()) || nuevaFecha.isAfter(edicion.getFechaFin())) {
+            System.out.println("La fecha del concierto debe estar dentro de las fechas de la edición.");
+            return;
+        }
+
+        LocalTime nuevaHoraInicio = leerHora("Nueva hora de inicio (HH:mm): ");
+        LocalTime nuevaHoraFin = leerHora("Nueva hora de fin (HH:mm): ");
+
+        if (!nuevaHoraFin.isAfter(nuevaHoraInicio)) {
+            System.out.println("La hora de fin debe ser posterior a la hora de inicio.");
+            return;
+        }
+
+        concierto.setArtista(nuevaArtista);
+        concierto.setFecha(nuevaFecha);
+        concierto.setHoraInicio(nuevaHoraInicio);
+        concierto.setHoraFin(nuevaHoraFin);
+        int filasActualizadas = conciertoDAO.actualizarConcierto(concierto);
+        if (filasActualizadas > 0) {
+            System.out.println("Concierto modificado correctamente.");
+            System.out.println(concierto);
         } else {
-            System.out.println("Debes introducir un número entero.");
-            scanner.nextLine();
+            System.out.println("No se ha podido modificar el concierto.");
+        }
+    }
+
+    public void eliminarConcierto() {
+        String nombreArtistaBuscado = leerTexto("Introduce el nombre artístico del concierto a eliminar: ");
+        LocalDate fechaBuscada = leerFecha("Introduce la fecha del concierto a eliminar (yyyy-MM-dd): ");
+        Concierto concierto = conciertoDAO.obtenerConciertoPorArtistaYFecha(nombreArtistaBuscado, fechaBuscada);
+        if (concierto == null) {
+            System.out.println("No se ha encontrado ningún concierto para esa artista en esa fecha.");
+            return;
+        }
+
+        int filasEliminadas = conciertoDAO.eliminarConcierto(concierto.getIdConcierto());
+        if (filasEliminadas > 0) {
+            System.out.println("Concierto eliminado correctamente.");
+        } else if (filasEliminadas == 0) {
+            System.out.println("No se ha encontrado ningún concierto para esa artista en esa fecha.");
+        } else {
+            System.out.println("No se ha podido eliminar el concierto.");
         }
     }
 
@@ -299,5 +278,19 @@ public class ConciertoController {
                 System.out.println("Formato de hora no válido. Usa HH:mm.");
             }
         }
+    }
+
+    private String leerTexto(String mensaje) {
+        String texto;
+        do {
+            System.out.print(mensaje);
+            texto = scanner.nextLine().trim();
+
+            if (texto.isEmpty()) {
+                System.out.println("Este campo no puede estar vacío.");
+            }
+        } while (texto.isEmpty());
+
+        return texto;
     }
 }
