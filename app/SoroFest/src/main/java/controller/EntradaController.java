@@ -125,47 +125,34 @@ public class EntradaController {
     }
 
     public void buscarEntrada() {
-        System.out.print("Introduce el id de la entrada: ");
-        if (scanner.hasNextInt()) {
-            int idEntrada = scanner.nextInt();
-            scanner.nextLine();
-            Entrada entrada = entradaDAO.obtenerEntradaPorId(idEntrada);
+        String codigoEntrada = leerTexto("Introduce el código de la entrada: ");
+        Entrada entrada = entradaDAO.obtenerEntradaPorCodigo(codigoEntrada);
 
-            if (entrada != null) {
-                System.out.println("Entrada encontrada:");
-                System.out.println(entrada);
-            } else {
-                System.out.println("No se ha encontrado ninguna entrada con dicho id.");
-            }
+        if (entrada != null) {
+            System.out.println("Entrada encontrada:");
+            System.out.println(entrada);
         } else {
-            System.out.println("Debes introducir un número entero.");
-            scanner.nextLine();
+            System.out.println("No se ha encontrado ninguna entrada con dicho código.");
         }
     }
 
-    public void eliminarEntrada(){
-        System.out.print("Introduce el id de la entrada que quieres eliminar: ");
-        if (scanner.hasNextInt()) {
-            int idEntrada = scanner.nextInt();
-            scanner.nextLine();
-            Entrada entrada = entradaDAO.obtenerEntradaPorId(idEntrada);
+    public void eliminarEntrada() {
+        String codigoEntrada = leerTexto("Introduce el código de la entrada que quieres eliminar: ");
+        Entrada entrada = entradaDAO.obtenerEntradaPorCodigo(codigoEntrada);
 
-            if (entrada == null) {
-                System.out.println("No se ha encontrado ninguna entrada con dicho id.");
-                return;
-            }
+        if (entrada == null) {
+            System.out.println("No se ha encontrado ninguna entrada con dicho código.");
+            return;
+        }
 
-            int filasEliminadas = entradaDAO.eliminarEntrada(idEntrada);
-            if (filasEliminadas > 0) {
-                System.out.println("Entrada eliminada correctamente.");
-            } else if (filasEliminadas == 0) {
-                System.out.println("No se ha encontrado ninguna entrada con dicho id.");
-            } else {
-                System.out.println("No se ha podido eliminar la entrada.");
-            }
+        int filasEliminadas = entradaDAO.eliminarEntrada(entrada.getIdEntrada());
+
+        if (filasEliminadas > 0) {
+            System.out.println("Entrada eliminada correctamente.");
+        } else if (filasEliminadas == 0) {
+            System.out.println("No se ha encontrado ninguna entrada con dicho código.");
         } else {
-            System.out.println("Debes introducir un número entero.");
-            scanner.nextLine();
+            System.out.println("No se ha podido eliminar la entrada.");
         }
     }
 
@@ -220,5 +207,19 @@ public class EntradaController {
 
     private boolean existenEntradasCompra(Compra compra) {
         return entradaDAO.existeEntradaPorCompra(compra.getIdCompra());
+    }
+
+    private String leerTexto(String mensaje) {
+        String texto;
+        do {
+            System.out.print(mensaje);
+            texto = scanner.nextLine().trim();
+
+            if (texto.isEmpty()) {
+                System.out.println("Este campo no puede estar vacío.");
+            }
+        } while (texto.isEmpty());
+
+        return texto;
     }
 }
