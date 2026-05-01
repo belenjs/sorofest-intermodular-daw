@@ -91,6 +91,35 @@ public class ArtistaDAO {
         return null;
     }
 
+    public Artista obtenerArtistaPorNombre(String nombreArtistaBuscado) {
+        String query = String.format(
+                "SELECT * FROM %s WHERE %s = ?",
+                SchemaBD.TAB_ARTISTA,
+                SchemaBD.COL_NOMBRE_ARTISTA
+        );
+
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, nombreArtistaBuscado);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return new Artista(
+                        resultSet.getInt(SchemaBD.COL_ID_ARTISTA),
+                        resultSet.getString(SchemaBD.COL_NOMBRE_ARTISTA),
+                        resultSet.getString(SchemaBD.COL_TIPO_ARTISTA),
+                        resultSet.getString(SchemaBD.COL_GENERO_MUSICAL),
+                        resultSet.getBoolean(SchemaBD.COL_ES_CABEZA_CARTEL),
+                        resultSet.getString(SchemaBD.COL_DESCRIPCION)
+                );
+            }
+        } catch (SQLException e) {
+            System.out.println("Error en la SQL");
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
     public int actualizarArtista(Artista artista) {
         String query = String.format(
                 "UPDATE %s SET %s = ?, %s = ?, %s = ?, %s = ?, %s = ? WHERE %s = ?",

@@ -96,84 +96,61 @@ public class ArtistaController {
     }
 
     public void buscarArtista(){
-        System.out.println("Introduce el id de la artista a buscar: ");
+        String nombreArtista = leerTexto("Introduce el nombre artístico a buscar: ");
+        Artista artista = artistaDAO.obtenerArtistaPorNombre(nombreArtista);
 
-        if(scanner.hasNextInt()) {
-            int idArtista = scanner.nextInt();
-            scanner.nextLine();
-            Artista artista = artistaDAO.obtenerArtistaPorId(idArtista);
+        if (artista != null) {
+            System.out.println(artista);
+        } else {
+            System.out.println("No se ha encontrado ninguna artista con ese nombre artístico.");
+        }
+    }
 
-            if (artista != null) {
+    public void modificarArtista() {
+        String nombreArtista = leerTexto("Introduce el nombre artístico de la artista a modificar: ");
+        Artista artista = artistaDAO.obtenerArtistaPorNombre(nombreArtista);
+
+        if (artista != null) {
+            artista.setNombreArtista(leerTexto("Nuevo nombre artístico: "));
+            artista.setTipoArtista(leerTexto("Nuevo tipo de artista: "));
+            artista.setGeneroMusical(leerTexto("Nuevo género musical: "));
+            artista.setEsCabezaCartel(leerBoolean("¿Es cabeza de cartel? (true/false): "));
+            artista.setDescripcion(leerTexto("Nueva descripción: "));
+
+            int filasActualizadas = artistaDAO.actualizarArtista(artista);
+            if (filasActualizadas > 0) {
+                System.out.println("Artista modificada correctamente.");
                 System.out.println(artista);
             } else {
-                System.out.println("No se ha encontrado ninguna artista con dicho id.");
+                System.out.println("No se ha podido modificar la artista.");
             }
         } else {
-            System.out.println("Debes introducir un número entero.");
-            scanner.nextLine();
+            System.out.println("No se ha encontrado ninguna artista con ese nombre artístico.");
         }
     }
 
-    public void modificarArtista(){
-        System.out.println("Introduce el id de la artista a modificar: ");
+    public void eliminarArtista() {
+        String nombreArtista = leerTexto("Introduce el nombre artístico de la artista a eliminar: ");
+        Artista artista = artistaDAO.obtenerArtistaPorNombre(nombreArtista);
 
-        if(scanner.hasNextInt()) {
-            int idArtista = scanner.nextInt();
-            scanner.nextLine();
-            Artista artista = artistaDAO.obtenerArtistaPorId(idArtista);
+        if (artista != null) {
+            if (tieneConciertosAsociados(artista)) {
+                System.out.println("No se puede eliminar la artista porque tiene conciertos asociados.");
+                return;
+            }
 
-            if (artista != null) {
-                artista.setNombreArtista(leerTexto("Nuevo nombre artístico: "));
-                artista.setTipoArtista(leerTexto("Nuevo tipo de artista: "));
-                artista.setGeneroMusical(leerTexto("Nuevo género musical: "));
-                artista.setEsCabezaCartel(leerBoolean("¿Es cabeza de cartel? (true/false): "));
-                artista.setDescripcion(leerTexto("Nueva descripción: "));
+            int filasEliminadas = artistaDAO.eliminarArtista(artista.getIdArtista());
 
-                int filasActualizadas = artistaDAO.actualizarArtista(artista);
-                if (filasActualizadas > 0) {
-                    System.out.println("Artista modificada correctamente.");
-                    System.out.println(artista);
-                } else {
-                    System.out.println("No se ha podido modificar la artista.");
-                }
+            if (filasEliminadas > 0) {
+                System.out.println("Artista eliminada correctamente.");
+            } else if (filasEliminadas == 0) {
+                System.out.println("No se ha encontrado ninguna artista con ese nombre artístico.");
             } else {
-                System.out.println("No se ha encontrado ninguna artista con dicho id.");
+                System.out.println("No se ha podido eliminar la artista.");
             }
         } else {
-            System.out.println("Debes introducir un número entero.");
-            scanner.nextLine();
+            System.out.println("No se ha encontrado ninguna artista con ese nombre artístico.");
         }
-    }
-
-    public void eliminarArtista(){
-        System.out.print("Introduce el id de la artista a eliminar: ");
-
-        if(scanner.hasNextInt()) {
-            int idArtista = scanner.nextInt();
-            scanner.nextLine();
-            Artista artista = artistaDAO.obtenerArtistaPorId(idArtista);
-
-            if (artista != null) {
-                if (tieneConciertosAsociados(artista)) {
-                    System.out.println("No se puede eliminar la artista porque tiene conciertos asociados.");
-                    return;
-                }
-                int filasEliminadas = artistaDAO.eliminarArtista(idArtista);
-                if (filasEliminadas > 0) {
-                    System.out.println("Artista eliminada correctamente.");
-                } else if (filasEliminadas == 0) {
-                    System.out.println("No se ha encontrado ninguna artista con dicho id.");
-                } else {
-                    System.out.println("No se ha podido eliminar la artista.");
-                }
-            } else {
-                System.out.println("No se ha encontrado ninguna artista con dicho id.");
-            }
-        } else {
-            System.out.println("Debes introducir un número entero.");
-            scanner.nextLine();
-        }
-
     }
 
     private String leerTexto(String mensaje) {
