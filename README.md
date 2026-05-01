@@ -47,7 +47,7 @@ SoroFest es un proyecto intermodular de 1º de DAW centrado en el diseño y desa
   - JDBC
   - SQL
   - Git y GitHub
-  - MySQL o MariaDB
+  - MariaDB
 
 
   ## Estructura del repositorio
@@ -55,8 +55,8 @@ SoroFest es un proyecto intermodular de 1º de DAW centrado en el diseño y desa
   - `/web` → portal web del festival
   - `/app` → aplicación Java para gestión interna
   - `/sql` → scripts de base de datos
-  - `/diagrams` → diagramas E/R, clases y esquemas
-  - `/docs` → documentación técnica y profesional por módulos
+  - `/diagrams` → diagramas E/R, clases y esquema de funcionamiento del sistema
+  - `/docs` → documentación técnica y profesional por módulos (general, base de datos, empleabilidad y sistemas informáticos)
 
 
   # Secciones de la web
@@ -73,8 +73,7 @@ SoroFest es un proyecto intermodular de 1º de DAW centrado en el diseño y desa
 
   ## Estado actual
 
-  Proyecto en fase inicial. Actualmente se ha definido la idea general, la identidad del festival y la estructura base del repositorio.
-
+  Proyecto finalizado
 
   ## Cómo visualizar el proyecto
 
@@ -133,6 +132,9 @@ SoroFest es un proyecto intermodular de 1º de DAW centrado en el diseño y desa
   - separación entre lógica de presentación, lógica de control y acceso a datos
   - mejora de la mantenibilidad del código
   ----
+  Nueva funcionalidad correspondiente a MPO:
+  - Se añade funcionalidad de lista todas las compras de un cliente por su DNI
+  ----
   Buenas prácticas:
   Durante el desarrollo de la aplicación se han seguido buenas prácticas relacionadas con programación orientada a objetos y calidad del código:
   - encapsulación de atributos con getters y setters
@@ -164,5 +166,5 @@ SoroFest es un proyecto intermodular de 1º de DAW centrado en el diseño y desa
 
   ## Autoría
 
-  Proyecto desarrollado por Belén Jiménez Sánchez.
+  Proyecto desarrollado por Belén Jiménez Sánchez con fines educativos
 
